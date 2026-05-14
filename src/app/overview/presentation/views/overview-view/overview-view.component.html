@@ -1,0 +1,241 @@
+<!-- Panel general — fiel al mockup imagen 1 -->
+<div class="overview">
+
+    <!-- ── Cabecera ──────────────────────────────────────── -->
+    <div class="ov-header">
+        <h1 class="ov-title">Panel general</h1>
+        <div class="ov-header__right">
+            <span class="ov-date">{{ todayLabel() }}</span>
+            <button class="btn-new-appt" type="button">
+                <mat-icon>add</mat-icon>
+                Nueva cita
+            </button>
+        </div>
+    </div>
+
+    <!-- ── KPIs ──────────────────────────────────────────── -->
+    <div class="kpi-grid">
+
+        <div class="kpi-card kpi-card--blue">
+            <div class="kpi-card__icon kpi-card__icon--blue">
+                <mat-icon>calendar_today</mat-icon>
+            </div>
+            <p class="kpi-card__label">Citas hoy</p>
+            <p class="kpi-card__value">{{ store.stats().todayAppointments }}</p>
+            <p class="kpi-card__sub">
+                <span class="kpi-sub--green">+{{ store.stats().todayVsYesterday }}</span> vs. ayer
+            </p>
+        </div>
+
+        <div class="kpi-card kpi-card--cyan">
+            <div class="kpi-card__icon kpi-card__icon--cyan">
+                <mat-icon>task_alt</mat-icon>
+            </div>
+            <p class="kpi-card__label">Confirmadas</p>
+            <p class="kpi-card__value">{{ store.stats().confirmed }}</p>
+            <p class="kpi-card__sub">
+                <span class="kpi-sub--cyan">{{ store.stats().confirmedPercent }}%</span> del total
+            </p>
+        </div>
+
+        <div class="kpi-card kpi-card--orange">
+            <div class="kpi-card__icon kpi-card__icon--orange">
+                <mat-icon>schedule</mat-icon>
+            </div>
+            <p class="kpi-card__label">Pendientes</p>
+            <p class="kpi-card__value">{{ store.stats().pending }}</p>
+            <p class="kpi-card__sub">
+                <span class="kpi-sub--orange">Revisar</span> pronto
+            </p>
+        </div>
+
+        <div class="kpi-card kpi-card--grey">
+            <div class="kpi-card__icon kpi-card__icon--grey">
+                <mat-icon>group</mat-icon>
+            </div>
+            <p class="kpi-card__label">Clientes activos</p>
+            <p class="kpi-card__value">{{ store.stats().activeClients }}</p>
+            <p class="kpi-card__sub">
+                <span class="kpi-sub--green">+{{ store.stats().newClientsThisMonth }}</span> este mes
+            </p>
+        </div>
+
+    </div>
+
+    <!-- ── Fila central ──────────────────────────────────── -->
+    <div class="center-row">
+
+        <!-- Citas del día -->
+        <div class="appt-panel">
+            <div class="appt-panel__header">
+                <h2 class="appt-panel__title">Citas del día</h2>
+                <div class="filter-tabs" role="tablist">
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('all')"       (click)="setFilter('all')">Todas</button>
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('confirmed')" (click)="setFilter('confirmed')">Confirmadas</button>
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('pending')"   (click)="setFilter('pending')">Pendientes</button>
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('cancelled')" (click)="setFilter('cancelled')">Canceladas</button>
+                </div>
+                <button class="btn-filter" type="button">
+                    <mat-icon>filter_list</mat-icon> Filtrar
+                </button>
+            </div>
+
+            <!-- Lista de citas -->
+            <ul class="appt-list">
+                @for (appt of store.filteredAppointments(); track appt.id) {
+                    <li class="appt-item">
+                        <span class="appt-time">{{ appt.time }}</span>
+                        <div class="appt-bar" [attr.data-status]="appt.status"></div>
+                        <div class="appt-info">
+                            <p class="appt-name">{{ appt.clientName }}</p>
+                            <p class="appt-service">
+                                {{ appt.service }} · {{ appt.category }}
+                                @if (appt.note) {
+                                    <span class="appt-note">
+                    <mat-icon>edit_note</mat-icon>{{ appt.note }}
+                  </span>
+                                }
+                            </p>
+                        </div>
+                        <span class="appt-badge" [attr.data-status]="appt.status">
+              {{ appt.status === 'confirmed' ? 'Confirmada' :
+                            appt.status === 'pending'   ? 'Pendiente'  : 'Cancelada' }}
+            </span>
+                        @if (appt.status === 'confirmed' || appt.status === 'pending') {
+                            <button class="appt-action-btn" type="button" title="Editar">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        }
+                        @if (appt.status === 'pending') {
+                            <button class="appt-action-btn appt-action-btn--confirm"
+                                    type="button" title="Confirmar" (click)="confirm(appt)">
+                                <mat-icon>check</mat-icon>
+                            </button>
+                        }
+                        @if (appt.status === 'cancelled') {
+                            <button class="appt-action-btn" type="button" title="Buscar">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        }
+                        @if (appt.status !== 'cancelled') {
+                            <button class="appt-action-btn appt-action-btn--cancel"
+                                    type="button" title="Cancelar" (click)="cancel(appt)">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        }
+                    </li>
+                } @empty {
+                    <li class="appt-empty">
+                        <mat-icon>event_busy</mat-icon>
+                        <p>No hay citas para este filtro</p>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!-- Columna derecha: calendario + alerta -->
+        <aside class="right-col">
+
+            <!-- Mini-calendario -->
+            <div class="mini-cal">
+                <div class="mini-cal__header">
+                    <h3 class="mini-cal__month">{{ calMonthLabel() }}</h3>
+                    <div class="mini-cal__nav">
+                        <button type="button" (click)="prevMonth()">
+                            <mat-icon>chevron_left</mat-icon>
+                        </button>
+                        <button type="button" (click)="nextMonth()">
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="mini-cal__grid">
+                    <span class="cal-dn">L</span>
+                    <span class="cal-dn">M</span>
+                    <span class="cal-dn">M</span>
+                    <span class="cal-dn">J</span>
+                    <span class="cal-dn">V</span>
+                    <span class="cal-dn">S</span>
+                    <span class="cal-dn">D</span>
+                    @for (cell of calendarDays(); track $index) {
+                        <span
+                                class="cal-day"
+                                [class.cal-day--other]="!cell.current"
+                                [class.cal-day--today]="cell.today"
+                        >{{ cell.day }}</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Alerta próxima cita -->
+            @if (store.nextAlert(); as alert) {
+                <div class="alert-card">
+                    <div class="alert-card__tag">
+                        <mat-icon>diamond</mat-icon> ALERTA
+                    </div>
+                    <p class="alert-card__title">Próxima cita empieza pronto</p>
+                    <p class="alert-card__detail">{{ alert.service }}</p>
+                    <p class="alert-card__detail">{{ alert.clientName }}</p>
+                    <div class="alert-card__footer">
+                        <span class="alert-card__time">{{ alert.time }}</span>
+                        <span class="alert-card__eta">En 12 mins</span>
+                    </div>
+                    <button class="alert-card__btn" type="button">Revisar</button>
+                </div>
+            }
+
+        </aside>
+    </div>
+
+    <!-- ── Clientes recientes ─────────────────────────────── -->
+    <div class="clients-panel">
+        <div class="clients-panel__header">
+            <h2 class="clients-panel__title">Clientes recientes</h2>
+            <button class="btn-add-client" type="button">
+                <mat-icon>add</mat-icon> Agregar cliente
+            </button>
+        </div>
+        <table class="clients-table">
+            <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Servicio habitual</th>
+                <th>Última cita</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                @for (c of store.clients(); track c.id) {
+                    <tr>
+                        <td>
+                            <div class="client-cell">
+                                <span class="client-avatar">{{ c.initials }}</span>
+                                <div>
+                                    <p class="client-name">{{ c.name }}</p>
+                                    <p class="client-phone">{{ c.phone }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ c.usualService }}</td>
+                        <td>{{ c.lastAppointment }}</td>
+                        <td>
+              <span class="appt-badge" [attr.data-status]="c.status">
+                {{ c.status === 'confirmed' ? 'Confirmado' :
+                  c.status === 'pending'   ? 'Pendiente'  : 'Cancelado' }}
+              </span>
+                        </td>
+                        <td>
+                            <button class="btn-history" type="button">Ver historial</button>
+                        </td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="5" class="clients-empty">Sin clientes registrados</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
