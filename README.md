@@ -20,8 +20,7 @@ The project is organized into Bounded Contexts, each containing:
 - **Presentation**: UI components and routed views.
 
 ## Author
-- **Name**: Alejandro [Last Name]
-- **Role**: Full Stack Developer
+- **Name**: DeepLook
 
 ## Getting Started
 1. Run `npm install` to install dependencies.
