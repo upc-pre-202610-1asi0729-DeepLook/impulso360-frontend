@@ -34,5 +34,8 @@ export class ClientApiService {
             .put<ClientResource>(`${this.baseUrl}/${id}`, resource)
             .pipe(map((updatedResource) => ClientAssembler.toEntity(updatedResource)));
     }
+    delete(id: number) {
+        return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    }
 
 }
