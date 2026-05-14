@@ -1,0 +1,152 @@
+.history-panel {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  height: fit-content;
+}
+
+.history-header {
+  background: #082855;
+  color: #ffffff;
+  padding: 18px 22px;
+
+  h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  span {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+}
+
+.client-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 22px;
+
+  strong,
+  span {
+    display: block;
+  }
+
+  span {
+    color: #697386;
+    font-size: 0.85rem;
+  }
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #d9f2f8;
+  color: #0b4a6f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+
+  &.large {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.history-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid #e4e7ec;
+  border-bottom: 1px solid #e4e7ec;
+
+  div {
+    padding: 18px;
+    text-align: center;
+
+    &:first-child {
+      border-right: 1px solid #e4e7ec;
+    }
+  }
+
+  strong {
+    display: block;
+    color: #092855;
+    font-size: 1.4rem;
+  }
+
+  span {
+    color: #697386;
+    font-size: 0.75rem;
+  }
+}
+
+.history-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.history-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 22px;
+  border-bottom: 1px solid #e4e7ec;
+
+  strong {
+    font-size: 0.9rem;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #697386;
+    font-size: 0.78rem;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: #61b6cf;
+
+  &.cancelled {
+    background: #a8a8a8;
+  }
+}
+
+.export-history-button {
+  width: calc(100% - 36px);
+  min-height: 46px;
+  margin: 16px 18px 18px;
+  border: none  ;
+  background: #ffffff;
+  color: #092855;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 5rem;
+  p{
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+}
+
+.export-history-button:hover {
+  background: #f4fbfe;
+}
+
+.export-history-button mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: #092855;
+}

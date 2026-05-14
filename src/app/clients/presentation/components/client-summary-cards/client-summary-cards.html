@@ -1,0 +1,31 @@
+<section class="summary-grid">
+    <article class="summary-card">
+        <div class="icon-box">
+            <mat-icon>groups</mat-icon>
+        </div>
+        <div>
+            <strong>{{ totalClients }}</strong>
+            <span>{{ 'CLIENTS.TOTAL_CLIENTS' | translate }}</span>
+        </div>
+    </article>
+
+    <article class="summary-card">
+        <div class="icon-box blue">
+            <mat-icon>task_alt</mat-icon>
+        </div>
+        <div>
+            <strong>{{ activeClients }}</strong>
+            <span>{{ 'CLIENTS.ACTIVE_CLIENTS' | translate }}</span>
+        </div>
+    </article>
+
+    <article class="summary-card">
+        <div class="icon-box orange">
+            <mat-icon>calendar_month</mat-icon>
+        </div>
+        <div>
+            <strong>+{{ newThisMonth }}</strong>
+            <span>{{ 'CLIENTS.NEW_THIS_MONTH' | translate }}</span>
+        </div>
+    </article>
+</section>
