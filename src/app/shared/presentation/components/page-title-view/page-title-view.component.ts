@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-page-title-view',
+  selector: 'app-page-title-views',
   standalone: true,
   imports: [TranslateModule],
   templateUrl: './page-title-view.component.html',

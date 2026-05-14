@@ -1,5 +1,5 @@
 /**
- * @summary Overview view — panel general, presentation layer.
+ * @summary Overview views — panel general, presentation layer.
  * Fiel al mockup: KPIs, citas del día, mini-calendario, alerta, clientes recientes.
  */
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
@@ -10,7 +10,7 @@ import { OverviewStore, AppointmentFilter } from '../../../application/overview.
 import { AppointmentSummary } from '../../../domain/model/appointment-summary.entity';
 
 @Component({
-    selector: 'app-overview-view',
+    selector: 'app-overview-views',
     standalone: true,
     imports: [MatIconModule, TranslateModule],
     templateUrl: './overview-view.component.html',

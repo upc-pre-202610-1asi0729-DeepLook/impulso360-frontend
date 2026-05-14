@@ -14,7 +14,7 @@ import { AppointmentFormComponent } from '../../components/appointment-form/appo
 export type CalendarViewMode = 'daily' | 'weekly' | 'monthly';
 
 @Component({
-  selector: 'app-agenda-view',
+  selector: 'app-agenda-views',
   standalone: true,
   imports: [
     CommonModule,
