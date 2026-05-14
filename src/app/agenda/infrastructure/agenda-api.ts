@@ -3,6 +3,8 @@
  */
 import { Injectable } from '@angular/core';
 import { BaseApi } from '../../shared/infrastructure/base-api';
+import { Appointment } from '../domain/model/appointment.entity';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +14,13 @@ export class AgendaApi extends BaseApi {
     return '/appointments';
   }
 
-  // Methods for CRUD would go here
+  getAllAppointments() {
+    return this.http.get<Appointment[]>(this.resourceUrl);
+  }
+
+  createAppointment(appointment: Partial<Appointment>) {
+    return this.http.post<Appointment>(this.resourceUrl, appointment);
+  }
 }
+
+

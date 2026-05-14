@@ -3,5 +3,6 @@
  */
 export const environment = {
   production: true,
-  baseUrl: 'https://api.impulso360.com'
+  baseUrl: 'http://localhost:3000'
 };
+

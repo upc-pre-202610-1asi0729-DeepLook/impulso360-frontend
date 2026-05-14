@@ -1,5 +1,116 @@
 {
-  "appointments": [],
+  "appointments": [
+    {
+      "id": "1",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "2",
+      "date": "2026-05-14",
+      "time": "10:30",
+      "clientName": "Carlos Mendoza",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "Traer carnet"
+    },
+    {
+      "id": "3",
+      "date": "2026-05-15",
+      "time": "11:00",
+      "clientName": "Ana Flores",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "4",
+      "date": "2026-05-14",
+      "time": "14:00",
+      "clientName": "Jorge Paredes",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": null
+    },
+    {
+      "id": "5",
+      "date": "2026-05-14",
+      "time": "16:30",
+      "clientName": "Rosa Quispe",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "6",
+      "date": "2026-05-13",
+      "time": "09:00",
+      "clientName": "Pedro R.",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "7",
+      "date": "2026-05-12",
+      "time": "10:00",
+      "clientName": "Ana F.",
+      "service": "Baño",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "-iWM3LdWpnI",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": ""
+    },
+    {
+      "id": "ePKWtksYZbw",
+      "date": "2026-05-14",
+      "time": "23:59",
+      "clientName": "af efaf",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": ""
+    },
+    {
+      "id": "VBLO9l8abvs",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "jBLCWZ2Bb-Q",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    }
+  ],
   "clients": [
     {
       "id": "1",
@@ -153,9 +264,77 @@
           "status": "attended"
         }
       ]
+    },
+    {
+      "firstName": "af",
+      "lastName": "efaf",
+      "phone": "ffa",
+      "email": "feaefaeaf",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-05-14",
+      "lastAppointment": "",
+      "totalAppointments": 0,
+      "attendedAppointments": 0,
+      "history": [],
+      "id": "khexnVwpHD8"
     }
   ],
-  "notifications": [],
+  "notifications": [
+    {
+      "id": "1",
+      "type": "alert",
+      "title": "Cita en 25 minutos",
+      "description": "Carlos Mendoza · Vacunación · 10:30 am",
+      "time": "Hace 5 min",
+      "read": true,
+      "appointmentId": 2
+    },
+    {
+      "id": "2",
+      "type": "pending",
+      "title": "Cita pendiente de confirmación",
+      "description": "Rosa Quispe · Consulta general · 16:30",
+      "time": "Hace 20 min",
+      "read": true,
+      "appointmentId": 5
+    },
+    {
+      "id": "3",
+      "type": "info",
+      "title": "3 citas programadas para mañana",
+      "description": "Martes 27 de abril · 09:00, 11:00, 14:30",
+      "time": "Hace 1 hora",
+      "read": true
+    },
+    {
+      "id": "4",
+      "type": "cancelled",
+      "title": "Cita cancelada",
+      "description": "Jorge Paredes · Baño y corte · 14:00 · Horario liberado",
+      "time": "Hace 2 horas",
+      "read": true,
+      "appointmentId": 4
+    },
+    {
+      "id": "5",
+      "type": "confirmed",
+      "title": "Cita confirmada",
+      "description": "Laura Castillo · Consulta general · 09:00",
+      "time": "Hace 3 horas",
+      "read": true,
+      "appointmentId": 1
+    },
+    {
+      "id": "6",
+      "type": "new_client",
+      "title": "Nuevo cliente registrado",
+      "description": "Sofía Vargas fue agregada a tu base de clientes",
+      "time": "Ayer, 17:30",
+      "read": true,
+      "clientId": 6
+    }
+  ],
   "profile": {},
   "$schema": "./node_modules/json-server/schema.json"
 }

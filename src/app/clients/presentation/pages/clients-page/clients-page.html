@@ -84,9 +84,9 @@
                                         class="icon-button"
                                         type="button"
                                         [title]="'CLIENTS.ACTIONS.VIEW_HISTORY' | translate"
-                                        (click)="deleteClient(client.id); $event.stopPropagation()"
+                                        (click)="selectClient(client); $event.stopPropagation()"
                                 >
-                                    <mat-icon>delete</mat-icon>
+                                    <mat-icon>history</mat-icon>
                                 </button>
 
                                 <button

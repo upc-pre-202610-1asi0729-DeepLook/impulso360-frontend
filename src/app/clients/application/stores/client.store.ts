@@ -126,25 +126,7 @@ export class ClientStore {
             }
         });
     }
-    deleteClient(id: number): void {
-        this.clientApiService.delete(id).subscribe({
-            next: () => {
-                this.clientsSignal.update((clients) =>
-                    clients.filter((client) => client.id !== id)
-                );
 
-                const currentSelectedClient = this.selectedClientSignal();
-
-                if (currentSelectedClient?.id === id) {
-                    const remainingClients = this.clientsSignal();
-                    this.selectedClientSignal.set(remainingClients[0] ?? null);
-                }
-            },
-            error: (error) => {
-                console.error('Error deleting client:', error);
-            }
-        });
-    }
     saveClient(client: Partial<Client>): void {
         const clientToEdit = this.clientToEditSignal();
 
@@ -158,5 +140,4 @@ export class ClientStore {
 
         this.createClient(client);
     }
-
 }
