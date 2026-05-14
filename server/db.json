@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/json-server/schema.json",
   "appointments": [
     { "id": 1, "time": "09:00", "clientName": "Laura Castillo",  "service": "Consulta general", "category": "Veterinaria", "status": "confirmed", "note": null },
     { "id": 2, "time": "10:30", "clientName": "Carlos Mendoza",  "service": "Vacunación",        "category": "Veterinaria", "status": "pending",   "note": "Traer carnet" },
@@ -7,66 +8,113 @@
     { "id": 5, "time": "16:30", "clientName": "Rosa Quispe",     "service": "Consulta general",  "category": "Veterinaria", "status": "pending",   "note": null }
   ],
   "clients": [
-    { "id": 1, "initials": "LC", "name": "Laura Castillo",  "phone": "+51 987 654 321", "usualService": "Consulta general", "lastAppointment": "Hoy, 09:00", "status": "confirmed" },
-    { "id": 2, "initials": "CM", "name": "Carlos Mendoza",  "phone": "+51 912 345 678", "usualService": "Vacunación",       "lastAppointment": "Hoy, 10:30", "status": "pending"   },
-    { "id": 3, "initials": "AF", "name": "Ana Flores",      "phone": "+51 956 789 012", "usualService": "Desparasitación",  "lastAppointment": "Hoy, 11:00", "status": "confirmed" },
-    { "id": 4, "initials": "JP", "name": "Jorge Paredes",   "phone": "+51 934 210 987", "usualService": "Baño y corte",     "lastAppointment": "Hoy, 14:00", "status": "cancelled" },
-    { "id": 5, "initials": "RQ", "name": "Rosa Quispe",     "phone": "+51 901 543 876", "usualService": "Consulta general", "lastAppointment": "Hoy, 16:30", "status": "pending"   }
+    {
+      "id": "1",
+      "firstName": "Laura",
+      "lastName": "Castillo",
+      "phone": "+51 987 654 321",
+      "email": "laura.castillo@gmail.com",
+      "status": "active",
+      "notes": "Prefiere recordatorios por WhatsApp.",
+      "createdAt": "2026-04-01",
+      "lastAppointment": "2026-04-26",
+      "totalAppointments": 8,
+      "attendedAppointments": 7,
+      "history": [
+        { "id": 1, "service": "Consulta general", "date": "2026-04-26", "time": "09:00", "status": "attended" },
+        { "id": 2, "service": "Desparasitación",  "date": "2026-04-10", "time": "10:00", "status": "attended" },
+        { "id": 3, "service": "Vacunación",        "date": "2026-03-22", "time": "09:30", "status": "attended" },
+        { "id": 4, "service": "Baño y corte",      "date": "2026-03-05", "time": "11:00", "status": "cancelled" }
+      ]
+    },
+    {
+      "id": "2",
+      "firstName": "Carlos",
+      "lastName": "Mendoza",
+      "phone": "+51 912 345 678",
+      "email": "carlos.mendoza@gmail.com",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-04-03",
+      "lastAppointment": "2026-04-26",
+      "totalAppointments": 5,
+      "attendedAppointments": 4,
+      "history": [
+        { "id": 1, "service": "Vacunación", "date": "2026-04-26", "time": "10:30", "status": "pending" }
+      ]
+    },
+    {
+      "id": "3",
+      "firstName": "Ana",
+      "lastName": "Flores",
+      "phone": "+51 956 789 012",
+      "email": "ana.flores@gmail.com",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-04-07",
+      "lastAppointment": "2026-04-24",
+      "totalAppointments": 12,
+      "attendedAppointments": 10,
+      "history": [
+        { "id": 1, "service": "Desparasitación", "date": "2026-04-24", "time": "11:00", "status": "attended" }
+      ]
+    },
+    {
+      "id": "4",
+      "firstName": "Jorge",
+      "lastName": "Paredes",
+      "phone": "+51 934 210 987",
+      "email": "jorge.paredes@gmail.com",
+      "status": "inactive",
+      "notes": "",
+      "createdAt": "2026-03-12",
+      "lastAppointment": "2026-04-20",
+      "totalAppointments": 3,
+      "attendedAppointments": 2,
+      "history": [
+        { "id": 1, "service": "Baño y corte", "date": "2026-04-20", "time": "14:00", "status": "cancelled" }
+      ]
+    },
+    {
+      "id": "5",
+      "firstName": "Rosa",
+      "lastName": "Quispe",
+      "phone": "+51 901 543 876",
+      "email": "rosa.quispe@gmail.com",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-04-18",
+      "lastAppointment": "2026-04-26",
+      "totalAppointments": 7,
+      "attendedAppointments": 6,
+      "history": [
+        { "id": 1, "service": "Consulta general", "date": "2026-04-26", "time": "16:30", "status": "pending" }
+      ]
+    },
+    {
+      "id": "6",
+      "firstName": "Sofía",
+      "lastName": "Vargas",
+      "phone": "+51 978 321 654",
+      "email": "sofia.vargas@gmail.com",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-04-21",
+      "lastAppointment": "2026-04-22",
+      "totalAppointments": 9,
+      "attendedAppointments": 8,
+      "history": [
+        { "id": 1, "service": "Consulta general", "date": "2026-04-22", "time": "09:00", "status": "attended" }
+      ]
+    }
   ],
   "notifications": [
-    {
-      "id": 1,
-      "type": "alert",
-      "title": "Cita en 25 minutos",
-      "description": "Carlos Mendoza · Vacunación · 10:30 am",
-      "time": "Hace 5 min",
-      "read": false,
-      "appointmentId": 2
-    },
-    {
-      "id": 2,
-      "type": "pending",
-      "title": "Cita pendiente de confirmación",
-      "description": "Rosa Quispe · Consulta general · 16:30",
-      "time": "Hace 20 min",
-      "read": false,
-      "appointmentId": 5
-    },
-    {
-      "id": 3,
-      "type": "info",
-      "title": "3 citas programadas para mañana",
-      "description": "Martes 27 de abril · 09:00, 11:00, 14:30",
-      "time": "Hace 1 hora",
-      "read": false
-    },
-    {
-      "id": 4,
-      "type": "cancelled",
-      "title": "Cita cancelada",
-      "description": "Jorge Paredes · Baño y corte · 14:00 · Horario liberado",
-      "time": "Hace 2 horas",
-      "read": true,
-      "appointmentId": 4
-    },
-    {
-      "id": 5,
-      "type": "confirmed",
-      "title": "Cita confirmada",
-      "description": "Laura Castillo · Consulta general · 09:00",
-      "time": "Hace 3 horas",
-      "read": true,
-      "appointmentId": 1
-    },
-    {
-      "id": 6,
-      "type": "new_client",
-      "title": "Nuevo cliente registrado",
-      "description": "Sofía Vargas fue agregada a tu base de clientes",
-      "time": "Ayer, 17:30",
-      "read": true,
-      "clientId": 6
-    }
+    { "id": 1, "type": "alert",      "title": "Cita en 25 minutos",               "description": "Carlos Mendoza · Vacunación · 10:30 am",               "time": "Hace 5 min",   "read": false, "appointmentId": 2 },
+    { "id": 2, "type": "pending",    "title": "Cita pendiente de confirmación",   "description": "Rosa Quispe · Consulta general · 16:30",                "time": "Hace 20 min",  "read": false, "appointmentId": 5 },
+    { "id": 3, "type": "info",       "title": "3 citas programadas para mañana", "description": "Martes 27 de abril · 09:00, 11:00, 14:30",               "time": "Hace 1 hora",  "read": false },
+    { "id": 4, "type": "cancelled",  "title": "Cita cancelada",                  "description": "Jorge Paredes · Baño y corte · 14:00 · Horario liberado", "time": "Hace 2 horas", "read": true,  "appointmentId": 4 },
+    { "id": 5, "type": "confirmed",  "title": "Cita confirmada",                 "description": "Laura Castillo · Consulta general · 09:00",              "time": "Hace 3 horas", "read": true,  "appointmentId": 1 },
+    { "id": 6, "type": "new_client", "title": "Nuevo cliente registrado",        "description": "Sofía Vargas fue agregada a tu base de clientes",         "time": "Ayer, 17:30",  "read": true,  "clientId": 6 }
   ],
   "profile": {}
 }
