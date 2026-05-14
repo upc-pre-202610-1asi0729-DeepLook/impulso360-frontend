@@ -1,5 +1,5 @@
 /**
- * @summary Main layout component providing the application shell.
+ * @summary Main layout components providing the application shell.
  */
 import { Component, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';

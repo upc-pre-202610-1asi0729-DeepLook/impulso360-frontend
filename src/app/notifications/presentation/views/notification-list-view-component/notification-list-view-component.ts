@@ -1,5 +1,5 @@
 /**
- * @summary Notification list view — notifications presentation layer.
+ * @summary Notification list views — notifications presentation layer.
  */
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { Notification } from '../../../../shared/domain/model/notification.entit
 type FilterTab = 'all' | 'unread' | 'alerts';
 
 @Component({
-  selector: 'app-notification-list-view-component',
+  selector: 'app-notification-list-views-components',
   standalone: true,
   imports: [MatIconModule, TranslateModule],
   templateUrl: './notification-list-view-component.html',

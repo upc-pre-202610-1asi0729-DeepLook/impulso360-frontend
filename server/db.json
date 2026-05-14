@@ -229,6 +229,16 @@
       "status": "pending",
       "note": "",
       "id": "IJrMyBd_ZKU"
+    },
+    {
+      "date": "2026-05-30",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "z3WaNsycTf8"
     }
   ],
   "clients": [

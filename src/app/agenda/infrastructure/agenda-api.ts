@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * @summary API service for agenda-related operations.
  */
@@ -31,3 +32,31 @@ export class AgendaApi extends BaseApi {
     return this.http.delete<void>(`${this.resourceUrl}/${id}`);
   }
 }
+=======
+/**
+ * @summary API service for agenda-related operations.
+ */
+import { Injectable } from '@angular/core';
+import { BaseApi } from '../../shared/infrastructure/base-api';
+import { Appointment } from '../domain/model/appointment.entity';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AgendaApi extends BaseApi {
+  override get resourcePath(): string {
+    return '/appointments';
+  }
+
+  getAllAppointments() {
+    return this.http.get<Appointment[]>(this.resourceUrl);
+  }
+
+  createAppointment(appointment: Partial<Appointment>) {
+    return this.http.post<Appointment>(this.resourceUrl, appointment);
+  }
+}
+
+
+>>>>>>> 639c63f2da7f2ec1fdc1cc2b62e7980dc2a456df
