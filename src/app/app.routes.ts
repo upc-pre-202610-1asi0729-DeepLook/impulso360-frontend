@@ -26,10 +26,11 @@ export const routes: Routes = [
         path: 'servicios',
         loadChildren: () => import('./servicios/presentation/servicios.routes').then(m => m.SERVICIOS_ROUTES)
       },
+
       {
         path: 'perfil-negocio',
-        loadChildren: () =>
-            import('./perfil-negocio/presentation/perfil-negocio.routes').then(m => m.PERFIL_NEGOCIO_ROUTES)
+        loadChildren: () => import('./business-profile/presentation/perfil-negocio.routes')
+            .then(m => m.PERFIL_NEGOCIO_ROUTES)
       },
       {
         path: 'ayuda',
