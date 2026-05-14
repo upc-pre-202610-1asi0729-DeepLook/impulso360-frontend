@@ -52,4 +52,13 @@ export class ClientsPageComponent implements OnInit {
   trackByClientId(index: number, client: Client): number {
     return client.id;
   }
+  deleteClient(id: number): void {
+    const confirmed = confirm('¿Seguro que deseas eliminar este cliente?');
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.clientStore.deleteClient(id);
+  }
 }
