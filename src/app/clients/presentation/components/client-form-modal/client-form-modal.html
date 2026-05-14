@@ -1,1 +1,132 @@
-<p>client-form-modal works!</p>
+<div class="modal-backdrop">
+    <section class="client-modal">
+        <header class="modal-header">
+            <h2>
+                {{
+                    isEditMode
+                        ? ('CLIENTS.FORM.EDIT_TITLE' | translate)
+                        : ('CLIENTS.FORM.TITLE' | translate)
+                }}
+            </h2>
+
+            <button type="button" class="close-button" (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </header>
+
+        <div class="modal-body">
+            <div class="hint-box">
+                <mat-icon>lightbulb</mat-icon>
+                <span>{{ 'CLIENTS.FORM.REQUIRED_HINT' | translate }}</span>
+            </div>
+
+            <h3>{{ 'CLIENTS.FORM.PERSONAL_INFO' | translate }}</h3>
+
+            <div class="form-grid">
+                <label>
+          <span class="field-label">
+            {{ 'CLIENTS.FORM.FIRST_NAME' | translate }}
+              <span class="required">*</span>
+          </span>
+
+                    <input
+                            type="text"
+                            [(ngModel)]="firstName"
+                            [placeholder]="'CLIENTS.FORM.FIRST_NAME_PLACEHOLDER' | translate"
+                    />
+                </label>
+
+                <label>
+          <span class="field-label">
+            {{ 'CLIENTS.FORM.LAST_NAME' | translate }}
+              <span class="required">*</span>
+          </span>
+
+                    <input
+                            type="text"
+                            [(ngModel)]="lastName"
+                            [placeholder]="'CLIENTS.FORM.LAST_NAME_PLACEHOLDER' | translate"
+                    />
+                </label>
+            </div>
+
+            <h3>{{ 'CLIENTS.FORM.CONTACT_INFO' | translate }}</h3>
+
+            <div class="form-grid">
+                <label>
+          <span class="field-label">
+            {{ 'CLIENTS.FORM.PHONE' | translate }}
+              <span class="required">*</span>
+          </span>
+
+                    <input
+                            type="text"
+                            [(ngModel)]="phone"
+                            [placeholder]="'CLIENTS.FORM.PHONE_PLACEHOLDER' | translate"
+                    />
+
+                    <small>{{ 'CLIENTS.FORM.PHONE_HINT' | translate }}</small>
+                </label>
+
+                <label>
+          <span class="field-label">
+            {{ 'CLIENTS.FORM.EMAIL' | translate }}
+          </span>
+
+                    <input
+                            type="email"
+                            [(ngModel)]="email"
+                            [placeholder]="'CLIENTS.FORM.EMAIL_PLACEHOLDER' | translate"
+                    />
+                </label>
+            </div>
+
+            <h3>{{ 'CLIENTS.FORM.ADDITIONAL_INFO' | translate }}</h3>
+
+            <label>
+        <span class="field-label">
+          {{ 'CLIENTS.FORM.STATUS' | translate }}
+            <span class="required">*</span>
+        </span>
+
+                <select [(ngModel)]="status">
+                    <option value="active">
+                        {{ 'CLIENTS.STATUS.ACTIVE' | translate }}
+                    </option>
+
+                    <option value="inactive">
+                        {{ 'CLIENTS.STATUS.INACTIVE' | translate }}
+                    </option>
+                </select>
+            </label>
+
+            <label>
+        <span class="field-label">
+          {{ 'CLIENTS.FORM.NOTES' | translate }}
+        </span>
+
+                <textarea
+                        rows="3"
+                        [(ngModel)]="notes"
+                        [placeholder]="'CLIENTS.FORM.NOTES_PLACEHOLDER' | translate"
+                ></textarea>
+
+                <small>{{ 'CLIENTS.FORM.NOTES_HINT' | translate }}</small>
+            </label>
+        </div>
+
+        <footer class="modal-footer">
+            <button type="button" class="cancel-button" (click)="close()">
+                {{ 'CLIENTS.ACTIONS.CANCEL' | translate }}
+            </button>
+
+            <button type="button" class="save-button" (click)="save()">
+                {{
+                    isEditMode
+                        ? ('CLIENTS.ACTIONS.UPDATE' | translate)
+                        : ('CLIENTS.ACTIONS.SAVE' | translate)
+                }}
+            </button>
+        </footer>
+    </section>
+</div>

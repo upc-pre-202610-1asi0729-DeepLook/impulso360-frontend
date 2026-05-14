@@ -1,1 +1,46 @@
-<p>client-history-panel works!</p>
+<aside class="history-panel" *ngIf="client">
+    <header class="history-header">
+        <h2>{{ 'CLIENTS.HISTORY.TITLE' | translate }}</h2>
+        <span>{{ client.fullName }}</span>
+    </header>
+
+    <section class="client-summary">
+        <div class="avatar large">{{ client.initials }}</div>
+
+        <div>
+            <strong>{{ client.fullName }}</strong>
+            <span>{{ client.phone }}</span>
+        </div>
+    </section>
+
+    <section class="history-stats">
+        <div>
+            <strong>{{ client.totalAppointments }}</strong>
+            <span>{{ 'CLIENTS.HISTORY.TOTAL_APPOINTMENTS' | translate }}</span>
+        </div>
+
+        <div>
+            <strong>{{ client.attendedAppointments }}</strong>
+            <span>{{ 'CLIENTS.HISTORY.ATTENDED' | translate }}</span>
+        </div>
+    </section>
+
+    <section class="history-list">
+        <article class="history-item" *ngFor="let item of client.history">
+            <span class="dot" [class.cancelled]="item.status === 'cancelled'"></span>
+
+            <div>
+                <strong>{{ item.service }}</strong>
+                <p>
+                    {{ item.date | date: 'dd MMM yyyy' }} · {{ item.time }} ·
+                    {{ 'CLIENTS.STATUS.' + item.status.toUpperCase() | translate }}
+                </p>
+            </div>
+        </article>
+    </section>
+
+    <button class="export-history-button" type="button" (click)="exportHistory()">
+        <mat-icon>file_download</mat-icon>
+        <span>{{ 'CLIENTS.ACTIONS.EXPORT_HISTORY' | translate }}</span>
+    </button>
+</aside>
