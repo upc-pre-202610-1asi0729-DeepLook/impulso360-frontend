@@ -29,8 +29,8 @@ export const routes: Routes = [
 
       {
         path: 'perfil-negocio',
-        loadChildren: () =>
-            import('./perfil-negocio/presentation/perfil-negocio.routes').then(m => m.PERFIL_NEGOCIO_ROUTES)
+        loadChildren: () => import('./business-profile/presentation/perfil-negocio.routes')
+            .then(m => m.PERFIL_NEGOCIO_ROUTES)
       },
       {
         path: 'ayuda',
