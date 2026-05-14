@@ -1,0 +1,96 @@
+{
+  "GENERAL": {
+    "TITLE": "Impulso 360",
+    "WELCOME": "Bienvenido a Impulso 360"
+  },
+  "NAVIGATION": {
+    "HOME": "Inicio",
+    "AGENDA": "Agenda",
+    "CLIENTS": "Clientes"
+  },
+  "LAYOUT": {
+    "NAV_LABEL": "Navegación principal",
+    "GROUP_MAIN": "PRINCIPAL",
+    "GROUP_TOOLS": "HERRAMIENTAS",
+    "NAV_DASHBOARD": "Panel general",
+    "NAV_AGENDA": "Agenda",
+    "NAV_CLIENTS": "Clientes",
+    "NAV_SERVICES": "Servicios",
+    "NAV_BUSINESS": "Perfil del negocio",
+    "NAV_HELP": "Ayuda",
+    "USER_NAME": "Usuario",
+    "USER_ROLE": "Administrador",
+    "LANGUAGE": "Idioma",
+    "LANGUAGE_ARIA": "Seleccionar idioma de la aplicación",
+    "LANG_ES": "ES",
+    "LANG_EN": "EN"
+  },
+  "VIEWS": {
+    "PANEL": "Panel general",
+    "AGENDA": "Agenda",
+    "CLIENTS": "Clientes",
+    "SERVICES": "Servicios",
+    "BUSINESS_PROFILE": "Perfil del negocio",
+    "HELP": "Ayuda"
+  },
+  "CLIENTS": {
+    "TITLE": "Clientes",
+    "NEW_CLIENT": "Nuevo cliente",
+    "TOTAL_CLIENTS": "Total clientes",
+    "ACTIVE_CLIENTS": "Clientes activos",
+    "NEW_THIS_MONTH": "Nuevos este mes",
+    "SEARCH_PLACEHOLDER": "Buscar por nombre o teléfono...",
+    "FILTER": "Filtrar",
+    "EXPORT_PDF": "Exportar PDF",
+    "TABLE": {
+      "CLIENT": "Cliente",
+      "PHONE": "Teléfono",
+      "LAST_APPOINTMENT": "Última cita",
+      "TOTAL_APPOINTMENTS": "Total citas",
+      "STATUS": "Estado",
+      "ACTIONS": "Acciones"
+    },
+    "STATUS": {
+      "ACTIVE": "Activo",
+      "INACTIVE": "Inactivo",
+      "ATTENDED": "Atendida",
+      "PENDING": "Pendiente",
+      "CANCELLED": "Cancelada"
+    },
+    "ACTIONS": {
+      "VIEW_HISTORY": "Ver historial",
+      "EDIT": "Editar",
+      "SEE_ALL": "Ver todos los clientes",
+      "EXPORT_HISTORY": "Exportar historial en PDF",
+      "SAVE": "Guardar cliente",
+      "CANCEL": "Cancelar",
+      "UPDATE": "Guardar cambios"
+    },
+    "HISTORY": {
+      "TITLE": "Historial de citas",
+      "TOTAL_APPOINTMENTS": "Total citas",
+      "ATTENDED": "Atendidas"
+    },
+    "FORM": {
+      "TITLE": "Nuevo cliente",
+      "EDIT_TITLE": "Editar cliente",
+      "REQUIRED_HINT": "Los campos marcados con * son obligatorios",
+      "PERSONAL_INFO": "Información personal",
+      "CONTACT_INFO": "Información de contacto",
+      "ADDITIONAL_INFO": "Información adicional",
+      "FIRST_NAME": "Nombre",
+      "LAST_NAME": "Apellidos",
+      "PHONE": "Teléfono",
+      "EMAIL": "Email",
+      "STATUS": "Estado del cliente",
+      "NOTES": "Notas",
+      "FIRST_NAME_PLACEHOLDER": "Ej: Juan Carlos",
+      "LAST_NAME_PLACEHOLDER": "Ej: García López",
+      "PHONE_PLACEHOLDER": "+51 987 654 321",
+      "EMAIL_PLACEHOLDER": "cliente@ejemplo.com",
+      "NOTES_PLACEHOLDER": "Información adicional del cliente, preferencias, recordatorios, etc.",
+      "PHONE_HINT": "Incluye código de país si es internacional",
+      "NOTES_HINT": "Opcional: Agrega información relevante sobre el cliente"
+    }
+  }
+}
