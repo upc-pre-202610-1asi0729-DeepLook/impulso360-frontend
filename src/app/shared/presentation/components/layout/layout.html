@@ -1,0 +1,88 @@
+<div class="shell">
+  <aside class="sidebar" aria-label="{{ 'LAYOUT.NAV_LABEL' | translate }}">
+    <div class="brand">Impulso360</div>
+
+    <div class="nav-scroll">
+      <p class="nav-group-label">{{ 'LAYOUT.GROUP_MAIN' | translate }}</p>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="nav-link--active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <mat-icon>dashboard</mat-icon>
+            {{ 'LAYOUT.NAV_DASHBOARD' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/agenda" routerLinkActive="nav-link--active">
+            <mat-icon>event</mat-icon>
+            {{ 'LAYOUT.NAV_AGENDA' | translate }}
+            @if (agendaNavBadgeCount() > 0) {
+              <span class="nav-badge">{{ agendaNavBadgeCount() }}</span>
+            }
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/clientes" routerLinkActive="nav-link--active">
+            <mat-icon>people</mat-icon>
+            {{ 'LAYOUT.NAV_CLIENTS' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/servicios" routerLinkActive="nav-link--active">
+            <mat-icon>design_services</mat-icon>
+            {{ 'LAYOUT.NAV_SERVICES' | translate }}
+          </a>
+        </li>
+      </ul>
+
+      <p class="nav-group-label">{{ 'LAYOUT.GROUP_TOOLS' | translate }}</p>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/perfil-negocio" routerLinkActive="nav-link--active">
+            <mat-icon>storefront</mat-icon>
+            {{ 'LAYOUT.NAV_BUSINESS' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/ayuda" routerLinkActive="nav-link--active">
+            <mat-icon>help_outline</mat-icon>
+            {{ 'LAYOUT.NAV_HELP' | translate }}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <app-sidebar-user-profile />
+  </aside>
+
+  <div class="main">
+    <header class="main-header">
+      <div class="lang-switch" role="group" [attr.aria-label]="'LAYOUT.LANGUAGE_ARIA' | translate">
+        <span class="lang-switch__label">{{ 'LAYOUT.LANGUAGE' | translate }}</span>
+        <button
+          type="button"
+          class="lang-btn"
+          [class.lang-btn--active]="currentLang() === 'es'"
+          (click)="setLanguage('es')"
+        >
+          {{ 'LAYOUT.LANG_ES' | translate }}
+        </button>
+        <button
+          type="button"
+          class="lang-btn"
+          [class.lang-btn--active]="currentLang() === 'en'"
+          (click)="setLanguage('en')"
+        >
+          {{ 'LAYOUT.LANG_EN' | translate }}
+        </button>
+      </div>
+    </header>
+    <div class="main-body">
+      <router-outlet />
+    </div>
+  </div>
+</div>

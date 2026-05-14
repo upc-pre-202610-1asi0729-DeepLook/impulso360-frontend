@@ -1,0 +1,36 @@
+{
+  "GENERAL": {
+    "TITLE": "Impulso 360",
+    "WELCOME": "Bienvenido a Impulso 360"
+  },
+  "NAVIGATION": {
+    "HOME": "Inicio",
+    "AGENDA": "Agenda",
+    "CLIENTS": "Clientes"
+  },
+  "LAYOUT": {
+    "NAV_LABEL": "Navegación principal",
+    "GROUP_MAIN": "PRINCIPAL",
+    "GROUP_TOOLS": "HERRAMIENTAS",
+    "NAV_DASHBOARD": "Panel general",
+    "NAV_AGENDA": "Agenda",
+    "NAV_CLIENTS": "Clientes",
+    "NAV_SERVICES": "Servicios",
+    "NAV_BUSINESS": "Perfil del negocio",
+    "NAV_HELP": "Ayuda",
+    "USER_NAME": "Usuario",
+    "USER_ROLE": "Administrador",
+    "LANGUAGE": "Idioma",
+    "LANGUAGE_ARIA": "Seleccionar idioma de la aplicación",
+    "LANG_ES": "ES",
+    "LANG_EN": "EN"
+  },
+  "VIEWS": {
+    "PANEL": "Panel general",
+    "AGENDA": "Agenda",
+    "CLIENTS": "Clientes",
+    "SERVICES": "Servicios",
+    "BUSINESS_PROFILE": "Perfil del negocio",
+    "HELP": "Ayuda"
+  }
+}
