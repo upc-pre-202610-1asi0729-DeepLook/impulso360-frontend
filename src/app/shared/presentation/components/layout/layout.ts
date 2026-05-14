@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SidebarUserProfileComponent } from '../sidebar-user-profile/sidebar-user-profile.component';
-import { NotificationBellComponent } from '../notification-bell/notification-bell';
+import { NotificationBellComponent } from '../notification-bell/notification-bell.component';
 
 @Component({
   selector: 'app-layout',

@@ -1,6 +1,5 @@
 /**
  * @summary Notification list view — notifications presentation layer.
- * Pantalla completa de notificaciones (imagen 2 del mockup).
  */
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +15,7 @@ type FilterTab = 'all' | 'unread' | 'alerts';
   standalone: true,
   imports: [MatIconModule, TranslateModule],
   templateUrl: './notification-list-view-component.html',
-  styleUrl: './notification-list-view-component.component.scss'
+  styleUrl: './notification-list-view.component.scss'
 })
 export class NotificationListViewComponent implements OnInit {
   private readonly service = inject(NotificationService);
@@ -29,7 +28,7 @@ export class NotificationListViewComponent implements OnInit {
     proximaCita: true,
     citasPendientes: true,
     resumenDiario: false,
-    citasMañana: true,
+    citasManiana: true,
   });
 
   protected readonly filteredNotifications = computed<Notification[]>(() => {
