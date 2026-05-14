@@ -2,6 +2,7 @@
   "appointments": [],
   "clients": [
     {
+      "id": "1",
       "firstName": "Laura",
       "lastName": "Castillo",
       "phone": "+51 987 654 321",
@@ -41,8 +42,7 @@
           "time": "11:00",
           "status": "cancelled"
         }
-      ],
-      "id": "1"
+      ]
     },
     {
       "id": "2",
