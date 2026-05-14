@@ -1,0 +1,15 @@
+<button
+        class="bell-btn"
+        type="button"
+        [class.bell-btn--active]="store.unreadCount() > 0"
+        (click)="goToNotifications()"
+        aria-label="Ver notificaciones"
+>
+    <mat-icon>notifications</mat-icon>
+
+    @if (store.unreadCount() > 0) {
+        <span class="bell-badge" aria-hidden="true">
+      {{ store.unreadCount() > 9 ? '9+' : store.unreadCount() }}
+    </span>
+    }
+</button>
