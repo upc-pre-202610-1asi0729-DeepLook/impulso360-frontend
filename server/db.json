@@ -1,6 +1,60 @@
 {
   "appointments": [],
   "clients": [],
-  "notifications": [],
+  "notifications": [
+    {
+      "id": 1,
+      "type": "alert",
+      "title": "Cita en 25 minutos",
+      "description": "Carlos Mendoza · Vacunación · 10:30 am",
+      "time": "Hace 5 min",
+      "read": false,
+      "appointmentId": 2
+    },
+    {
+      "id": 2,
+      "type": "pending",
+      "title": "Cita pendiente de confirmación",
+      "description": "Rosa Quispe · Consulta general · 16:30",
+      "time": "Hace 20 min",
+      "read": false,
+      "appointmentId": 5
+    },
+    {
+      "id": 3,
+      "type": "info",
+      "title": "3 citas programadas para mañana",
+      "description": "Martes 27 de abril · 09:00, 11:00, 14:30",
+      "time": "Hace 1 hora",
+      "read": false
+    },
+    {
+      "id": 4,
+      "type": "cancelled",
+      "title": "Cita cancelada",
+      "description": "Jorge Paredes · Baño y corte · 14:00 · Horario liberado",
+      "time": "Hace 2 horas",
+      "read": true,
+      "appointmentId": 4
+    },
+    {
+      "id": 5,
+      "type": "confirmed",
+      "title": "Cita confirmada",
+      "description": "Laura Castillo · Consulta general · 09:00",
+      "time": "Hace 3 horas",
+      "read": true,
+      "appointmentId": 1
+    },
+    {
+      "id": 6,
+      "type": "new_client",
+      "title": "Nuevo cliente registrado",
+      "description": "Sofía Vargas fue agregada a tu base de clientes",
+      "time": "Ayer, 17:30",
+      "read": true,
+      "clientId": 6
+    }
+  ],
   "profile": {}
 }
