@@ -2,9 +2,7 @@
  * @summary Main routing configuration for the application.
  */
 import { Routes } from '@angular/router';
-import { PageTitleViewComponent } from './shared/presentation/components/page-title-view/page-title-view.component';
 import { LayoutComponent } from './shared/presentation/components/layout/layout';
-
 export const routes: Routes = [
   {
     path: '',
@@ -13,8 +11,8 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        component: PageTitleViewComponent,
-        data: { titleKey: 'VIEWS.PANEL' }
+        loadChildren: () =>
+            import('../../src/app/overview/presentation/views/overview.routes').then(m => m.OVERVIEW_ROUTES)
       },
       {
         path: 'agenda',
@@ -40,9 +38,10 @@ export const routes: Routes = [
       {
         path: 'notificaciones',
         loadChildren: () =>
-            import('./notifications/presentation/notification.routes').then(m => m.NOTIFICATIONS_ROUTES)
+            import('./notifications/presentation/notification.routes').then(m =>
+                m.NOTIFICATIONS_ROUTES)
       }
-    ]
+      ]
   },
   { path: '**', redirectTo: '' }
 ];

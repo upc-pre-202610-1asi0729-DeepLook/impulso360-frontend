@@ -1,6 +1,18 @@
 {
-  "appointments": [],
-  "clients": [],
+  "appointments": [
+    { "id": 1, "time": "09:00", "clientName": "Laura Castillo",  "service": "Consulta general", "category": "Veterinaria", "status": "confirmed", "note": null },
+    { "id": 2, "time": "10:30", "clientName": "Carlos Mendoza",  "service": "Vacunación",        "category": "Veterinaria", "status": "pending",   "note": "Traer carnet" },
+    { "id": 3, "time": "11:00", "clientName": "Ana Flores",      "service": "Desparasitación",   "category": "Veterinaria", "status": "confirmed", "note": null },
+    { "id": 4, "time": "14:00", "clientName": "Jorge Paredes",   "service": "Baño y corte",      "category": "Veterinaria", "status": "cancelled", "note": null },
+    { "id": 5, "time": "16:30", "clientName": "Rosa Quispe",     "service": "Consulta general",  "category": "Veterinaria", "status": "pending",   "note": null }
+  ],
+  "clients": [
+    { "id": 1, "initials": "LC", "name": "Laura Castillo",  "phone": "+51 987 654 321", "usualService": "Consulta general", "lastAppointment": "Hoy, 09:00", "status": "confirmed" },
+    { "id": 2, "initials": "CM", "name": "Carlos Mendoza",  "phone": "+51 912 345 678", "usualService": "Vacunación",       "lastAppointment": "Hoy, 10:30", "status": "pending"   },
+    { "id": 3, "initials": "AF", "name": "Ana Flores",      "phone": "+51 956 789 012", "usualService": "Desparasitación",  "lastAppointment": "Hoy, 11:00", "status": "confirmed" },
+    { "id": 4, "initials": "JP", "name": "Jorge Paredes",   "phone": "+51 934 210 987", "usualService": "Baño y corte",     "lastAppointment": "Hoy, 14:00", "status": "cancelled" },
+    { "id": 5, "initials": "RQ", "name": "Rosa Quispe",     "phone": "+51 901 543 876", "usualService": "Consulta general", "lastAppointment": "Hoy, 16:30", "status": "pending"   }
+  ],
   "notifications": [
     {
       "id": 1,
