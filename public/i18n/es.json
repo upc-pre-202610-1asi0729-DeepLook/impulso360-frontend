@@ -32,5 +32,65 @@
     "SERVICES": "Servicios",
     "BUSINESS_PROFILE": "Perfil del negocio",
     "HELP": "Ayuda"
+  },
+  "CLIENTS": {
+    "TITLE": "Clientes",
+    "NEW_CLIENT": "Nuevo cliente",
+    "TOTAL_CLIENTS": "Total clientes",
+    "ACTIVE_CLIENTS": "Clientes activos",
+    "NEW_THIS_MONTH": "Nuevos este mes",
+    "SEARCH_PLACEHOLDER": "Buscar por nombre o teléfono...",
+    "FILTER": "Filtrar",
+    "EXPORT_PDF": "Exportar PDF",
+    "TABLE": {
+      "CLIENT": "Cliente",
+      "PHONE": "Teléfono",
+      "LAST_APPOINTMENT": "Última cita",
+      "TOTAL_APPOINTMENTS": "Total citas",
+      "STATUS": "Estado",
+      "ACTIONS": "Acciones"
+    },
+    "STATUS": {
+      "ACTIVE": "Activo",
+      "INACTIVE": "Inactivo",
+      "ATTENDED": "Atendida",
+      "PENDING": "Pendiente",
+      "CANCELLED": "Cancelada"
+    },
+    "ACTIONS": {
+      "VIEW_HISTORY": "Ver historial",
+      "EDIT": "Editar",
+      "SEE_ALL": "Ver todos los clientes",
+      "EXPORT_HISTORY": "Exportar historial en PDF",
+      "SAVE": "Guardar cliente",
+      "CANCEL": "Cancelar",
+      "UPDATE": "Guardar cambios"
+    },
+    "HISTORY": {
+      "TITLE": "Historial de citas",
+      "TOTAL_APPOINTMENTS": "Total citas",
+      "ATTENDED": "Atendidas"
+    },
+    "FORM": {
+      "TITLE": "Nuevo cliente",
+      "EDIT_TITLE": "Editar cliente",
+      "REQUIRED_HINT": "Los campos marcados con * son obligatorios",
+      "PERSONAL_INFO": "Información personal",
+      "CONTACT_INFO": "Información de contacto",
+      "ADDITIONAL_INFO": "Información adicional",
+      "FIRST_NAME": "Nombre",
+      "LAST_NAME": "Apellidos",
+      "PHONE": "Teléfono",
+      "EMAIL": "Email",
+      "STATUS": "Estado del cliente",
+      "NOTES": "Notas",
+      "FIRST_NAME_PLACEHOLDER": "Ej: Juan Carlos",
+      "LAST_NAME_PLACEHOLDER": "Ej: García López",
+      "PHONE_PLACEHOLDER": "+51 987 654 321",
+      "EMAIL_PLACEHOLDER": "cliente@ejemplo.com",
+      "NOTES_PLACEHOLDER": "Información adicional del cliente, preferencias, recordatorios, etc.",
+      "PHONE_HINT": "Incluye código de país si es internacional",
+      "NOTES_HINT": "Opcional: Agrega información relevante sobre el cliente"
+    }
   }
 }

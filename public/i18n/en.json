@@ -32,5 +32,65 @@
     "SERVICES": "Services",
     "BUSINESS_PROFILE": "Business profile",
     "HELP": "Help"
+  },
+  "CLIENTS": {
+    "TITLE": "Clients",
+    "NEW_CLIENT": "New client",
+    "TOTAL_CLIENTS": "Total clients",
+    "ACTIVE_CLIENTS": "Active clients",
+    "NEW_THIS_MONTH": "New this month",
+    "SEARCH_PLACEHOLDER": "Search by name or phone...",
+    "FILTER": "Filter",
+    "EXPORT_PDF": "Export PDF",
+    "TABLE": {
+      "CLIENT": "Client",
+      "PHONE": "Phone",
+      "LAST_APPOINTMENT": "Last appointment",
+      "TOTAL_APPOINTMENTS": "Total appointments",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "STATUS": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "ATTENDED": "Attended",
+      "PENDING": "Pending",
+      "CANCELLED": "Cancelled"
+    },
+    "ACTIONS": {
+      "VIEW_HISTORY": "View history",
+      "EDIT": "Edit",
+      "SEE_ALL": "See all clients",
+      "EXPORT_HISTORY": "Export history as PDF",
+      "SAVE": "Save client",
+      "CANCEL": "Cancel",
+      "UPDATE": "Save changes"
+    },
+    "HISTORY": {
+      "TITLE": "Appointment history",
+      "TOTAL_APPOINTMENTS": "Total appointments",
+      "ATTENDED": "Attended"
+    },
+    "FORM": {
+      "TITLE": "New client",
+      "EDIT_TITLE": "Edit client",
+      "REQUIRED_HINT": "Fields marked with * are required",
+      "PERSONAL_INFO": "Personal information",
+      "CONTACT_INFO": "Contact information",
+      "ADDITIONAL_INFO": "Additional information",
+      "FIRST_NAME": "First name",
+      "LAST_NAME": "Last name",
+      "PHONE": "Phone",
+      "EMAIL": "Email",
+      "STATUS": "Client status",
+      "NOTES": "Notes",
+      "FIRST_NAME_PLACEHOLDER": "Ex: John",
+      "LAST_NAME_PLACEHOLDER": "Ex: Garcia Lopez",
+      "PHONE_PLACEHOLDER": "+51 987 654 321",
+      "EMAIL_PLACEHOLDER": "client@example.com",
+      "NOTES_PLACEHOLDER": "Additional client information, preferences, reminders, etc.",
+      "PHONE_HINT": "Include the international country code",
+      "NOTES_HINT": "Optional: Add relevant client information"
+    }
   }
 }

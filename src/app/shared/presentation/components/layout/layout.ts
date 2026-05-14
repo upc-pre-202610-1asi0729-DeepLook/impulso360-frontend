@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SidebarUserProfileComponent } from '../sidebar-user-profile/sidebar-user-profile.component';
+import { NotificationBellComponent } from '../notification-bell/notification-bell.component';
 
 @Component({
   selector: 'app-layout',
@@ -16,7 +17,8 @@ import { SidebarUserProfileComponent } from '../sidebar-user-profile/sidebar-use
     RouterLink,
     RouterLinkActive,
     TranslateModule,
-    SidebarUserProfileComponent
+    SidebarUserProfileComponent,
+    NotificationBellComponent
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss'
