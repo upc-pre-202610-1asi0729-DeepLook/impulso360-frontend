@@ -1,0 +1,166 @@
+﻿/* ── Page layout ─────────────────────────── */
+.profile-page {
+    padding: 24px 32px;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+/* ── Loading ─────────────────────────────── */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+}
+
+/* ── Card ────────────────────────────────── */
+.section-card {
+    border-radius: 16px !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid #e8eaf0;
+    background: #ffffff;
+}
+
+.section-card mat-card-header {
+    padding: 24px 28px 0;
+}
+
+.section-card mat-card-title {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #1565c0 !important;
+}
+
+.section-card mat-card-content {
+    padding: 20px 28px 28px !important;
+}
+
+/* ── Cover placeholder ───────────────────── */
+.cover-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #1565c0;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.cover-placeholder {
+    width: 100%;
+    height: 160px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1a3a6b 0%, #1e88e5 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: default;
+}
+
+.cover-placeholder mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    opacity: 0.85;
+}
+
+.cover-placeholder span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* ── Form layout ─────────────────────────── */
+.form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 4px;
+}
+
+.field-half {
+    flex: 1;
+}
+
+.field-full {
+    width: 100%;
+}
+
+/* ── Material overrides ──────────────────── */
+::ng-deep .section-card .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 2px;
+}
+
+::ng-deep .section-card .mat-mdc-text-field-wrapper {
+    border-radius: 8px !important;
+    background-color: #f8f9fc !important;
+}
+
+::ng-deep .section-card .mdc-notched-outline__leading,
+::ng-deep .section-card .mdc-notched-outline__notch,
+::ng-deep .section-card .mdc-notched-outline__trailing {
+    border-color: #dde1ea !important;
+}
+
+::ng-deep .section-card .mat-mdc-form-field-label,
+::ng-deep .section-card .mat-mdc-floating-label {
+    color: #1565c0 !important;
+}
+
+::ng-deep .section-card .mdc-floating-label--float-above {
+    color: #1565c0 !important;
+}
+
+/* ── Footer actions ──────────────────────── */
+.footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 4px 0 16px;
+}
+
+.footer-actions button {
+    border-radius: 8px !important;
+    padding: 0 20px !important;
+    height: 40px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer-actions [mat-flat-button] {
+    background-color: #1565c0 !important;
+}
+
+/* ── Snackbar ────────────────────────────── */
+::ng-deep .snack-success {
+    background-color: #2e7d32 !important;
+    color: white !important;
+}
+
+/* ── Responsive ──────────────────────────── */
+@media (max-width: 600px) {
+    .profile-page {
+        padding: 16px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
