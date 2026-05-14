@@ -47,7 +47,7 @@
         <div class="form-grid">
           <mat-form-field appearance="outline">
             <mat-label>Fecha *</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="date">
+            <input matInput [matDatepicker]="picker" formControlName="date" readonly (click)="picker.open()">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -101,6 +101,10 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end" class="modal-footer">
+    <div class="error-summary" *ngIf="appointmentForm.invalid && appointmentForm.touched">
+      <mat-icon>error_outline</mat-icon>
+      <span>Por favor, revisa los campos marcados en rojo.</span>
+    </div>
     <button mat-button (click)="close()" type="button" class="btn-cancel">Cancelar</button>
     <button mat-flat-button color="primary" (click)="submit()" type="button" class="btn-submit">Crear cita</button>
   </mat-dialog-actions>

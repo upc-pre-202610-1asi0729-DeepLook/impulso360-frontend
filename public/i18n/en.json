@@ -60,6 +60,7 @@
     "ACTIONS": {
       "VIEW_HISTORY": "View history",
       "EDIT": "Edit",
+      "DELETE": "Delete client",
       "SEE_ALL": "See all clients",
       "EXPORT_HISTORY": "Export history as PDF",
       "SAVE": "Save client",

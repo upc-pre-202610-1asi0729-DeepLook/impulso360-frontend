@@ -27,7 +27,7 @@ export class ClientApiService {
             .pipe(map((createdResource) => ClientAssembler.toEntity(createdResource)));
     }
 
-    update(id: number, client: Partial<Client>): Observable<Client> {
+    update(id: any, client: Partial<Client>): Observable<Client> {
         const resource = ClientAssembler.toResource(client);
 
         return this.http
@@ -35,4 +35,7 @@ export class ClientApiService {
             .pipe(map((updatedResource) => ClientAssembler.toEntity(updatedResource)));
     }
 
+    delete(id: any): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    }
 }

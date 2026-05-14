@@ -1,7 +1,7 @@
 import { AppointmentHistoryItem, ClientStatus } from '../domain/model/client.entity';
 
 export interface ClientResource {
-    id: number;
+    id: any;
     firstName: string;
     lastName: string;
     phone: string;

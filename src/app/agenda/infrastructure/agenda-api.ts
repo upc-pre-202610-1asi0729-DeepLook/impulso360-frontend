@@ -4,6 +4,7 @@
 import { Injectable } from '@angular/core';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { Appointment } from '../domain/model/appointment.entity';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -14,13 +15,19 @@ export class AgendaApi extends BaseApi {
     return '/appointments';
   }
 
-  getAllAppointments() {
+  getAllAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(this.resourceUrl);
   }
 
-  createAppointment(appointment: Partial<Appointment>) {
+  getAppointmentsByClientName(clientName: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.resourceUrl}?clientName=${clientName}`);
+  }
+
+  createAppointment(appointment: Partial<Appointment>): Observable<Appointment> {
     return this.http.post<Appointment>(this.resourceUrl, appointment);
   }
+
+  deleteAppointment(id: string | number): Observable<void> {
+    return this.http.delete<void>(`${this.resourceUrl}/${id}`);
+  }
 }
-
-

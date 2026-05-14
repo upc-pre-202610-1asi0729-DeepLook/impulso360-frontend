@@ -1,6 +1,8 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { Client } from '../../domain/model/client.entity';
 import { ClientApiService } from '../../infrastructure/client-api.service';
+import { AgendaApi } from '../../../agenda/infrastructure/agenda-api';
+import { forkJoin, of, switchMap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -55,7 +57,10 @@ export class ClientStore {
         }).length;
     });
 
-    constructor(private readonly clientApiService: ClientApiService) {}
+    constructor(
+        private readonly clientApiService: ClientApiService,
+        private readonly agendaApi: AgendaApi
+    ) {}
 
     loadClients(): void {
         this.loadingSignal.set(true);
@@ -109,12 +114,12 @@ export class ClientStore {
         });
     }
 
-    updateClient(id: number, client: Partial<Client>): void {
+    updateClient(id: any, client: Partial<Client>): void {
         this.clientApiService.update(id, client).subscribe({
             next: (updatedClient) => {
                 this.clientsSignal.update((clients) =>
                     clients.map((currentClient) =>
-                        currentClient.id === id ? updatedClient : currentClient
+                        String(currentClient.id) === String(id) ? updatedClient : currentClient
                     )
                 );
 
@@ -139,5 +144,47 @@ export class ClientStore {
         }
 
         this.createClient(client);
+    }
+
+    deleteClient(id: any): void {
+        const client = this.clientsSignal().find(c => String(c.id) === String(id));
+        if (!client) {
+            console.error('No se pudo encontrar al cliente con ID:', id);
+            return;
+        }
+
+        if (!confirm(`¿Estás seguro de que deseas eliminar al cliente ${client.fullName}? Esto también eliminará todas sus citas asociadas.`)) {
+            return;
+        }
+
+        this.agendaApi.getAppointmentsByClientName(client.fullName).pipe(
+            switchMap(appointments => {
+                if (appointments && appointments.length > 0) {
+                    const deleteRequests = appointments
+                        .filter(app => app.id !== undefined && app.id !== null)
+                        .map(app => this.agendaApi.deleteAppointment(app.id!));
+                    
+                    if (deleteRequests.length > 0) {
+                        return forkJoin(deleteRequests).pipe(
+                            switchMap(() => this.clientApiService.delete(id))
+                        );
+                    }
+                }
+                return this.clientApiService.delete(id);
+            })
+        ).subscribe({
+            next: () => {
+                this.clientsSignal.update((clients) =>
+                    clients.filter((c) => String(c.id) !== String(id))
+                );
+                
+                if (String(this.selectedClientSignal()?.id) === String(id)) {
+                    this.selectedClientSignal.set(this.clientsSignal()[0] ?? null);
+                }
+            },
+            error: (error) => {
+                console.error('Error deleting client and appointments:', error);
+            }
+        });
     }
 }

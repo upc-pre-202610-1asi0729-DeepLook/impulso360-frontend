@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -9,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ClientApiService } from '../../../../clients/infrastructure/client-api.service';
@@ -20,6 +19,10 @@ import { Observable, map, startWith } from 'rxjs';
 @Component({
   selector: 'app-appointment-form',
   standalone: true,
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -85,15 +88,9 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   submit() {
-    console.log('Intentando enviar formulario...');
-    console.log('Válido:', this.appointmentForm.valid);
-    console.log('Valores:', this.appointmentForm.value);
-    console.log('Errores:', this.appointmentForm.errors);
-    
     if (this.appointmentForm.valid) {
       this.dialogRef.close(this.appointmentForm.value);
     } else {
-      // Mark all as touched to show errors
       this.appointmentForm.markAllAsTouched();
     }
   }

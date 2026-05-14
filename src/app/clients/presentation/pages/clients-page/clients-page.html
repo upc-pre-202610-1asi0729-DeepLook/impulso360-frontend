@@ -81,12 +81,12 @@
                         <td>
                             <div class="row-actions">
                                 <button
-                                        class="icon-button"
+                                        class="icon-button delete-button"
                                         type="button"
-                                        [title]="'CLIENTS.ACTIONS.VIEW_HISTORY' | translate"
-                                        (click)="selectClient(client); $event.stopPropagation()"
+                                        [title]="'CLIENTS.ACTIONS.DELETE' | translate"
+                                        (click)="deleteClient(client); $event.stopPropagation()"
                                 >
-                                    <mat-icon>history</mat-icon>
+                                    <mat-icon>delete</mat-icon>
                                 </button>
 
                                 <button

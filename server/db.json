@@ -109,11 +109,130 @@
       "category": "Veterinaria",
       "status": "confirmed",
       "note": ""
+    },
+    {
+      "id": "DVKEEZbthmU",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Jorge Paredes",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "bnYo-jrL2fw",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "voraDHmEvXo",
+      "date": "2026-12-05",
+      "time": "09:00",
+      "clientName": "Ana Flores",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": "buenos dias"
+    },
+    {
+      "id": "w74kPZiLdgk",
+      "date": "2026-10-05",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "YCEby6DQ-E0",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": ""
+    },
+    {
+      "id": "VxUZ3M21Uk8",
+      "date": "2026-12-05",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "date": "2026-06-15",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "qq5BVeweu4s"
+    },
+    {
+      "date": "2026-05-08",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "5o-e5EECAnY"
+    },
+    {
+      "date": "2026-06-10",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "8VKJVr1syQk"
+    },
+    {
+      "date": "2026-05-17",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "4CvEy6goQr0"
+    },
+    {
+      "date": "2026-07-16",
+      "time": "12:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "buenos dias",
+      "id": "VB_dTVO0HrI"
+    },
+    {
+      "date": "2026-06-19",
+      "time": "14:00",
+      "clientName": "Jorge Paredes",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "IJrMyBd_ZKU"
     }
   ],
   "clients": [
     {
-      "id": "1",
       "firstName": "Laura",
       "lastName": "Castillo",
       "phone": "+51 987 654 321",
@@ -153,7 +272,8 @@
           "time": "11:00",
           "status": "cancelled"
         }
-      ]
+      ],
+      "id": "1"
     },
     {
       "id": "2",
@@ -174,28 +294,6 @@
           "date": "2026-04-26",
           "time": "10:30",
           "status": "pending"
-        }
-      ]
-    },
-    {
-      "id": "3",
-      "firstName": "Ana",
-      "lastName": "Flores",
-      "phone": "+51 956 789 012",
-      "email": "ana.flores@gmail.com",
-      "status": "active",
-      "notes": "",
-      "createdAt": "2026-04-07",
-      "lastAppointment": "2026-04-24",
-      "totalAppointments": 12,
-      "attendedAppointments": 10,
-      "history": [
-        {
-          "id": 1,
-          "service": "Desparasitación",
-          "date": "2026-04-24",
-          "time": "11:00",
-          "status": "attended"
         }
       ]
     },
@@ -264,20 +362,6 @@
           "status": "attended"
         }
       ]
-    },
-    {
-      "firstName": "af",
-      "lastName": "efaf",
-      "phone": "ffa",
-      "email": "feaefaeaf",
-      "status": "active",
-      "notes": "",
-      "createdAt": "2026-05-14",
-      "lastAppointment": "",
-      "totalAppointments": 0,
-      "attendedAppointments": 0,
-      "history": [],
-      "id": "khexnVwpHD8"
     }
   ],
   "notifications": [

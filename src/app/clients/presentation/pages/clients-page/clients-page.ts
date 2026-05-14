@@ -45,6 +45,10 @@ export class ClientsPageComponent implements OnInit {
     this.clientStore.openEditModal(client);
   }
 
+  deleteClient(client: Client): void {
+    this.clientStore.deleteClient(client.id);
+  }
+
   exportPdf(): void {
     window.print();
   }

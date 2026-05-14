@@ -2,7 +2,7 @@ export type ClientStatus = 'active' | 'inactive';
 export type AppointmentHistoryStatus = 'attended' | 'pending' | 'cancelled';
 
 export interface AppointmentHistoryItem {
-    id: number;
+    id: any;
     service: string;
     date: string;
     time: string;
@@ -11,7 +11,7 @@ export interface AppointmentHistoryItem {
 
 export class Client {
     constructor(
-        public id: number,
+        public id: any,
         public firstName: string,
         public lastName: string,
         public phone: string,

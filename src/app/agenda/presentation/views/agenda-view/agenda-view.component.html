@@ -86,7 +86,7 @@
 
             <div class="time-cell">{{ hour }}</div>
             <div class="day-cell">
-              <div class="appointment-card large" *ngFor="let app of getAppointmentsFor(selectedDate().toISOString().split('T')[0], hour)" [ngClass]="getStatusClass(app.status)">
+              <div class="appointment-card large" *ngFor="let app of getAppointmentsFor(formatLocalDate(selectedDate()), hour)" [ngClass]="getStatusClass(app.status)">
                 <div class="card-content">
                   <span class="client-name">{{ app.clientName }}</span>
                   <span class="service-name">{{ app.service }}</span>

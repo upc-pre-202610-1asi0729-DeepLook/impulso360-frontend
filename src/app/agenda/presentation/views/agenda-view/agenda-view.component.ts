@@ -101,15 +101,10 @@ export class AgendaViewComponent implements OnInit {
       const d = new Date(this.selectedDate());
       d.setDate(first + i);
       
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const dayNum = String(d.getDate()).padStart(2, '0');
-      const localDate = `${year}-${month}-${dayNum}`;
-
       return {
         name: this.weekDays[i],
         number: d.getDate(),
-        fullDate: localDate,
+        fullDate: this.formatLocalDate(d),
         isToday: d.toDateString() === new Date().toDateString()
       };
 
@@ -169,7 +164,7 @@ export class AgendaViewComponent implements OnInit {
     return days;
   });
 
-  private formatLocalDate(d: Date): string {
+  public formatLocalDate(d: Date): string {
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, '0');
     const dayNum = String(d.getDate()).padStart(2, '0');
@@ -242,16 +237,11 @@ export class AgendaViewComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Resultado del diálogo:', result);
       if (result) {
-        const d = result.date;
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const dayNum = String(d.getDate()).padStart(2, '0');
-        const localDate = `${year}-${month}-${dayNum}`;
+        const d = result.date instanceof Date ? result.date : new Date(result.date);
+        const localDate = this.formatLocalDate(d);
 
         const newAppointment: Partial<Appointment> = {
-          id: Date.now() as any, // json-server will handle it, but using Date.now() ensures uniqueness
           date: localDate,
           time: result.time,
           clientName: result.client,
@@ -264,6 +254,13 @@ export class AgendaViewComponent implements OnInit {
 
         this.agendaApi.createAppointment(newAppointment).subscribe({
           next: () => {
+            // Actualizar la fecha seleccionada para navegar a la nueva cita
+            this.selectedDate.set(d);
+            
+            // Si la cita es en el futuro y estamos en modo mensual, asegurarnos de que se vea bien
+            // Opcionalmente podemos forzar la vista diaria o semanal si queremos más detalle
+            // this.viewMode.set('daily'); 
+
             this.loadAppointments();
           },
           error: (err) => {
