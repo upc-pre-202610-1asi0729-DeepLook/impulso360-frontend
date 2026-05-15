@@ -1,0 +1,121 @@
+<section class="clients-page">
+    <header class="clients-header">
+        <h1>{{ 'CLIENTS.TITLE' | translate }}</h1>
+
+        <div class="header-actions">
+            <button class="primary-button" type="button" (click)="openCreateClientModal()">
+                <mat-icon>add</mat-icon>{{ 'CLIENTS.NEW_CLIENT' | translate }}
+            </button>
+        </div>
+    </header>
+
+    <app-client-summary-cards
+            [totalClients]="clientStore.totalClients()"
+            [activeClients]="clientStore.activeClients()"
+            [newThisMonth]="clientStore.newThisMonth()"
+    />
+
+    <section class="clients-content">
+        <main class="clients-main-card">
+            <div class="toolbar">
+                <div class="search-box">
+                    <mat-icon class="search-icon">search</mat-icon>
+                    <input
+                            type="text"
+                            [placeholder]="'CLIENTS.SEARCH_PLACEHOLDER' | translate"
+                            (input)="onSearch($event)"
+                    />
+                </div>
+
+                <button class="secondary-button" type="button">
+                    <mat-icon>filter_list</mat-icon>
+                    {{ 'CLIENTS.FILTER' | translate }}
+                </button>
+
+                <button class="link-button export-button" type="button" (click)="exportPdf()">
+                    <mat-icon>file_download</mat-icon>
+                    {{ 'CLIENTS.EXPORT_PDF' | translate }}
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="clients-table">
+                    <thead>
+                    <tr>
+                        <th>{{ 'CLIENTS.TABLE.CLIENT' | translate }}</th>
+                        <th>{{ 'CLIENTS.TABLE.PHONE' | translate }}</th>
+                        <th>{{ 'CLIENTS.TABLE.LAST_APPOINTMENT' | translate }}</th>
+                        <th>{{ 'CLIENTS.TABLE.TOTAL_APPOINTMENTS' | translate }}</th>
+                        <th>{{ 'CLIENTS.TABLE.STATUS' | translate }}</th>
+                        <th>{{ 'CLIENTS.TABLE.ACTIONS' | translate }}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr
+                            *ngFor="let client of clientStore.filteredClients(); trackBy: trackByClientId"
+                            (click)="selectClient(client)"
+                            [class.selected]="clientStore.selectedClient()?.id === client.id"
+                    >
+                        <td>
+                            <div class="client-cell">
+                                <span class="avatar">{{ client.initials }}</span>
+                                <strong>{{ client.fullName }}</strong>
+                            </div>
+                        </td>
+
+                        <td>{{ client.phone }}</td>
+                        <td>{{ client.lastAppointment | date: 'dd MMM yyyy' }}</td>
+                        <td>{{ client.totalAppointments }}</td>
+
+                        <td>
+                <span class="status-badge" [class.inactive]="!client.isActive">
+                  {{
+                        client.isActive
+                            ? ('CLIENTS.STATUS.ACTIVE' | translate)
+                            : ('CLIENTS.STATUS.INACTIVE' | translate)
+                    }}
+                </span>
+                        </td>
+
+                        <td>
+                            <div class="row-actions">
+                                <button
+                                        class="icon-button delete-button"
+                                        type="button"
+                                        [title]="'CLIENTS.ACTIONS.DELETE' | translate"
+                                        (click)="deleteClient(client); $event.stopPropagation()"
+                                >
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+
+                                <button
+                                        class="icon-button"
+                                        type="button"
+                                        [title]="'CLIENTS.ACTIONS.EDIT' | translate"
+                                        (click)="openEditClientModal(client); $event.stopPropagation()"
+                                >
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="see-all-button" type="button">
+                {{ 'CLIENTS.ACTIONS.SEE_ALL' | translate }} ({{ clientStore.totalClients() }})
+            </button>
+        </main>
+
+        <app-client-history-panel [client]="clientStore.selectedClient()" />
+    </section>
+
+    <app-client-form-modal
+            *ngIf="clientStore.modalOpen()"
+            [client]="clientStore.clientToEdit()"
+            (closeModal)="clientStore.closeModal()"
+            (saveClient)="clientStore.saveClient($event)"
+    />
+</section>

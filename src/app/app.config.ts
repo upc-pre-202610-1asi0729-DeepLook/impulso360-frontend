@@ -7,6 +7,7 @@ import { provideRouter } from '@angular/router';
 import { provideTranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
+import { MatNativeDateModule } from '@angular/material/core';
 
 registerLocaleData(localeEs);
 
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: LOCALE_ID, useValue: 'es' },
+    importProvidersFrom(MatNativeDateModule),
     ...provideTranslateHttpLoader({ prefix: '/i18n/', suffix: '.json' }),
     importProvidersFrom(
       TranslateModule.forRoot({

@@ -1,0 +1,49 @@
+<div class="services-page">
+    <!-- Top Bar -->
+<header class="services-page__header">
+<h1 class="page-title">{{ 'SERVICES.TITLE' | translate }}</h1>
+    <div class="header-right">
+<span class="header-date">Lunes, 28 de abril de 2025</span>
+<div class="header-avatar">MR</div>
+    <button class="btn-add" (click)="onAddService()">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+{{ 'SERVICES.ADD' | translate }}
+</button>
+</div>
+</header>
+
+<!-- Alert banner -->
+<ng-container *ngIf="featuredCount$ | async as count">
+<div *ngIf="count >= maxFeatured" class="services-page__alert">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <span [innerHTML]="'SERVICES.FEATURED_LIMIT' | translate:{ count: count, max: maxFeatured }"></span>
+</div>
+</ng-container>
+
+<!-- Error message -->
+<div *ngIf="errorMessage" class="services-page__error">
+    {{ errorMessage }}
+</div>
+
+<!-- Services grid -->
+<main class="services-page__grid">
+<ng-container *ngIf="services$ | async as services; else loading">
+<app-service-card
+*ngFor="let service of services; trackBy: trackById"
+    [service]="service"
+    [canFeature]="(canFeature$ | async) ?? false"
+(edit)="onEdit($event)"
+(delete)="onDelete($event)"
+(toggleFeature)="onToggleFeature($event)">
+    </app-service-card>
+    </ng-container>
+
+    <ng-template #loading>
+<div class="loading-state">{{ 'SERVICES.LOADING' | translate }}</div>
+</ng-template>
+</main>
+</div>

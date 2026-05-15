@@ -1,0 +1,194 @@
+<!-- Pantalla de notificaciones — fiel al mockup imagen 2 -->
+<div class="notif-page">
+
+    <!-- ── Cabecera de página ─────────────────────────────── -->
+    <div class="page-header">
+        <h1 class="page-title">{{ 'NOTIFICATIONS.TITLE' | translate }}</h1>
+        <div class="page-header__actions">
+            <span class="page-date">{{ 'NOTIFICATIONS.MOCK_DATE' | translate }}</span>
+            <button class="mark-all-btn" type="button" (click)="markAllAsRead()">
+                {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <!-- ── Layout dos columnas ───────────────────────────── -->
+    <div class="notif-layout">
+
+        <!-- Columna izquierda: lista -->
+        <div class="notif-card">
+            <div class="notif-card__header">
+                <h2 class="notif-card__title">{{ 'NOTIFICATIONS.ALL_NOTIFICATIONS' | translate }}</h2>
+                <div class="filter-tabs" role="tablist">
+                    <button
+                            class="filter-tab"
+                            [class.filter-tab--active]="activeTab() === 'all'"
+                            (click)="setTab('all')"
+                            role="tab"
+                    >{{ 'NOTIFICATIONS.TABS.ALL' | translate }}</button>
+                    <button
+                            class="filter-tab"
+                            [class.filter-tab--active]="activeTab() === 'unread'"
+                            (click)="setTab('unread')"
+                            role="tab"
+                    >
+                        {{ 'NOTIFICATIONS.TABS.UNREAD' | translate }}
+                        @if (store.unreadCount() > 0) {
+                            <span class="tab-badge">{{ store.unreadCount() }}</span>
+                        }
+                    </button>
+                    <button
+                            class="filter-tab"
+                            [class.filter-tab--active]="activeTab() === 'alerts'"
+                            (click)="setTab('alerts')"
+                            role="tab"
+                    >{{ 'NOTIFICATIONS.TABS.ALERTS' | translate }}</button>
+                </div>
+            </div>
+
+            <!-- Lista de notificaciones -->
+            <ul class="notif-list">
+                @for (notif of filteredNotifications(); track notif.id) {
+                    <li
+                            class="notif-item"
+                            [class.notif-item--unread]="!notif.read"
+                            (click)="markAsRead(notif.id!)"
+                    >
+                        <!-- Icono tipo -->
+                        <div class="notif-item__icon" [attr.data-type]="notif.type">
+                            <mat-icon>{{ iconForType(notif.type) }}</mat-icon>
+                        </div>
+
+                        <!-- Contenido -->
+                        <div class="notif-item__body">
+                            <p class="notif-item__title">{{ notif.title }}</p>
+                            <p class="notif-item__desc">{{ notif.description }}</p>
+
+                            <!-- Acciones inline para alertas/pendientes -->
+                            @if (notif.type === 'alert' && !notif.read) {
+                                <div class="notif-item__actions">
+                                    <button class="action-btn action-btn--primary" type="button">
+                                        {{ 'NOTIFICATIONS.ACTIONS.VIEW_APPOINTMENT' | translate }}
+                                    </button>
+                                </div>
+                            }
+                            @if (notif.type === 'pending' && !notif.read) {
+                                <div class="notif-item__actions">
+                                    <button class="action-btn action-btn--primary" type="button">
+                                        {{ 'NOTIFICATIONS.ACTIONS.CONFIRM' | translate }}
+                                    </button>
+                                    <button class="action-btn action-btn--ghost" type="button">
+                                        {{ 'NOTIFICATIONS.ACTIONS.VIEW' | translate }}
+                                    </button>
+                                </div>
+                            }
+
+                            <span class="notif-item__time">{{ notif.time }}</span>
+                        </div>
+
+                        <!-- Punto no leído -->
+                        @if (!notif.read) {
+                            <span class="notif-item__dot" [attr.aria-label]="'NOTIFICATIONS.ACCESSIBILITY.UNREAD' | translate"></span>
+                        }
+                    </li>
+                } @empty {
+                    <li class="notif-empty">
+                        <mat-icon>notifications_off</mat-icon>
+                        <p>{{ 'NOTIFICATIONS.EMPTY' | translate }}</p>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!-- Columna derecha: resumen + config -->
+        <aside class="notif-aside">
+
+            <!-- Resumen del día -->
+            <div class="aside-card">
+                <h3 class="aside-card__title">{{ 'NOTIFICATIONS.SUMMARY.TITLE' | translate }}</h3>
+                <ul class="summary-list">
+                    <li class="summary-item summary-item--pending">
+                        <span class="summary-item__label">{{ 'NOTIFICATIONS.SUMMARY.PENDING' | translate }}</span>
+                        <span class="summary-item__count">{{ pendingCount() }}</span>
+                    </li>
+                    <li class="summary-item summary-item--confirmed">
+                        <span class="summary-item__label">{{ 'NOTIFICATIONS.SUMMARY.CONFIRMED' | translate }}</span>
+                        <span class="summary-item__count">{{ confirmedCount() }}</span>
+                    </li>
+                    <li class="summary-item summary-item--neutral">
+                        <span class="summary-item__label">{{ 'NOTIFICATIONS.SUMMARY.CANCELLED' | translate }}</span>
+                        <span class="summary-item__count">{{ cancelledCount() }}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Configurar alertas -->
+            <div class="aside-card">
+                <h3 class="aside-card__title">{{ 'NOTIFICATIONS.CONFIG.TITLE' | translate }}</h3>
+                <ul class="alert-config-list">
+                    <li class="alert-config-item">
+                        <div class="alert-config-item__info">
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.NEXT_APPOINTMENT.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.NEXT_APPOINTMENT.DESC' | translate }}</span>
+                        </div>
+                        <button
+                                class="toggle-btn"
+                                [class.toggle-btn--on]="alertConfig().proximaCita"
+                                type="button"
+                                (click)="toggleAlert('proximaCita')"
+                                [attr.aria-pressed]="alertConfig().proximaCita"
+                        >
+                            <span class="toggle-btn__thumb"></span>
+                        </button>
+                    </li>
+                    <li class="alert-config-item">
+                        <div class="alert-config-item__info">
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.PENDING.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.PENDING.DESC' | translate }}</span>
+                        </div>
+                        <button
+                                class="toggle-btn"
+                                [class.toggle-btn--on]="alertConfig().citasPendientes"
+                                type="button"
+                                (click)="toggleAlert('citasPendientes')"
+                                [attr.aria-pressed]="alertConfig().citasPendientes"
+                        >
+                            <span class="toggle-btn__thumb"></span>
+                        </button>
+                    </li>
+                    <li class="alert-config-item">
+                        <div class="alert-config-item__info">
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.DAILY_SUMMARY.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.DAILY_SUMMARY.DESC' | translate }}</span>
+                        </div>
+                        <button
+                                class="toggle-btn"
+                                [class.toggle-btn--on]="alertConfig().resumenDiario"
+                                type="button"
+                                (click)="toggleAlert('resumenDiario')"
+                                [attr.aria-pressed]="alertConfig().resumenDiario"
+                        >
+                            <span class="toggle-btn__thumb"></span>
+                        </button>
+                    </li>
+                    <li class="alert-config-item">
+                        <div class="alert-config-item__info">
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.TOMORROW_APPOINTMENTS.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.TOMORROW_APPOINTMENTS.DESC' | translate }}</span>
+                        </div>
+                        <button
+                                class="toggle-btn"
+                                [class.toggle-btn--on]="alertConfig().citasManiana"
+                                type="button"
+                                (click)="toggleAlert('citasManiana')"
+                                [attr.aria-pressed]="alertConfig().citasManiana"
+                        >
+                            <span class="toggle-btn__thumb"></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+        </aside>
+    </div>
+</div>

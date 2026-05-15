@@ -1,0 +1,198 @@
+.appointment-dialog {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  min-width: 700px;
+  max-width: 850px;
+  font-family: 'Inter', sans-serif;
+
+  ::ng-deep {
+    .mat-mdc-form-field-infix {
+      padding-left: 12px !important;
+    }
+    .mat-mdc-text-field-wrapper {
+      background-color: #fcfcfc !important;
+    }
+  }
+
+
+  .modal-header {
+    background-color: #003366;
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+
+    span { font-size: 1.5rem; font-weight: 700; }
+    button { color: white; margin-right: -8px; }
+  }
+
+  .modal-content {
+    padding: 24px !important;
+    margin: 0;
+
+    .info-banner {
+      background-color: #e0f2fe;
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #0369a1;
+      font-size: 0.9375rem;
+      margin-bottom: 32px;
+
+      mat-icon { font-size: 24px; width: 24px; height: 24px; color: #f59e0b; }
+    }
+
+    .form-section {
+      margin-bottom: 32px;
+
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #003366;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f3f4f6;
+        padding-bottom: 8px;
+      }
+
+      .full-width { width: 100%; }
+
+      .form-field {
+        margin-bottom: 20px;
+      }
+
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1.2fr;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .status-selection {
+        margin-top: 8px;
+        
+        .field-label {
+          display: block;
+          font-weight: 600;
+          color: #4b5563;
+          margin-bottom: 12px;
+          font-size: 0.9375rem;
+        }
+
+        .status-buttons {
+          display: flex;
+          gap: 16px;
+
+          .status-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: #4b5563;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            .dot {
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+            }
+
+            &:hover:not(.active) {
+              background-color: #f9fafb;
+              border-color: #d1d5db;
+            }
+
+            &.confirmed { 
+              .dot { background-color: #0ea5e9; }
+              &.active { border-color: #0ea5e9; background-color: #f0f9ff; color: #0369a1; box-shadow: 0 0 0 1px #0ea5e9; }
+            }
+
+            &.pending { 
+              .dot { background-color: #f97316; }
+              &.active { border-color: #f97316; background-color: #fff7ed; color: #c2410c; box-shadow: 0 0 0 1px #f97316; }
+            }
+
+            &.cancelled { 
+              .dot { background-color: #9ca3af; }
+              &.active { border-color: #9ca3af; background-color: #f3f4f6; color: #4b5563; box-shadow: 0 0 0 1px #9ca3af; }
+            }
+          }
+        }
+      }
+
+      &.checkbox-section {
+        margin-top: 16px;
+        background-color: #f9fafb;
+        padding: 16px;
+        border-radius: 12px;
+        
+        mat-checkbox { margin-bottom: 4px; }
+        .helper-text { margin: 0; font-size: 0.8125rem; color: #6b7280; padding-left: 32px; }
+      }
+    }
+  }
+
+  .modal-footer {
+    padding: 20px 24px !important;
+    border-top: 1px solid #f3f4f6;
+    gap: 12px;
+
+    button {
+      padding: 0 28px;
+      height: 48px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .error-summary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-right: auto;
+      font-weight: 500;
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .btn-cancel {
+      background-color: #f9fafb;
+      border: 1px solid #e5e7eb;
+      color: #4b5563;
+    }
+
+    .btn-submit {
+      background-color: #ff855e;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 133, 94, 0.3);
+      
+      &:hover {
+        background-color: #f47a54;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 14px rgba(255, 133, 94, 0.4);
+      }
+    }
+  }
+}
+
+/* Ensure solid background for Material dropdowns */

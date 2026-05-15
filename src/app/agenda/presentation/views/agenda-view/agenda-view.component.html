@@ -1,0 +1,166 @@
+<div class="agenda-container">
+  <!-- Top Header -->
+  <header class="agenda-header">
+    <div class="header-top">
+      <h1 class="page-title">{{ 'AGENDA.TITLE' | translate }}</h1>
+      <button mat-flat-button color="primary" class="btn-new-appointment" (click)="openNewAppointmentForm()">
+        <mat-icon>add</mat-icon>
+        {{ 'AGENDA.NEW_APPOINTMENT' | translate }}
+      </button>
+    </div>
+
+
+    <div class="header-controls">
+      <div class="view-selectors">
+        <button mat-flat-button [class.active]="viewMode() === 'daily'" (click)="viewMode.set('daily')">{{ 'AGENDA.VIEW_DAILY' | translate }}</button>
+        <button mat-flat-button [class.active]="viewMode() === 'weekly'" (click)="viewMode.set('weekly')">{{ 'AGENDA.VIEW_WEEKLY' | translate }}</button>
+        <button mat-flat-button [class.active]="viewMode() === 'monthly'" (click)="viewMode.set('monthly')">{{ 'AGENDA.VIEW_MONTHLY' | translate }}</button>
+      </div>
+
+      <div class="status-filters">
+        <button mat-flat-button [class.active]="statusFilter() === 'all'" (click)="statusFilter.set('all')">{{ 'AGENDA.FILTER_ALL' | translate }}</button>
+        <button mat-flat-button [class.active]="statusFilter() === 'confirmed'" (click)="statusFilter.set('confirmed')">{{ 'AGENDA.FILTER_CONFIRMED' | translate }}</button>
+        <button mat-flat-button [class.active]="statusFilter() === 'pending'" (click)="statusFilter.set('pending')">{{ 'AGENDA.FILTER_PENDING' | translate }}</button>
+        <button mat-flat-button [class.active]="statusFilter() === 'cancelled'" (click)="statusFilter.set('cancelled')">{{ 'AGENDA.FILTER_CANCELLED' | translate }}</button>
+      </div>
+
+      <div class="search-bar">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput [placeholder]="'AGENDA.SEARCH_PLACEHOLDER' | translate" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)">
+        </mat-form-field>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="agenda-content">
+    <!-- Main Calendar Area -->
+    <main class="calendar-main">
+      <div class="calendar-header">
+        <div class="navigation">
+          <button mat-icon-button (click)="prev()"><mat-icon>chevron_left</mat-icon></button>
+          <span class="current-range">{{ currentWeekRange() }}</span>
+          <button mat-icon-button (click)="next()"><mat-icon>chevron_right</mat-icon></button>
+        </div>
+        <button mat-stroked-button (click)="today()" class="btn-today">{{ 'AGENDA.TODAY' | translate }}</button>
+      </div>
+
+      <!-- Weekly View Grid -->
+      <div class="calendar-grid" *ngIf="viewMode() === 'weekly'">
+        <div class="grid-header">
+          <div class="time-column"></div>
+          <div class="day-column" *ngFor="let day of daysInWeek()">
+            <span class="day-name">{{ day.name }}</span>
+            <span class="day-number" [class.today]="day.isToday">{{ day.number }}</span>
+          </div>
+        </div>
+
+        <div class="grid-body">
+          <div class="grid-row" *ngFor="let hour of hours()">
+            <div class="time-cell">{{ hour }}</div>
+            <div class="day-cell" *ngFor="let day of daysInWeek()">
+              <div class="appointment-card" *ngFor="let app of getAppointmentsFor(day.fullDate, hour)" [ngClass]="getStatusClass(app.status)">
+                <div class="card-content">
+                  <span class="client-name">{{ app.clientName }}</span>
+                  <span class="service-name">{{ app.service }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily View Grid -->
+      <div class="calendar-grid daily-view" *ngIf="viewMode() === 'daily'">
+        <div class="grid-header">
+          <div class="time-column"></div>
+          <div class="day-column">
+            <span class="day-name">{{ selectedDate().toLocaleDateString('es-ES', { weekday: 'long' }) | uppercase }}</span>
+            <span class="day-number today">{{ selectedDate().getDate() }}</span>
+          </div>
+        </div>
+
+        <div class="grid-body">
+          <div class="grid-row" *ngFor="let hour of hours()">
+
+            <div class="time-cell">{{ hour }}</div>
+            <div class="day-cell">
+              <div class="appointment-card large" *ngFor="let app of getAppointmentsFor(formatLocalDate(selectedDate()), hour)" [ngClass]="getStatusClass(app.status)">
+                <div class="card-content">
+                  <span class="client-name">{{ app.clientName }}</span>
+                  <span class="service-name">{{ app.service }}</span>
+                  <p class="app-note" *ngIf="app.note">{{ app.note }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly View Grid -->
+      <div class="calendar-grid monthly-view" *ngIf="viewMode() === 'monthly'">
+        <div class="grid-header no-time">
+          <div class="day-column" *ngFor="let day of weekDays">
+            <span class="day-name">{{ day }}</span>
+          </div>
+        </div>
+
+        <div class="month-body">
+          <div class="month-day" *ngFor="let day of daysInMonth()" [class.not-current]="!day.isCurrentMonth">
+            <div class="day-header">
+              <span class="day-number" [class.today]="day.isToday">{{ day.number }}</span>
+            </div>
+            <div class="day-events">
+              <div class="event-indicator" *ngFor="let app of getAppointmentsForDay(day.fullDate)" [ngClass]="getStatusClass(app.status)">
+                <span class="dot"></span>
+                <span class="event-time">{{ app.time }}</span>
+                <span class="event-client">{{ app.clientName }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="agenda-sidebar">
+      <!-- Day Details -->
+
+      <section class="day-details card">
+        <div class="details-header">
+          <h3>{{ 'AGENDA.SIDEBAR_TITLE' | translate }}</h3>
+          <span class="subtitle">{{ 'AGENDA.SIDEBAR_SUBTITLE' | translate:{ count: getAppointmentsForDay(formatLocalDate(selectedDate())).length } }}</span>
+        </div>
+        <div class="details-list">
+          <div class="detail-item" *ngFor="let app of getAppointmentsForDay(formatLocalDate(selectedDate()))">
+            <span class="time">{{ app.time }}</span>
+            <div class="info">
+              <span class="name">{{ app.clientName }}</span>
+              <span class="svc">{{ app.service }}</span>
+            </div>
+            <span class="badge" [ngClass]="app.status">{{ 'OVERVIEW.STATUS.' + (app.status | uppercase) | translate }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Upcoming Appointments -->
+      <section class="upcoming-appointments card">
+        <h4>{{ 'AGENDA.UPCOMING_TITLE' | translate }}</h4>
+        <div class="upcoming-item">
+          <div class="date-box">
+            <span class="day">15</span>
+            <span class="month">MAY</span>
+          </div>
+          <div class="info">
+            <span class="name">Ana Flores</span>
+            <span class="svc">Desparasitación</span>
+          </div>
+          <span class="time">11:00</span>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>

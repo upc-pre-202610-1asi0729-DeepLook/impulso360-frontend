@@ -1,0 +1,30 @@
+﻿<section class="help-card">
+    <div class="section-header">
+        <h2>{{ 'HELP.QUICK_GUIDES_TITLE' | translate }}</h2>
+        <p>{{ 'HELP.QUICK_GUIDES_DESCRIPTION' | translate }}</p>
+    </div>
+
+    <div class="guides-list">
+        <button
+                *ngFor="let guide of guides"
+                class="guide-item"
+                type="button"
+                (click)="onOpenGuide(guide)"
+        >
+      <span class="guide-icon">
+        <mat-icon>{{ guide.icon }}</mat-icon>
+      </span>
+
+            <span class="guide-content">
+        <strong>{{ guide.title }}</strong>
+        <small>{{ guide.description }}</small>
+      </span>
+
+            <mat-icon class="arrow-icon">chevron_right</mat-icon>
+        </button>
+    </div>
+
+    <div *ngIf="guides.length === 0" class="empty-state">
+        {{ 'HELP.EMPTY_GUIDES' | translate }}
+    </div>
+</section>

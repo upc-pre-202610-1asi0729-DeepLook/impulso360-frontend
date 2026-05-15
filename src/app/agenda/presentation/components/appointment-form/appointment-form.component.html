@@ -1,0 +1,108 @@
+<div class="appointment-dialog">
+  <h2 mat-dialog-title class="modal-header">
+    <span>{{ 'APPOINTMENT.FORM.TITLE' | translate }}</span>
+    <button mat-icon-button (click)="close()" type="button"><mat-icon>close</mat-icon></button>
+  </h2>
+
+  <mat-dialog-content class="modal-content">
+    <div class="info-banner">
+      <mat-icon>lightbulb_outline</mat-icon>
+      <span>{{ 'APPOINTMENT.FORM.REQUIRED_BANNER' | translate }}</span>
+    </div>
+
+    <form [formGroup]="appointmentForm">
+      <section class="form-section">
+        <h3 class="section-title">{{ 'APPOINTMENT.FORM.CLIENT_INFO' | translate }}</h3>
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'APPOINTMENT.FORM.CLIENT_LABEL' | translate }}</mat-label>
+            <input matInput [placeholder]="'APPOINTMENT.FORM.CLIENT_PLACEHOLDER' | translate" formControlName="client" [matAutocomplete]="auto">
+            <mat-icon matSuffix>person_search</mat-icon>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let client of filteredClients | async" [value]="client.firstName + ' ' + client.lastName">
+                {{ client.firstName }} {{ client.lastName }} ({{ client.phone }})
+              </mat-option>
+            </mat-autocomplete>
+            <mat-hint>{{ 'APPOINTMENT.FORM.CLIENT_HINT' | translate }}</mat-hint>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h3 class="section-title">{{ 'APPOINTMENT.FORM.DETAILS_TITLE' | translate }}</h3>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'APPOINTMENT.FORM.SERVICE_LABEL' | translate }}</mat-label>
+            <mat-select [placeholder]="'APPOINTMENT.FORM.SERVICE_PLACEHOLDER' | translate" formControlName="service">
+              <mat-option *ngFor="let svc of services" [value]="svc.name">{{ svc.name }}</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>category</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'APPOINTMENT.FORM.DATE_LABEL' | translate }}</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" readonly (click)="picker.open()">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'APPOINTMENT.FORM.TIME_LABEL' | translate }}</mat-label>
+            <input matInput type="time" formControlName="time">
+            <mat-icon matSuffix>schedule</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'APPOINTMENT.FORM.DURATION_LABEL' | translate }}</mat-label>
+            <mat-select formControlName="duration">
+              <mat-option value="30 min">30 min</mat-option>
+              <mat-option value="1 hora">1 hora</mat-option>
+              <mat-option value="2 horas">2 horas</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="status-selection">
+          <label class="field-label">{{ 'APPOINTMENT.FORM.STATUS_LABEL' | translate }}</label>
+          <div class="status-buttons">
+            <button type="button" class="status-btn confirmed" [class.active]="appointmentForm.get('status')?.value === 'confirmed'" (click)="setStatus('confirmed')">
+              <span class="dot"></span> {{ 'APPOINTMENT.FORM.STATUS_CONFIRMED' | translate }}
+            </button>
+            <button type="button" class="status-btn pending" [class.active]="appointmentForm.get('status')?.value === 'pending'" (click)="setStatus('pending')">
+              <span class="dot"></span> {{ 'APPOINTMENT.FORM.STATUS_PENDING' | translate }}
+            </button>
+            <button type="button" class="status-btn cancelled" [class.active]="appointmentForm.get('status')?.value === 'cancelled'" (click)="setStatus('cancelled')">
+              <span class="dot"></span> {{ 'APPOINTMENT.FORM.STATUS_CANCELLED' | translate }}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h3 class="section-title">{{ 'APPOINTMENT.FORM.NOTES_TITLE' | translate }}</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'APPOINTMENT.FORM.NOTES_LABEL' | translate }}</mat-label>
+          <textarea matInput rows="3" [placeholder]="'APPOINTMENT.FORM.NOTES_PLACEHOLDER' | translate" formControlName="notes"></textarea>
+          <mat-hint>{{ 'APPOINTMENT.FORM.NOTES_HINT' | translate }}</mat-hint>
+        </mat-form-field>
+      </section>
+
+      <section class="form-section checkbox-section">
+        <mat-checkbox formControlName="sendReminder">{{ 'APPOINTMENT.FORM.REMINDER_LABEL' | translate }}</mat-checkbox>
+        <p class="helper-text">{{ 'APPOINTMENT.FORM.REMINDER_HINT' | translate }}</p>
+      </section>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="modal-footer">
+    <div class="error-summary" *ngIf="appointmentForm.invalid && appointmentForm.touched">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ 'APPOINTMENT.FORM.ERROR_SUMMARY' | translate }}</span>
+    </div>
+    <button mat-button (click)="close()" type="button" class="btn-cancel">{{ 'APPOINTMENT.FORM.CANCEL' | translate }}</button>
+    <button mat-flat-button color="primary" (click)="submit()" type="button" class="btn-submit">{{ 'APPOINTMENT.FORM.SUBMIT' | translate }}</button>
+  </mat-dialog-actions>
+</div>

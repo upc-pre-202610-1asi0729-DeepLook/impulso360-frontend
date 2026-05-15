@@ -1,6 +1,521 @@
 {
-  "appointments": [],
-  "clients": [],
-  "notifications": [],
-  "profile": {}
+  "appointments": [
+    {
+      "id": "1",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "2",
+      "date": "2026-05-14",
+      "time": "10:30",
+      "clientName": "Carlos Mendoza",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "Traer carnet"
+    },
+    {
+      "id": "3",
+      "date": "2026-05-15",
+      "time": "11:00",
+      "clientName": "Ana Flores",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "4",
+      "date": "2026-05-14",
+      "time": "14:00",
+      "clientName": "Jorge Paredes",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": null
+    },
+    {
+      "id": "5",
+      "date": "2026-05-14",
+      "time": "16:30",
+      "clientName": "Rosa Quispe",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "6",
+      "date": "2026-05-13",
+      "time": "09:00",
+      "clientName": "Pedro R.",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "7",
+      "date": "2026-05-12",
+      "time": "10:00",
+      "clientName": "Ana F.",
+      "service": "Baño",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": null
+    },
+    {
+      "id": "-iWM3LdWpnI",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": ""
+    },
+    {
+      "id": "ePKWtksYZbw",
+      "date": "2026-05-14",
+      "time": "23:59",
+      "clientName": "af efaf",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": ""
+    },
+    {
+      "id": "VBLO9l8abvs",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "jBLCWZ2Bb-Q",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "DVKEEZbthmU",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Jorge Paredes",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "bnYo-jrL2fw",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "voraDHmEvXo",
+      "date": "2026-12-05",
+      "time": "09:00",
+      "clientName": "Ana Flores",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": "buenos dias"
+    },
+    {
+      "id": "w74kPZiLdgk",
+      "date": "2026-10-05",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "id": "YCEby6DQ-E0",
+      "date": "2026-05-14",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "cancelled",
+      "note": ""
+    },
+    {
+      "id": "VxUZ3M21Uk8",
+      "date": "2026-12-05",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": ""
+    },
+    {
+      "date": "2026-06-15",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "qq5BVeweu4s"
+    },
+    {
+      "date": "2026-05-08",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "5o-e5EECAnY"
+    },
+    {
+      "date": "2026-06-10",
+      "time": "09:00",
+      "clientName": "Laura Castillo",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "8VKJVr1syQk"
+    },
+    {
+      "date": "2026-05-17",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "4CvEy6goQr0"
+    },
+    {
+      "date": "2026-07-16",
+      "time": "12:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "buenos dias",
+      "id": "VB_dTVO0HrI"
+    },
+    {
+      "date": "2026-06-19",
+      "time": "14:00",
+      "clientName": "Jorge Paredes",
+      "service": "Consulta general",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "IJrMyBd_ZKU"
+    },
+    {
+      "date": "2026-05-30",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Vacunación",
+      "category": "Veterinaria",
+      "status": "confirmed",
+      "note": "",
+      "id": "z3WaNsycTf8"
+    },
+    {
+      "date": "2026-05-22",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "DNfp0qAwtyo"
+    },
+    {
+      "date": "2026-05-31",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "HvLCw_5fLvA"
+    },
+    {
+      "date": "2026-05-24",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "sPp1IWb2j0E"
+    },
+    {
+      "date": "2026-05-30",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Fotos",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "bADTfPImir4"
+    }
+  ],
+  "clients": [
+    {
+      "firstName": "Laura",
+      "lastName": "Castillo",
+      "phone": "+51 987 654 321",
+      "email": "laura.castillo@gmail.com",
+      "status": "active",
+      "notes": "Prefiere recordatorios por WhatsApp.",
+      "createdAt": "2026-04-01",
+      "lastAppointment": "2026-04-26",
+      "totalAppointments": 8,
+      "attendedAppointments": 7,
+      "history": [
+        {
+          "id": 1,
+          "service": "Consulta general",
+          "date": "2026-04-26",
+          "time": "09:00",
+          "status": "attended"
+        },
+        {
+          "id": 2,
+          "service": "Desparasitación",
+          "date": "2026-04-10",
+          "time": "10:00",
+          "status": "attended"
+        },
+        {
+          "id": 3,
+          "service": "Vacunación",
+          "date": "2026-03-22",
+          "time": "09:30",
+          "status": "attended"
+        },
+        {
+          "id": 4,
+          "service": "Baño y corte",
+          "date": "2026-03-05",
+          "time": "11:00",
+          "status": "cancelled"
+        }
+      ],
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "firstName": "Carlos",
+      "lastName": "Mendoza",
+      "phone": "+51 912 345 678",
+      "email": "carlos.mendoza@gmail.com",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-04-03",
+      "lastAppointment": "2026-04-26",
+      "totalAppointments": 5,
+      "attendedAppointments": 4,
+      "history": [
+        {
+          "id": 1,
+          "service": "Vacunación",
+          "date": "2026-04-26",
+          "time": "10:30",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "firstName": "Jorge",
+      "lastName": "Paredes",
+      "phone": "+51 934 210 987",
+      "email": "jorge.paredes@gmail.com",
+      "status": "inactive",
+      "notes": "",
+      "createdAt": "2026-03-12",
+      "lastAppointment": "2026-04-20",
+      "totalAppointments": 3,
+      "attendedAppointments": 2,
+      "history": [
+        {
+          "id": 1,
+          "service": "Baño y corte",
+          "date": "2026-04-20",
+          "time": "14:00",
+          "status": "cancelled"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "firstName": "Rosa",
+      "lastName": "Quispe",
+      "phone": "+51 901 543 876",
+      "email": "rosa.quispe@gmail.com",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-04-18",
+      "lastAppointment": "2026-04-26",
+      "totalAppointments": 7,
+      "attendedAppointments": 6,
+      "history": [
+        {
+          "id": 1,
+          "service": "Consulta general",
+          "date": "2026-04-26",
+          "time": "16:30",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "firstName": "Sofía",
+      "lastName": "Vargas",
+      "phone": "+51 978 321 654",
+      "email": "sofia.vargas@gmail.com",
+      "status": "active",
+      "notes": "",
+      "createdAt": "2026-04-21",
+      "lastAppointment": "2026-04-22",
+      "totalAppointments": 9,
+      "attendedAppointments": 8,
+      "history": [
+        {
+          "id": 1,
+          "service": "Consulta general",
+          "date": "2026-04-22",
+          "time": "09:00",
+          "status": "attended"
+        }
+      ]
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "type": "alert",
+      "title": "Cita en 25 minutos",
+      "description": "Carlos Mendoza · Vacunación · 10:30 am",
+      "time": "Hace 5 min",
+      "read": true,
+      "appointmentId": 2
+    },
+    {
+      "id": "2",
+      "type": "pending",
+      "title": "Cita pendiente de confirmación",
+      "description": "Rosa Quispe · Consulta general · 16:30",
+      "time": "Hace 20 min",
+      "read": true,
+      "appointmentId": 5
+    },
+    {
+      "id": "3",
+      "type": "info",
+      "title": "3 citas programadas para mañana",
+      "description": "Martes 27 de abril · 09:00, 11:00, 14:30",
+      "time": "Hace 1 hora",
+      "read": true
+    },
+    {
+      "id": "4",
+      "type": "cancelled",
+      "title": "Cita cancelada",
+      "description": "Jorge Paredes · Baño y corte · 14:00 · Horario liberado",
+      "time": "Hace 2 horas",
+      "read": true,
+      "appointmentId": 4
+    },
+    {
+      "id": "5",
+      "type": "confirmed",
+      "title": "Cita confirmada",
+      "description": "Laura Castillo · Consulta general · 09:00",
+      "time": "Hace 3 horas",
+      "read": true,
+      "appointmentId": 1
+    },
+    {
+      "id": "6",
+      "type": "new_client",
+      "title": "Nuevo cliente registrado",
+      "description": "Sofía Vargas fue agregada a tu base de clientes",
+      "time": "Ayer, 17:30",
+      "read": true,
+      "clientId": 6
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "name": "Consulta general",
+      "category": "Veterinaria",
+      "description": "Evaluación general del estado de salud de la mascota.",
+      "price": 50,
+      "status": "activo",
+      "isFeatured": false
+    },
+    {
+      "id": "2",
+      "name": "Vacunación",
+      "category": "Prevención",
+      "description": "Aplicación de vacunas según el calendario del animal.",
+      "price": 35,
+      "status": "activo",
+      "isFeatured": false
+    },
+    {
+      "id": "3",
+      "name": "Baño y corte",
+      "category": "Estética",
+      "description": "Baño completo y corte de pelo a medida.",
+      "price": 45,
+      "status": "activo",
+      "isFeatured": false
+    },
+    {
+      "id": "4",
+      "name": "Desparasitación",
+      "category": "Prevención",
+      "description": "Tratamiento contra parásitos internos y externos.",
+      "price": 30,
+      "status": "inactivo",
+      "isFeatured": false
+    },
+    {
+      "id": "hOJkTexu5eo",
+      "name": "Fotos",
+      "category": "Fotos",
+      "description": "asdad",
+      "price": 45,
+      "status": "activo",
+      "isFeatured": false
+    }
+  ],
+  "profile": {},
+  "$schema": "./node_modules/json-server/schema.json"
 }

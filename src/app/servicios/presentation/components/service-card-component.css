@@ -1,0 +1,183 @@
+.service-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #eef2f6;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.service-card--featured {
+    border-color: #00d2ff;
+    background: linear-gradient(to bottom right, #fff, #f0f9ff);
+}
+
+.service-card__featured-tag {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00d2ff;
+    color: #0369a1;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 12px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.service-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.service-card__icon {
+    width: 48px;
+    height: 48px;
+    background: #f0f7ff;
+    color: #007bff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-card__top-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.btn-star {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-star:hover:not(:disabled) {
+    background: rgba(0, 210, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.btn-star:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.service-card__status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #28a745;
+    background: #e8f5e9;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.service-card__status--inactive {
+    color: #fd7e14;
+    background: #fff3e0;
+}
+
+.service-card__content {
+    flex: 1;
+}
+
+.service-card__name {
+    margin: 0 0 4px;
+    font-size: 1.15rem;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.service-card__category {
+    margin: 0 0 12px;
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.service-card__description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.service-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.service-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.service-card__price .currency {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.service-card__price .amount {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.service-card__actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.btn-icon--danger:hover {
+    background: #dc3545;
+    border-color: #dc3545;
+}

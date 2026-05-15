@@ -1,0 +1,279 @@
+.clients-page {
+  min-height: 100%;
+  background: #f2f4f7;
+  color: #092855;
+}
+
+.clients-header {
+  height: 64px;
+  padding: 0 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #dedede;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 500;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.current-date {
+  font-size: 0.85rem;
+  color: #697386;
+}
+
+.primary-button {
+  border: none;
+  background: #082855;
+  color: #ffffff;
+  padding: 0 18px;
+  min-height: 46px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.primary-button mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+.secondary-button,
+.notification-button,
+.icon-button {
+  border: 1px solid #cdd5df;
+  background: #ffffff;
+  color: #092855;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+.clients-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  padding: 0 28px 28px;
+}
+
+.clients-main-card {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px;
+
+  .export-button {
+    margin-left: auto;
+  }
+}
+
+.search-box {
+  width: 290px;
+  height: 38px;
+  border: 1px solid #cdd5df;
+  background: #ffffff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+
+  .search-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #697386;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.9rem;
+    background: transparent;
+  }
+}
+
+.secondary-button,
+.link-button {
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1px solid #cdd5df;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #092855;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondary-button:hover,
+.link-button:hover {
+  border-color: #61b6cf;
+  background: #f4fbfe;
+}
+
+.secondary-button mat-icon,
+.link-button mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: #092855;
+}
+
+.export-button {
+  margin-left: auto;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding: 14px 18px;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #697386;
+    background: #f2f4f7;
+  }
+
+  td {
+    padding: 14px 18px;
+    border-top: 1px solid #e4e7ec;
+    font-size: 0.9rem;
+    color: #2f3847;
+  }
+
+  tr {
+    cursor: pointer;
+  }
+
+  tr:hover,
+  tr.selected {
+    background: #f4fbfe;
+  }
+}
+
+.client-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  strong {
+    color: #1f2937;
+  }
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #d9f2f8;
+  color: #0b4a6f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  &.inactive {
+    background: #eeeeee;
+    color: #6b7280;
+  }
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+
+  .icon-button {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      border-color: #61b6cf;
+      background: #f4fbfe;
+    }
+
+    &.delete-button:hover {
+      background-color: #fee2e2;
+      border-color: #ef4444;
+      color: #b91c1c;
+
+      mat-icon {
+        color: #b91c1c;
+      }
+    }
+  }
+}
+
+.see-all-button {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #e4e7ec;
+  background: #ffffff;
+  padding: 14px;
+  color: #2c7fa3;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+  .clients-content {
+    grid-template-columns: 1fr;
+  }
+}
