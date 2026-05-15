@@ -239,6 +239,26 @@
       "status": "confirmed",
       "note": "",
       "id": "z3WaNsycTf8"
+    },
+    {
+      "date": "2026-05-22",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "DNfp0qAwtyo"
+    },
+    {
+      "date": "2026-05-31",
+      "time": "09:00",
+      "clientName": "Carlos Mendoza",
+      "service": "Baño y corte",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "HvLCw_5fLvA"
     }
   ],
   "clients": [

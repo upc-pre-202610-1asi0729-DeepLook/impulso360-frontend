@@ -1,8 +1,8 @@
-﻿<div class="profile-page">
+<div class="profile-page">
 
     <!-- Header -->
     <div class="page-header">
-        <h1 class="page-title">Perfil del negocio</h1>
+        <h1 class="page-title">{{ 'BUSINESS.TITLE' | translate }}</h1>
     </div>
 
     <!-- Loading -->
@@ -17,85 +17,85 @@
         <!-- Imagen y datos básicos -->
         <mat-card class="section-card">
             <mat-card-header>
-                <mat-card-title>Imagen y datos básicos</mat-card-title>
+                <mat-card-title>{{ 'BUSINESS.SECTIONS.GENERAL' | translate }}</mat-card-title>
             </mat-card-header>
 
             <mat-card-content>
                 <form [formGroup]="form">
 
                     <!-- Cover image placeholder -->
-                    <span class="cover-label">Imagen de portada</span>
+                    <span class="cover-label">{{ 'BUSINESS.FIELDS.COVER_IMAGE' | translate }}</span>
                     <div class="cover-placeholder">
                         <mat-icon>image</mat-icon>
-                        <span>Cambiar portada</span>
+                        <span>{{ 'BUSINESS.FIELDS.CHANGE_COVER' | translate }}</span>
                     </div>
 
                     <!-- Fila: Nombre + Categoría -->
                     <div class="form-row">
                         <mat-form-field appearance="outline" class="field-half">
-                            <mat-label>Nombre del negocio</mat-label>
-                            <input matInput formControlName="publicDisplayName" placeholder="Ej. Veterinaria San Marcos" />
+                            <mat-label>{{ 'BUSINESS.FIELDS.NAME' | translate }}</mat-label>
+                            <input matInput formControlName="publicDisplayName" [placeholder]="'BUSINESS.FIELDS.NAME_PLACEHOLDER' | translate" />
                             @if (form.get('publicDisplayName')?.hasError('required') && form.get('publicDisplayName')?.touched) {
-                                <mat-error>El nombre es obligatorio</mat-error>
+                                <mat-error>{{ 'BUSINESS.ERRORS.REQUIRED_NAME' | translate }}</mat-error>
                             }
                             @if (form.get('publicDisplayName')?.hasError('minlength') && form.get('publicDisplayName')?.touched) {
-                                <mat-error>Mínimo 3 caracteres</mat-error>
+                                <mat-error>{{ 'BUSINESS.ERRORS.MIN_LENGTH' | translate }}</mat-error>
                             }
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="field-half">
-                            <mat-label>Categoría</mat-label>
+                            <mat-label>{{ 'BUSINESS.FIELDS.CATEGORY' | translate }}</mat-label>
                             <mat-select formControlName="category">
                                 @for (cat of categories; track cat) {
                                     <mat-option [value]="cat">{{ cat | titlecase }}</mat-option>
                                 }
                             </mat-select>
                             @if (form.get('category')?.hasError('required') && form.get('category')?.touched) {
-                                <mat-error>Selecciona una categoría</mat-error>
+                                <mat-error>{{ 'BUSINESS.ERRORS.REQUIRED_CATEGORY' | translate }}</mat-error>
                             }
                         </mat-form-field>
                     </div>
 
                     <!-- Descripción -->
                     <mat-form-field appearance="outline" class="field-full">
-                        <mat-label>Descripción</mat-label>
+                        <mat-label>{{ 'BUSINESS.FIELDS.DESCRIPTION' | translate }}</mat-label>
                         <textarea
                                 matInput
                                 formControlName="description"
                                 rows="3"
-                                placeholder="Cuéntanos sobre tu negocio..."
+                                [placeholder]="'BUSINESS.FIELDS.DESCRIPTION_PLACEHOLDER' | translate"
                         ></textarea>
                         <mat-hint align="end">
                             {{ form.get('description')?.value?.length || 0 }}/300
                         </mat-hint>
                         @if (form.get('description')?.hasError('required') && form.get('description')?.touched) {
-                            <mat-error>La descripción es obligatoria</mat-error>
+                            <mat-error>{{ 'BUSINESS.ERRORS.REQUIRED_DESCRIPTION' | translate }}</mat-error>
                         }
                         @if (form.get('description')?.hasError('maxlength') && form.get('description')?.touched) {
-                            <mat-error>Máximo 300 caracteres</mat-error>
+                            <mat-error>{{ 'BUSINESS.ERRORS.MAX_LENGTH' | translate }}</mat-error>
                         }
                     </mat-form-field>
 
                     <!-- Fila: Teléfono + Dirección -->
                     <div class="form-row">
                         <mat-form-field appearance="outline" class="field-half">
-                            <mat-label>Teléfono</mat-label>
+                            <mat-label>{{ 'BUSINESS.FIELDS.PHONE' | translate }}</mat-label>
                             <input matInput formControlName="phone" placeholder="+51 987 654 321" />
                             <mat-icon matPrefix>phone</mat-icon>
                             @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
-                                <mat-error>El teléfono es obligatorio</mat-error>
+                                <mat-error>{{ 'BUSINESS.ERRORS.REQUIRED_PHONE' | translate }}</mat-error>
                             }
                             @if (form.get('phone')?.hasError('pattern') && form.get('phone')?.touched) {
-                                <mat-error>Ingresa un número válido</mat-error>
+                                <mat-error>{{ 'BUSINESS.ERRORS.INVALID_PHONE' | translate }}</mat-error>
                             }
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="field-half">
-                            <mat-label>Dirección</mat-label>
+                            <mat-label>{{ 'BUSINESS.FIELDS.ADDRESS' | translate }}</mat-label>
                             <input matInput formControlName="street" placeholder="Av. Arequipa 1234, Lima" />
                             <mat-icon matPrefix>location_on</mat-icon>
                             @if (form.get('street')?.hasError('required') && form.get('street')?.touched) {
-                                <mat-error>La dirección es obligatoria</mat-error>
+                                <mat-error>{{ 'BUSINESS.ERRORS.REQUIRED_ADDRESS' | translate }}</mat-error>
                             }
                         </mat-form-field>
                     </div>
@@ -108,11 +108,11 @@
         <div class="footer-actions">
             <button mat-stroked-button (click)="onPreview()">
                 <mat-icon>visibility</mat-icon>
-                Vista previa
+                {{ 'BUSINESS.ACTIONS.PREVIEW' | translate }}
             </button>
             <button mat-flat-button color="primary" (click)="onSave()">
                 <mat-icon>save</mat-icon>
-                Guardar cambios
+                {{ 'BUSINESS.SAVE' | translate }}
             </button>
         </div>
 

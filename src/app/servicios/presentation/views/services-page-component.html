@@ -1,7 +1,7 @@
-﻿<div class="services-page">
+<div class="services-page">
     <!-- Top Bar -->
 <header class="services-page__header">
-<h1 class="page-title">Servicios</h1>
+<h1 class="page-title">{{ 'SERVICES.TITLE' | translate }}</h1>
     <div class="header-right">
 <span class="header-date">Lunes, 28 de abril de 2025</span>
 <div class="header-avatar">MR</div>
@@ -9,7 +9,7 @@
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
     </svg>
-Agregar servicio
+{{ 'SERVICES.ADD' | translate }}
 </button>
 </div>
 </header>
@@ -20,7 +20,7 @@ Agregar servicio
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
-    <span>Tienes <strong>{{ count }} de {{ maxFeatured }}</strong> servicios destacados. Para destacar otro, quita primero uno de los actuales.</span>
+    <span [innerHTML]="'SERVICES.FEATURED_LIMIT' | translate:{ count: count, max: maxFeatured }"></span>
 </div>
 </ng-container>
 
@@ -43,7 +43,7 @@ Agregar servicio
     </ng-container>
 
     <ng-template #loading>
-<div class="loading-state">Cargando servicios...</div>
+<div class="loading-state">{{ 'SERVICES.LOADING' | translate }}</div>
 </ng-template>
 </main>
 </div>

@@ -33,6 +33,139 @@
     "BUSINESS_PROFILE": "Perfil del negocio",
     "HELP": "Ayuda"
   },
+  "OVERVIEW": {
+    "TITLE": "Panel general",
+    "NEW_APPOINTMENT": "Nueva cita",
+    "STATS": {
+      "TODAY_APPOINTMENTS": "Citas hoy",
+      "VS_YESTERDAY": "vs. ayer",
+      "CONFIRMED": "Confirmadas",
+      "OF_TOTAL": "del total",
+      "PENDING": "Pendientes",
+      "REVIEW_SOON": "Revisar pronto",
+      "ACTIVE_CLIENTS": "Clientes activos",
+      "THIS_MONTH": "este mes"
+    },
+    "APPOINTMENTS_TODAY": "Citas del día",
+    "FILTER_ALL": "Todas",
+    "FILTER_CONFIRMED": "Confirmadas",
+    "FILTER_PENDING": "Pendientes",
+    "FILTER_CANCELLED": "Canceladas",
+    "BTN_FILTER": "Filtrar",
+    "STATUS": {
+      "CONFIRMED": "Confirmada",
+      "PENDING": "Pendiente",
+      "CANCELLED": "Cancelada"
+    },
+    "EMPTY_APPOINTMENTS": "No hay citas para este filtro",
+    "ALERT": {
+      "TITLE": "ALERTA",
+      "SUBTITLE": "Próxima cita empieza pronto",
+      "ETA": "En {{ mins }} mins",
+      "REVIEW": "Revisar"
+    },
+    "RECENT_CLIENTS": "Clientes recientes",
+    "ADD_CLIENT": "Agregar cliente",
+    "TABLE": {
+      "CLIENT": "Cliente",
+      "SERVICE": "Servicio habitual",
+      "LAST_APPOINTMENT": "Última cita",
+      "STATUS": "Estado"
+    },
+    "EMPTY_CLIENTS": "Sin clientes registrados",
+    "VIEW_HISTORY": "Ver historial"
+  },
+  "AGENDA": {
+    "TITLE": "Agenda",
+    "NEW_APPOINTMENT": "Nueva cita",
+    "VIEW_DAILY": "Diaria",
+    "VIEW_WEEKLY": "Semanal",
+    "VIEW_MONTHLY": "Mensual",
+    "FILTER_ALL": "Todas",
+    "FILTER_CONFIRMED": "Confirmadas",
+    "FILTER_PENDING": "Pendientes",
+    "FILTER_CANCELLED": "Canceladas",
+    "SEARCH_PLACEHOLDER": "Buscar cliente o servicio...",
+    "TODAY": "Hoy",
+    "SIDEBAR_TITLE": "Detalles del día",
+    "SIDEBAR_SUBTITLE": "{{ count }} citas programadas",
+    "UPCOMING_TITLE": "PRÓXIMAS CITAS"
+  },
+  "APPOINTMENT": {
+    "FORM": {
+      "TITLE": "Nueva cita",
+      "REQUIRED_BANNER": "Los campos marcados con * son obligatorios",
+      "CLIENT_INFO": "Información del cliente",
+      "CLIENT_LABEL": "Cliente *",
+      "CLIENT_PLACEHOLDER": "Buscar cliente por nombre o teléfono...",
+      "CLIENT_HINT": "Comienza a escribir para buscar clientes existentes",
+      "DETAILS_TITLE": "Detalles de la cita",
+      "SERVICE_LABEL": "Servicio *",
+      "SERVICE_PLACEHOLDER": "Seleccionar servicio",
+      "DATE_LABEL": "Fecha *",
+      "TIME_LABEL": "Hora *",
+      "DURATION_LABEL": "Duración *",
+      "STATUS_LABEL": "Estado de la cita *",
+      "STATUS_CONFIRMED": "Confirmada",
+      "STATUS_PENDING": "Pendiente",
+      "STATUS_CANCELLED": "Cancelada",
+      "NOTES_TITLE": "Notas adicionales",
+      "NOTES_LABEL": "Notas",
+      "NOTES_PLACEHOLDER": "Información adicional sobre la cita...",
+      "NOTES_HINT": "Opcional: Agrega información relevante sobre la cita",
+      "REMINDER_LABEL": "Enviar recordatorio automático al cliente",
+      "REMINDER_HINT": "Se enviará un recordatorio 24 horas antes de la cita",
+      "ERROR_SUMMARY": "Por favor, revisa los campos marcados en rojo.",
+      "CANCEL": "Cancelar",
+      "SUBMIT": "Crear cita"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Servicios",
+    "ADD": "Agregar servicio",
+    "FEATURED_LIMIT": "Tienes <strong>{{ count }} de {{ max }}</strong> servicios destacados. Para destacar otro, quita primero uno de los actuales.",
+    "LOADING": "Cargando servicios...",
+    "ACTIONS": {
+        "EDIT": "Editar",
+        "DELETE": "Eliminar",
+        "FEATURE": "Destacar"
+    }
+  },
+  "BUSINESS": {
+    "TITLE": "Perfil del negocio",
+    "SAVE": "Guardar cambios",
+    "SECTIONS": {
+      "GENERAL": "Imagen y datos básicos",
+      "CONTACT": "Contacto y Ubicación",
+      "HOURS": "Horario de Atención"
+    },
+    "FIELDS": {
+      "NAME": "Nombre del negocio",
+      "NAME_PLACEHOLDER": "Ej. Veterinaria San Marcos",
+      "CATEGORY": "Categoría",
+      "DESCRIPTION": "Descripción",
+      "DESCRIPTION_PLACEHOLDER": "Cuéntanos sobre tu negocio...",
+      "PHONE": "Teléfono",
+      "EMAIL": "Email",
+      "ADDRESS": "Dirección",
+      "CITY": "Ciudad",
+      "COVER_IMAGE": "Imagen de portada",
+      "CHANGE_COVER": "Cambiar portada"
+    },
+    "ACTIONS": {
+      "PREVIEW": "Vista previa"
+    },
+    "ERRORS": {
+      "REQUIRED_NAME": "El nombre es obligatorio",
+      "MIN_LENGTH": "Mínimo 3 caracteres",
+      "REQUIRED_CATEGORY": "Selecciona una categoría",
+      "REQUIRED_DESCRIPTION": "La descripción es obligatoria",
+      "MAX_LENGTH": "Máximo 300 caracteres",
+      "REQUIRED_PHONE": "El teléfono es obligatorio",
+      "INVALID_PHONE": "Ingresa un número válido",
+      "REQUIRED_ADDRESS": "La dirección es obligatoria"
+    }
+  },
   "CLIENTS": {
     "TITLE": "Clientes",
     "NEW_CLIENT": "Nuevo cliente",

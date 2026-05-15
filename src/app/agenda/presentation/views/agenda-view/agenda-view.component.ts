@@ -7,6 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { AgendaApi } from '../../../infrastructure/agenda-api';
 import { Appointment, AppointmentStatus } from '../../../domain/model/appointment.entity';
 import { AppointmentFormComponent } from '../../components/appointment-form/appointment-form.component';
@@ -14,7 +15,7 @@ import { AppointmentFormComponent } from '../../components/appointment-form/appo
 export type CalendarViewMode = 'daily' | 'weekly' | 'monthly';
 
 @Component({
-  selector: 'app-agenda-views',
+  selector: 'app-agenda-view',
   standalone: true,
   imports: [
     CommonModule,
@@ -24,7 +25,8 @@ export type CalendarViewMode = 'daily' | 'weekly' | 'monthly';
     MatButtonToggleModule,
     MatInputModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    TranslateModule
   ],
   templateUrl: './agenda-view.component.html',
   styleUrls: ['./agenda-view.component.scss']
@@ -32,6 +34,7 @@ export type CalendarViewMode = 'daily' | 'weekly' | 'monthly';
 export class AgendaViewComponent implements OnInit {
   private agendaApi = inject(AgendaApi);
   private dialog = inject(MatDialog);
+  private translate = inject(TranslateService);
 
 
   viewMode = signal<CalendarViewMode>('weekly');
@@ -40,6 +43,7 @@ export class AgendaViewComponent implements OnInit {
   statusFilter = signal<AppointmentStatus | 'all'>('all');
   
   appointments = signal<Appointment[]>([]);
+  currentLang = signal(this.translate.currentLang || 'es');
   
   // Date helpers
   weekDays = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM'];
@@ -73,9 +77,10 @@ export class AgendaViewComponent implements OnInit {
 
   currentWeekRange = computed(() => {
     const curr = new Date(this.selectedDate());
+    const lang = this.currentLang();
     
     if (this.viewMode() === 'daily') {
-        return curr.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+        return curr.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     const first = curr.getDate() - curr.getDay() + (curr.getDay() === 0 ? -6 : 1);
@@ -86,10 +91,13 @@ export class AgendaViewComponent implements OnInit {
     const lastDay = new Date(this.selectedDate());
     lastDay.setDate(last);
 
+    const monthFormat = lang === 'es' ? 'long' : 'long';
+    const yearFormat = 'numeric';
+
     if (firstDay.getMonth() === lastDay.getMonth()) {
-        return `${firstDay.getDate()} - ${lastDay.getDate()} de ${firstDay.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}`;
+        return `${firstDay.getDate()} - ${lastDay.getDate()} ${lang === 'es' ? 'de' : ''} ${firstDay.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { month: monthFormat, year: yearFormat })}`;
     }
-    return `${firstDay.getDate()} ${firstDay.toLocaleDateString('es-ES', { month: 'short' })} - ${lastDay.getDate()} ${lastDay.toLocaleDateString('es-ES', { month: 'short', year: 'numeric' })}`;
+    return `${firstDay.getDate()} ${firstDay.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { month: 'short' })} - ${lastDay.getDate()} ${lastDay.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { month: 'short', year: yearFormat })}`;
   });
 
 
@@ -183,6 +191,9 @@ export class AgendaViewComponent implements OnInit {
 
   ngOnInit() {
     this.loadAppointments();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.currentLang.set(event.lang);
+    });
   }
 
   loadAppointments() {

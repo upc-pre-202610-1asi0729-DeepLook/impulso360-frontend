@@ -3,12 +3,12 @@
 
     <!-- ── Cabecera ──────────────────────────────────────── -->
     <div class="ov-header">
-        <h1 class="ov-title">Panel general</h1>
+        <h1 class="ov-title">{{ 'OVERVIEW.TITLE' | translate }}</h1>
         <div class="ov-header__right">
             <span class="ov-date">{{ todayLabel() }}</span>
-            <button class="btn-new-appt" type="button">
+            <button class="btn-new-appt" type="button" (click)="openNewAppointmentForm()">
                 <mat-icon>add</mat-icon>
-                Nueva cita
+                {{ 'OVERVIEW.NEW_APPOINTMENT' | translate }}
             </button>
         </div>
     </div>
@@ -20,10 +20,10 @@
             <div class="kpi-card__icon kpi-card__icon--blue">
                 <mat-icon>calendar_today</mat-icon>
             </div>
-            <p class="kpi-card__label">Citas hoy</p>
+            <p class="kpi-card__label">{{ 'OVERVIEW.STATS.TODAY_APPOINTMENTS' | translate }}</p>
             <p class="kpi-card__value">{{ store.stats().todayAppointments }}</p>
             <p class="kpi-card__sub">
-                <span class="kpi-sub--green">+{{ store.stats().todayVsYesterday }}</span> vs. ayer
+                <span class="kpi-sub--green">+{{ store.stats().todayVsYesterday }}</span> {{ 'OVERVIEW.STATS.VS_YESTERDAY' | translate }}
             </p>
         </div>
 
@@ -31,10 +31,10 @@
             <div class="kpi-card__icon kpi-card__icon--cyan">
                 <mat-icon>task_alt</mat-icon>
             </div>
-            <p class="kpi-card__label">Confirmadas</p>
+            <p class="kpi-card__label">{{ 'OVERVIEW.STATS.CONFIRMED' | translate }}</p>
             <p class="kpi-card__value">{{ store.stats().confirmed }}</p>
             <p class="kpi-card__sub">
-                <span class="kpi-sub--cyan">{{ store.stats().confirmedPercent }}%</span> del total
+                <span class="kpi-sub--cyan">{{ store.stats().confirmedPercent }}%</span> {{ 'OVERVIEW.STATS.OF_TOTAL' | translate }}
             </p>
         </div>
 
@@ -42,10 +42,10 @@
             <div class="kpi-card__icon kpi-card__icon--orange">
                 <mat-icon>schedule</mat-icon>
             </div>
-            <p class="kpi-card__label">Pendientes</p>
+            <p class="kpi-card__label">{{ 'OVERVIEW.STATS.PENDING' | translate }}</p>
             <p class="kpi-card__value">{{ store.stats().pending }}</p>
             <p class="kpi-card__sub">
-                <span class="kpi-sub--orange">Revisar</span> pronto
+                <span class="kpi-sub--orange">{{ 'OVERVIEW.STATS.REVIEW_SOON' | translate }}</span>
             </p>
         </div>
 
@@ -53,10 +53,10 @@
             <div class="kpi-card__icon kpi-card__icon--grey">
                 <mat-icon>group</mat-icon>
             </div>
-            <p class="kpi-card__label">Clientes activos</p>
+            <p class="kpi-card__label">{{ 'OVERVIEW.STATS.ACTIVE_CLIENTS' | translate }}</p>
             <p class="kpi-card__value">{{ store.stats().activeClients }}</p>
             <p class="kpi-card__sub">
-                <span class="kpi-sub--green">+{{ store.stats().newClientsThisMonth }}</span> este mes
+                <span class="kpi-sub--green">+{{ store.stats().newClientsThisMonth }}</span> {{ 'OVERVIEW.STATS.THIS_MONTH' | translate }}
             </p>
         </div>
 
@@ -68,15 +68,15 @@
         <!-- Citas del día -->
         <div class="appt-panel">
             <div class="appt-panel__header">
-                <h2 class="appt-panel__title">Citas del día</h2>
+                <h2 class="appt-panel__title">{{ 'OVERVIEW.APPOINTMENTS_TODAY' | translate }}</h2>
                 <div class="filter-tabs" role="tablist">
-                    <button class="filter-tab" [class.filter-tab--active]="isFilter('all')"       (click)="setFilter('all')">Todas</button>
-                    <button class="filter-tab" [class.filter-tab--active]="isFilter('confirmed')" (click)="setFilter('confirmed')">Confirmadas</button>
-                    <button class="filter-tab" [class.filter-tab--active]="isFilter('pending')"   (click)="setFilter('pending')">Pendientes</button>
-                    <button class="filter-tab" [class.filter-tab--active]="isFilter('cancelled')" (click)="setFilter('cancelled')">Canceladas</button>
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('all')"       (click)="setFilter('all')">{{ 'OVERVIEW.FILTER_ALL' | translate }}</button>
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('confirmed')" (click)="setFilter('confirmed')">{{ 'OVERVIEW.FILTER_CONFIRMED' | translate }}</button>
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('pending')"   (click)="setFilter('pending')">{{ 'OVERVIEW.FILTER_PENDING' | translate }}</button>
+                    <button class="filter-tab" [class.filter-tab--active]="isFilter('cancelled')" (click)="setFilter('cancelled')">{{ 'OVERVIEW.FILTER_CANCELLED' | translate }}</button>
                 </div>
                 <button class="btn-filter" type="button">
-                    <mat-icon>filter_list</mat-icon> Filtrar
+                    <mat-icon>filter_list</mat-icon> {{ 'OVERVIEW.BTN_FILTER' | translate }}
                 </button>
             </div>
 
@@ -98,11 +98,10 @@
                             </p>
                         </div>
                         <span class="appt-badge" [attr.data-status]="appt.status">
-              {{ appt.status === 'confirmed' ? 'Confirmada' :
-                            appt.status === 'pending'   ? 'Pendiente'  : 'Cancelada' }}
+              {{ 'OVERVIEW.STATUS.' + (appt.status | uppercase) | translate }}
             </span>
                         @if (appt.status === 'confirmed' || appt.status === 'pending') {
-                            <button class="appt-action-btn" type="button" title="Editar">
+                            <button class="appt-action-btn" type="button" [title]="'CLIENTS.ACTIONS.EDIT' | translate">
                                 <mat-icon>edit</mat-icon>
                             </button>
                         }
@@ -119,7 +118,7 @@
                         }
                         @if (appt.status !== 'cancelled') {
                             <button class="appt-action-btn appt-action-btn--cancel"
-                                    type="button" title="Cancelar" (click)="cancel(appt)">
+                                    type="button" [title]="'CLIENTS.ACTIONS.CANCEL' | translate" (click)="cancel(appt)">
                                 <mat-icon>close</mat-icon>
                             </button>
                         }
@@ -127,7 +126,7 @@
                 } @empty {
                     <li class="appt-empty">
                         <mat-icon>event_busy</mat-icon>
-                        <p>No hay citas para este filtro</p>
+                        <p>{{ 'OVERVIEW.EMPTY_APPOINTMENTS' | translate }}</p>
                     </li>
                 }
             </ul>
@@ -171,16 +170,16 @@
             @if (store.nextAlert(); as alert) {
                 <div class="alert-card">
                     <div class="alert-card__tag">
-                        <mat-icon>diamond</mat-icon> ALERTA
+                        <mat-icon>diamond</mat-icon> {{ 'OVERVIEW.ALERT.TITLE' | translate }}
                     </div>
-                    <p class="alert-card__title">Próxima cita empieza pronto</p>
+                    <p class="alert-card__title">{{ 'OVERVIEW.ALERT.SUBTITLE' | translate }}</p>
                     <p class="alert-card__detail">{{ alert.service }}</p>
                     <p class="alert-card__detail">{{ alert.clientName }}</p>
                     <div class="alert-card__footer">
                         <span class="alert-card__time">{{ alert.time }}</span>
-                        <span class="alert-card__eta">En 12 mins</span>
+                        <span class="alert-card__eta">{{ 'OVERVIEW.ALERT.ETA' | translate:{ mins: 12 } }}</span>
                     </div>
-                    <button class="alert-card__btn" type="button">Revisar</button>
+                    <button class="alert-card__btn" type="button">{{ 'OVERVIEW.ALERT.REVIEW' | translate }}</button>
                 </div>
             }
 
@@ -190,18 +189,18 @@
     <!-- ── Clientes recientes ─────────────────────────────── -->
     <div class="clients-panel">
         <div class="clients-panel__header">
-            <h2 class="clients-panel__title">Clientes recientes</h2>
+            <h2 class="clients-panel__title">{{ 'OVERVIEW.RECENT_CLIENTS' | translate }}</h2>
             <button class="btn-add-client" type="button">
-                <mat-icon>add</mat-icon> Agregar cliente
+                <mat-icon>add</mat-icon> {{ 'OVERVIEW.ADD_CLIENT' | translate }}
             </button>
         </div>
         <table class="clients-table">
             <thead>
             <tr>
-                <th>Cliente</th>
-                <th>Servicio habitual</th>
-                <th>Última cita</th>
-                <th>Estado</th>
+                <th>{{ 'OVERVIEW.TABLE.CLIENT' | translate }}</th>
+                <th>{{ 'OVERVIEW.TABLE.SERVICE' | translate }}</th>
+                <th>{{ 'OVERVIEW.TABLE.LAST_APPOINTMENT' | translate }}</th>
+                <th>{{ 'OVERVIEW.TABLE.STATUS' | translate }}</th>
                 <th></th>
             </tr>
             </thead>
@@ -221,17 +220,16 @@
                         <td>{{ c.lastAppointment }}</td>
                         <td>
               <span class="appt-badge" [attr.data-status]="c.status">
-                {{ c.status === 'confirmed' ? 'Confirmado' :
-                  c.status === 'pending'   ? 'Pendiente'  : 'Cancelado' }}
+                {{ 'OVERVIEW.STATUS.' + (c.status | uppercase) | translate }}
               </span>
                         </td>
                         <td>
-                            <button class="btn-history" type="button">Ver historial</button>
+                            <button class="btn-history" type="button">{{ 'OVERVIEW.VIEW_HISTORY' | translate }}</button>
                         </td>
                     </tr>
                 } @empty {
                     <tr>
-                        <td colspan="5" class="clients-empty">Sin clientes registrados</td>
+                        <td colspan="5" class="clients-empty">{{ 'OVERVIEW.EMPTY_CLIENTS' | translate }}</td>
                     </tr>
                 }
             </tbody>

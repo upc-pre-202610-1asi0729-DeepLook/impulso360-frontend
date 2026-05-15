@@ -13,6 +13,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ClientApiService } from '../../../../clients/infrastructure/client-api.service';
 import { Client } from '../../../../clients/domain/model/client.entity';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable, map, startWith } from 'rxjs';
 
 
@@ -35,7 +36,8 @@ import { Observable, map, startWith } from 'rxjs';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    TranslateModule
   ],
   templateUrl: './appointment-form.component.html',
   styleUrls: ['./appointment-form.component.scss']

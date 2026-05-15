@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,11 +9,12 @@ import { ServiceRepository } from '@app/servicios/domain/model/service.repositor
 import { ServiceDto } from '@app/servicios/application/dtos/service.dto';
 import { Service } from '@app/servicios/domain/model/service.entity';
 import { ServiceCardComponent } from '@app/servicios/presentation/components/service-card-component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-services-page',
     standalone: true,
-    imports: [CommonModule, ServiceCardComponent],
+    imports: [CommonModule, ServiceCardComponent, TranslateModule],
     templateUrl: './services-page-component.html',
     styleUrls: ['./services-page-component.css'],
 })

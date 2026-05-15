@@ -2,32 +2,32 @@
   <!-- Top Header -->
   <header class="agenda-header">
     <div class="header-top">
-      <h1 class="page-title">Agenda</h1>
+      <h1 class="page-title">{{ 'AGENDA.TITLE' | translate }}</h1>
       <button mat-flat-button color="primary" class="btn-new-appointment" (click)="openNewAppointmentForm()">
         <mat-icon>add</mat-icon>
-        Nueva cita
+        {{ 'AGENDA.NEW_APPOINTMENT' | translate }}
       </button>
     </div>
 
 
     <div class="header-controls">
       <div class="view-selectors">
-        <button mat-flat-button [class.active]="viewMode() === 'daily'" (click)="viewMode.set('daily')">Diaria</button>
-        <button mat-flat-button [class.active]="viewMode() === 'weekly'" (click)="viewMode.set('weekly')">Semanal</button>
-        <button mat-flat-button [class.active]="viewMode() === 'monthly'" (click)="viewMode.set('monthly')">Mensual</button>
+        <button mat-flat-button [class.active]="viewMode() === 'daily'" (click)="viewMode.set('daily')">{{ 'AGENDA.VIEW_DAILY' | translate }}</button>
+        <button mat-flat-button [class.active]="viewMode() === 'weekly'" (click)="viewMode.set('weekly')">{{ 'AGENDA.VIEW_WEEKLY' | translate }}</button>
+        <button mat-flat-button [class.active]="viewMode() === 'monthly'" (click)="viewMode.set('monthly')">{{ 'AGENDA.VIEW_MONTHLY' | translate }}</button>
       </div>
 
       <div class="status-filters">
-        <button mat-flat-button [class.active]="statusFilter() === 'all'" (click)="statusFilter.set('all')">Todas</button>
-        <button mat-flat-button [class.active]="statusFilter() === 'confirmed'" (click)="statusFilter.set('confirmed')">Confirmadas</button>
-        <button mat-flat-button [class.active]="statusFilter() === 'pending'" (click)="statusFilter.set('pending')">Pendientes</button>
-        <button mat-flat-button [class.active]="statusFilter() === 'cancelled'" (click)="statusFilter.set('cancelled')">Canceladas</button>
+        <button mat-flat-button [class.active]="statusFilter() === 'all'" (click)="statusFilter.set('all')">{{ 'AGENDA.FILTER_ALL' | translate }}</button>
+        <button mat-flat-button [class.active]="statusFilter() === 'confirmed'" (click)="statusFilter.set('confirmed')">{{ 'AGENDA.FILTER_CONFIRMED' | translate }}</button>
+        <button mat-flat-button [class.active]="statusFilter() === 'pending'" (click)="statusFilter.set('pending')">{{ 'AGENDA.FILTER_PENDING' | translate }}</button>
+        <button mat-flat-button [class.active]="statusFilter() === 'cancelled'" (click)="statusFilter.set('cancelled')">{{ 'AGENDA.FILTER_CANCELLED' | translate }}</button>
       </div>
 
       <div class="search-bar">
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-icon matPrefix>search</mat-icon>
-          <input matInput placeholder="Buscar cliente o servicio..." [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)">
+          <input matInput [placeholder]="'AGENDA.SEARCH_PLACEHOLDER' | translate" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)">
         </mat-form-field>
       </div>
     </div>
@@ -43,7 +43,7 @@
           <span class="current-range">{{ currentWeekRange() }}</span>
           <button mat-icon-button (click)="next()"><mat-icon>chevron_right</mat-icon></button>
         </div>
-        <button mat-stroked-button (click)="today()" class="btn-today">Hoy</button>
+        <button mat-stroked-button (click)="today()" class="btn-today">{{ 'AGENDA.TODAY' | translate }}</button>
       </div>
 
       <!-- Weekly View Grid -->
@@ -131,33 +131,24 @@
 
       <section class="day-details card">
         <div class="details-header">
-          <h3>Jueves 14 de mayo</h3>
-          <span class="subtitle">4 citas programadas</span>
+          <h3>{{ 'AGENDA.SIDEBAR_TITLE' | translate }}</h3>
+          <span class="subtitle">{{ 'AGENDA.SIDEBAR_SUBTITLE' | translate:{ count: getAppointmentsForDay(formatLocalDate(selectedDate())).length } }}</span>
         </div>
         <div class="details-list">
-          <div class="detail-item" *ngFor="let app of getAppointmentsFor('2026-05-14', '09:00')">
+          <div class="detail-item" *ngFor="let app of getAppointmentsForDay(formatLocalDate(selectedDate()))">
             <span class="time">{{ app.time }}</span>
             <div class="info">
               <span class="name">{{ app.clientName }}</span>
               <span class="svc">{{ app.service }}</span>
             </div>
-            <span class="badge" [ngClass]="app.status">{{ app.status }}</span>
-          </div>
-          <!-- More items hardcoded for demo feel -->
-          <div class="detail-item">
-            <span class="time">10:30</span>
-            <div class="info">
-                <span class="name">Carlos Mendoza</span>
-                <span class="svc">Vacunación</span>
-            </div>
-            <span class="badge pending">Pendiente</span>
+            <span class="badge" [ngClass]="app.status">{{ 'OVERVIEW.STATUS.' + (app.status | uppercase) | translate }}</span>
           </div>
         </div>
       </section>
 
       <!-- Upcoming Appointments -->
       <section class="upcoming-appointments card">
-        <h4>PRÓXIMAS CITAS</h4>
+        <h4>{{ 'AGENDA.UPCOMING_TITLE' | translate }}</h4>
         <div class="upcoming-item">
           <div class="date-box">
             <span class="day">15</span>

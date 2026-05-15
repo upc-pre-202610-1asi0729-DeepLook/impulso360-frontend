@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -12,6 +12,7 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { BusinessProfileStore } from '@app/business-profile/application/store/business-profile.store';
 import { ServiceCategory } from '@app/business-profile/domain/model/service-category.enum';
@@ -30,7 +31,8 @@ import { ServiceCategory } from '@app/business-profile/domain/model/service-cate
         MatSnackBarModule,
         MatProgressSpinnerModule,
         MatDividerModule,
-        MatIconModule
+        MatIconModule,
+        TranslateModule
     ],
     templateUrl: './business-profile.component.html',
     styleUrl: './business-profile.component.css'
