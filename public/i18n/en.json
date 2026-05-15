@@ -233,5 +233,29 @@
       "PHONE_HINT": "Include country code if international",
       "NOTES_HINT": "Optional: Add relevant information about the client"
     }
+  },
+  "HELP": {
+    "EYEBROW": "Help center",
+    "TITLE": "How can we help you?",
+    "DESCRIPTION": "Search guides, tutorials, and quick answers to learn how to use Impulso360 easily.",
+    "SEARCH_PLACEHOLDER": "Search help...",
+
+    "TUTORIAL_TITLE": "Interactive tutorial",
+    "TUTORIAL_DESCRIPTION": "Complete these steps to set up your business and start using Impulso360.",
+    "QUICK_GUIDES_TITLE": "Quick guides",
+    "QUICK_GUIDES_DESCRIPTION": "Learn the main features in just a few minutes.",
+    "FAQ_TITLE": "Frequently asked questions",
+    "FAQ_DESCRIPTION": "Solve the most common questions about using the platform.",
+
+    "STEPS_LABEL": "steps",
+    "CONTINUE": "Continue",
+    "EMPTY_GUIDES": "No guides related to your search were found.",
+    "EMPTY_FAQS": "No questions related to your search were found.",
+
+    "STATUS": {
+      "COMPLETED": "Completed",
+      "IN_PROGRESS": "In progress",
+      "PENDING": "Pending"
+    }
   }
 }
