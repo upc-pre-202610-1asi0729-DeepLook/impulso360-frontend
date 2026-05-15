@@ -123,12 +123,19 @@
   "SERVICES": {
     "TITLE": "Services",
     "ADD": "Add service",
-    "FEATURED_LIMIT": "You have <strong>{{ count }} of {{ max }}</strong> featured services. To feature another, remove one of the current ones first.",
+    "FEATURED_LIMIT": "You have {{ count }} of {{ max }} featured services. To feature another, first remove one of the current ones.",
+    "FEATURED_LABEL": "Featured",
     "LOADING": "Loading services...",
     "ACTIONS": {
         "EDIT": "Edit",
         "DELETE": "Delete",
-        "FEATURE": "Feature"
+        "FEATURE": "Feature",
+        "SAVE_SERVICE": "Save service"
+    },
+    "FIELDS": {
+        "NAME": "Service Name",
+        "CATEGORY": "Category",
+        "DESCRIPTION": "Description"
     }
   },
   "BUSINESS": {

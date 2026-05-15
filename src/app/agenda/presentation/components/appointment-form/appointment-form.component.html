@@ -35,10 +35,7 @@
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>{{ 'APPOINTMENT.FORM.SERVICE_LABEL' | translate }}</mat-label>
             <mat-select [placeholder]="'APPOINTMENT.FORM.SERVICE_PLACEHOLDER' | translate" formControlName="service">
-              <mat-option value="Consulta general">{{ 'Consulta general' }}</mat-option>
-              <mat-option value="Vacunación">{{ 'Vacunación' }}</mat-option>
-              <mat-option value="Desparasitación">{{ 'Desparasitación' }}</mat-option>
-              <mat-option value="Baño y corte">{{ 'Baño y corte' }}</mat-option>
+              <mat-option *ngFor="let svc of services" [value]="svc.name">{{ svc.name }}</mat-option>
             </mat-select>
             <mat-icon matSuffix>category</mat-icon>
           </mat-form-field>

@@ -1,49 +1,50 @@
-﻿<div class="service-card" [class.service-card--featured]="service.isFeatured" [class.service-card--inactive]="!service.isActive">
-    <!-- Featured badge -->
-    <div *ngIf="service.isFeatured" class="card-featured-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-        </svg>
+<article class="service-card" [class.service-card--featured]="service.isFeatured">
+    <!-- Featured Badge -->
+    <div *ngIf="service.isFeatured" class="service-card__featured-tag">
         Destacado
     </div>
 
-    <!-- Card content -->
-    <div class="card-header">
-        <h3 class="card-title">{{ service.name }}</h3>
-        <span class="card-status" [class.card-status--active]="service.isActive" [class.card-status--inactive]="!service.isActive">
-      {{ service.status | titlecase }}
-    </span>
-    </div>
-
-    <p class="card-category">{{ service.category }}</p>
-    <p class="card-description">{{ service.description }}</p>
-
-    <div class="card-footer">
-        <span class="card-price">S/ {{ service.price }}</span>
-
-        <div class="card-actions">
-            <!-- Feature button (only if not featured and not at limit) -->
-            <button
-                    *ngIf="!service.isFeatured"
-                    class="btn btn--outline"
-                    [disabled]="!canFeature"
-                    (click)="onToggleFeature()"
-                    title="Destacar servicio">
-                Destacar
-            </button>
-
-            <button class="btn-icon" (click)="onEdit()" title="Editar">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    <div class="service-card__header">
+        <div class="service-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+        </div>
+        <div class="service-card__top-actions">
+            <!-- Star button -->
+            <button class="btn-star" (click)="onToggleFeature()" [class.active]="service.isFeatured" [disabled]="!canFeature && !service.isFeatured">
+                <svg width="20" height="20" viewBox="0 0 24 24" [attr.fill]="service.isFeatured ? '#00d2ff' : 'none'" [attr.stroke]="service.isFeatured ? '#00d2ff' : 'currentColor'" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>
             </button>
+            <span class="service-card__status" [class.service-card__status--inactive]="service.status === 'inactivo'">
+                {{ service.status | titlecase }}
+            </span>
+        </div>
+    </div>
 
-            <button *ngIf="service.isFeatured || service.isActive" class="btn-icon btn-icon--danger" (click)="onDelete()" title="Eliminar">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+    <div class="service-card__content">
+        <h3 class="service-card__name">{{ service.name }}</h3>
+        <p class="service-card__category">{{ service.category }}</p>
+        <p class="service-card__description">{{ service.description }}</p>
+    </div>
+
+    <div class="service-card__footer">
+        <div class="service-card__price">
+            <span class="currency">S/</span>
+            <span class="amount">{{ service.price }}</span>
+        </div>
+        <div class="service-card__actions">
+            <button class="btn-icon" (click)="onEdit()" aria-label="Editar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+            </button>
+            <button class="btn-icon btn-icon--danger" (click)="onDelete()" aria-label="Eliminar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
                 </svg>
             </button>
         </div>
     </div>
-</div>
+</article>

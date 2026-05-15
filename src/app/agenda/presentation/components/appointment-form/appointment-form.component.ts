@@ -14,6 +14,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ClientApiService } from '../../../../clients/infrastructure/client-api.service';
 import { Client } from '../../../../clients/domain/model/client.entity';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpServiceRepository } from '../../../../servicios/infrastructure/http-service.repository';
+import { Service } from '../../../../servicios/domain/model/service.entity';
 import { Observable, map, startWith } from 'rxjs';
 
 
@@ -47,8 +49,10 @@ export class AppointmentFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<AppointmentFormComponent>);
   private clientApi = inject(ClientApiService);
+  private serviceApi = inject(HttpServiceRepository);
 
   clients: Client[] = [];
+  services: Service[] = [];
   filteredClients!: Observable<Client[]>;
 
   appointmentForm: FormGroup = this.fb.group({
@@ -66,6 +70,10 @@ export class AppointmentFormComponent implements OnInit {
     this.clientApi.getAll().subscribe(data => {
       this.clients = data;
       this.setupAutocomplete();
+    });
+
+    this.serviceApi.getAll().subscribe(data => {
+      this.services = data;
     });
   }
 

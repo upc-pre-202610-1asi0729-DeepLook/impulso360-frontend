@@ -259,6 +259,26 @@
       "status": "pending",
       "note": "",
       "id": "HvLCw_5fLvA"
+    },
+    {
+      "date": "2026-05-24",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Desparasitación",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "sPp1IWb2j0E"
+    },
+    {
+      "date": "2026-05-30",
+      "time": "09:00",
+      "clientName": "Sofía Vargas",
+      "service": "Fotos",
+      "category": "Veterinaria",
+      "status": "pending",
+      "note": "",
+      "id": "bADTfPImir4"
     }
   ],
   "clients": [
@@ -447,6 +467,53 @@
       "time": "Ayer, 17:30",
       "read": true,
       "clientId": 6
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "name": "Consulta general",
+      "category": "Veterinaria",
+      "description": "Evaluación general del estado de salud de la mascota.",
+      "price": 50,
+      "status": "activo",
+      "isFeatured": false
+    },
+    {
+      "id": "2",
+      "name": "Vacunación",
+      "category": "Prevención",
+      "description": "Aplicación de vacunas según el calendario del animal.",
+      "price": 35,
+      "status": "activo",
+      "isFeatured": false
+    },
+    {
+      "id": "3",
+      "name": "Baño y corte",
+      "category": "Estética",
+      "description": "Baño completo y corte de pelo a medida.",
+      "price": 45,
+      "status": "activo",
+      "isFeatured": false
+    },
+    {
+      "id": "4",
+      "name": "Desparasitación",
+      "category": "Prevención",
+      "description": "Tratamiento contra parásitos internos y externos.",
+      "price": 30,
+      "status": "inactivo",
+      "isFeatured": false
+    },
+    {
+      "id": "hOJkTexu5eo",
+      "name": "Fotos",
+      "category": "Fotos",
+      "description": "asdad",
+      "price": 45,
+      "status": "activo",
+      "isFeatured": false
     }
   ],
   "profile": {},

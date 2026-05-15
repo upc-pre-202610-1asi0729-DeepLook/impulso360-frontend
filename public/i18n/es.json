@@ -122,13 +122,20 @@
   },
   "SERVICES": {
     "TITLE": "Servicios",
-    "ADD": "Agregar servicio",
-    "FEATURED_LIMIT": "Tienes <strong>{{ count }} de {{ max }}</strong> servicios destacados. Para destacar otro, quita primero uno de los actuales.",
+    "ADD": "Añadir servicio",
     "LOADING": "Cargando servicios...",
+    "FEATURED_LIMIT": "Tienes {{ count }} de {{ max }} servicios destacados. Para destacar otro, quita primero uno de los actuales.",
+    "FEATURED_LABEL": "Destacado",
     "ACTIONS": {
         "EDIT": "Editar",
         "DELETE": "Eliminar",
-        "FEATURE": "Destacar"
+        "FEATURE": "Destacar",
+        "SAVE_SERVICE": "Guardar servicio"
+    },
+    "FIELDS": {
+        "NAME": "Nombre del servicio",
+        "CATEGORY": "Categoría",
+        "DESCRIPTION": "Descripción"
     }
   },
   "BUSINESS": {
