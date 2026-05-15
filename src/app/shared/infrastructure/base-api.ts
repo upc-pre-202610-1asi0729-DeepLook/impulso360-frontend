@@ -17,6 +17,9 @@ export class BaseApi {
   }
 
   protected get resourceUrl(): string {
+    if (environment.production) {
+      return `${this.baseUrl}${this.resourcePath}.json`;
+    }
     return `${this.baseUrl}${this.resourcePath}`;
   }
 }

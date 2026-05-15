@@ -1,10 +1,11 @@
 /**
  * @summary Overview API — overview infrastructure layer.
- * Consume el json-server para obtener datos del panel general.
+ * Consume Firebase Realtime Database en producción y json-server en desarrollo.
  */
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
-import { BaseApi } from '../../shared/infrastructure/base-api';
+import { map, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { BaseApi } from '@app/shared/infrastructure/base-api';
 import { AppointmentSummary } from '../domain/model/appointment-summary.entity';
 import { ClientSummary } from '../domain/model/client-summary.entity';
 import { OverviewStats } from '../domain/model/overview-stats.entity';
@@ -18,10 +19,21 @@ export class OverviewApi extends BaseApi {
 
     override get resourcePath(): string { return '/appointments'; }
 
+    /** Convierte respuesta de Firebase (objeto) o json-server (array) a array */
+    private toArray<T>(data: any): T[] {
+        if (!data) return [];
+        if (Array.isArray(data)) return data as T[];
+        return Object.values(data) as T[];
+    }
+
     getStats(): Observable<OverviewStats> {
-        // Se derivan de los appointments; json-server no tiene endpoint de stats
-        return this.http.get<any[]>(`${this.baseUrl}/appointments`).pipe(
-            map(list => {
+        const url = environment.production
+            ? `${this.baseUrl}/appointments.json`
+            : `${this.baseUrl}/appointments`;
+
+        return this.http.get<any>(`${url}`).pipe(
+            map(data => {
+                const list = this.toArray<any>(data);
                 const stats = new OverviewStats();
                 stats.todayAppointments   = list.length;
                 stats.todayVsYesterday    = 2;
@@ -37,22 +49,36 @@ export class OverviewApi extends BaseApi {
     }
 
     getTodayAppointments(): Observable<AppointmentSummary[]> {
-        return this.http
-            .get<any[]>(`${this.baseUrl}/appointments`)
-            .pipe(map(list => list.map(r => this.apptAssembler.toEntity(r))));
+        const url = environment.production
+            ? `${this.baseUrl}/appointments.json`
+            : `${this.baseUrl}/appointments`;
+
+        return this.http.get<any>(url).pipe(
+            map(data => this.toArray<any>(data).map(r => this.apptAssembler.toEntity(r)))
+        );
     }
 
     getRecentClients(): Observable<ClientSummary[]> {
-        return this.http
-            .get<any[]>(`${this.baseUrl}/clients`)
-            .pipe(map(list => list.map(r => this.clientAssembler.toEntity(r))));
+        const url = environment.production
+            ? `${this.baseUrl}/clients.json`
+            : `${this.baseUrl}/clients`;
+
+        return this.http.get<any>(url).pipe(
+            map(data => this.toArray<any>(data).map(r => this.clientAssembler.toEntity(r)))
+        );
     }
 
     confirmAppointment(id: number): Observable<any> {
-        return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status: 'confirmed' });
+        const url = environment.production
+            ? `${this.baseUrl}/appointments/${id}.json`
+            : `${this.baseUrl}/appointments/${id}`;
+        return this.http.patch(url, { status: 'confirmed' });
     }
 
     cancelAppointment(id: number): Observable<any> {
-        return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status: 'cancelled' });
+        const url = environment.production
+            ? `${this.baseUrl}/appointments/${id}.json`
+            : `${this.baseUrl}/appointments/${id}`;
+        return this.http.patch(url, { status: 'cancelled' });
     }
 }
