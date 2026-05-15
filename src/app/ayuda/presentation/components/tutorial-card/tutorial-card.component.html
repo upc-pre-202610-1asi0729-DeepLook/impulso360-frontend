@@ -1,0 +1,56 @@
+﻿<section class="help-card tutorial-card">
+    <div class="section-header">
+        <div>
+            <h2>{{ 'HELP.TUTORIAL_TITLE' | translate }}</h2>
+            <p>{{ 'HELP.TUTORIAL_DESCRIPTION' | translate }}</p>
+        </div>
+
+        <span class="progress-label">
+      {{ steps.length }} {{ 'HELP.STEPS_LABEL' | translate }}
+    </span>
+    </div>
+
+    <div class="steps-list">
+        <div
+                *ngFor="let step of steps"
+                class="step-item"
+                [class.step-item--completed]="step.status === 'completed'"
+                [class.step-item--active]="step.status === 'in-progress'"
+                [class.step-item--pending]="step.status === 'pending'"
+        >
+            <div class="step-marker">
+                <mat-icon *ngIf="step.status === 'completed'">check</mat-icon>
+                <span *ngIf="step.status !== 'completed'">{{ step.number }}</span>
+            </div>
+
+            <div class="step-content">
+                <h3>{{ step.title }}</h3>
+                <p>{{ step.description }}</p>
+
+                <span class="step-status">
+          <ng-container *ngIf="step.status === 'completed'">
+            {{ 'HELP.STATUS.COMPLETED' | translate }}
+          </ng-container>
+
+          <ng-container *ngIf="step.status === 'in-progress'">
+            {{ 'HELP.STATUS.IN_PROGRESS' | translate }}
+          </ng-container>
+
+          <ng-container *ngIf="step.status === 'pending'">
+            {{ 'HELP.STATUS.PENDING' | translate }}
+          </ng-container>
+        </span>
+            </div>
+
+            <button
+                    *ngIf="step.status === 'in-progress'"
+                    mat-flat-button
+                    type="button"
+                    class="continue-button"
+                    (click)="onContinue(step)"
+            >
+                {{ 'HELP.CONTINUE' | translate }}
+            </button>
+        </div>
+    </div>
+</section>
