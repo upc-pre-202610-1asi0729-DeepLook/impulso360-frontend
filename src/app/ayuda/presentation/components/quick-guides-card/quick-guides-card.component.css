@@ -1,0 +1,91 @@
+﻿.help-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
+}
+
+.section-header {
+    margin-bottom: 18px;
+}
+
+.section-header h2 {
+    margin: 0;
+    color: #0c2340;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.section-header p {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 0.92rem;
+}
+
+.guides-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.guide-item {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 44px 1fr 24px;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.18s ease;
+}
+
+.guide-item:hover {
+    background: #f9fafb;
+    border-color: #f37048;
+    transform: translateY(-1px);
+}
+
+.guide-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: #eff6ff;
+    color: #0c2340;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.guide-content strong {
+    color: #111827;
+    font-size: 0.95rem;
+}
+
+.guide-content small {
+    color: #6b7280;
+    font-size: 0.82rem;
+}
+
+.arrow-icon {
+    color: #9ca3af;
+}
+
+.empty-state {
+    padding: 18px;
+    background: #f9fafb;
+    border: 1px dashed #d1d5db;
+    border-radius: 14px;
+    color: #6b7280;
+    text-align: center;
+}
