@@ -1,0 +1,50 @@
+﻿<div class="help-page">
+    <section class="help-hero">
+        <div class="hero-content">
+            <span class="eyebrow">{{ 'HELP.EYEBROW' | translate }}</span>
+
+            <h1>{{ 'HELP.TITLE' | translate }}</h1>
+
+            <p>
+                {{ 'HELP.DESCRIPTION' | translate }}
+            </p>
+
+            <div class="search-box">
+                <mat-icon>search</mat-icon>
+
+                <input
+                        type="text"
+                        [formControl]="searchControl"
+                        [placeholder]="'HELP.SEARCH_PLACEHOLDER' | translate"
+                />
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <mat-icon>support_agent</mat-icon>
+
+            <h2>{{ 'HELP.TUTORIAL_TITLE' | translate }}</h2>
+            <p>{{ 'HELP.TUTORIAL_DESCRIPTION' | translate }}</p>
+        </div>
+    </section>
+
+    <section class="help-content">
+        <div class="main-column">
+            <app-tutorial-card
+                    [steps]="store.tutorialSteps()"
+                    (continueStep)="continueTutorialStep($event)"
+            />
+
+            <app-faq-card
+                    [faqs]="store.filteredFaqs()"
+            />
+        </div>
+
+        <aside class="side-column">
+            <app-quick-guides-card
+                    [guides]="store.filteredGuides()"
+                    (openGuide)="openGuide($event)"
+            />
+        </aside>
+    </section>
+</div>
