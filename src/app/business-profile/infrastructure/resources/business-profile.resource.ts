@@ -1,4 +1,4 @@
-﻿export interface BusinessNameResource {
+export interface BusinessNameResource {
     legalName: string;
     publicDisplayName: string;
 }
@@ -34,4 +34,5 @@ export interface BusinessProfileResource {
     category: string;
     isPublished: boolean;
     services: ServiceResource[];
+    coverImage?: string;
 }

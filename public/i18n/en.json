@@ -257,5 +257,50 @@
       "IN_PROGRESS": "In progress",
       "PENDING": "Pending"
     }
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "MOCK_DATE": "Monday, April 26, 2026",
+    "MARK_ALL_READ": "Mark all as read",
+    "ALL_NOTIFICATIONS": "All notifications",
+    "TABS": {
+      "ALL": "All",
+      "UNREAD": "Unread",
+      "ALERTS": "Alerts"
+    },
+    "ACTIONS": {
+      "VIEW_APPOINTMENT": "View appointment",
+      "CONFIRM": "Confirm",
+      "VIEW": "View"
+    },
+    "ACCESSIBILITY": {
+      "UNREAD": "Unread"
+    },
+    "EMPTY": "No notifications",
+    "SUMMARY": {
+      "TITLE": "Daily summary",
+      "PENDING": "Pending confirmation",
+      "CONFIRMED": "Confirmed today",
+      "CANCELLED": "Cancelled"
+    },
+    "CONFIG": {
+      "TITLE": "Configure alerts",
+      "NEXT_APPOINTMENT": {
+        "TITLE": "Next appointment (30 min)",
+        "DESC": "Alert before each appointment"
+      },
+      "PENDING": {
+        "TITLE": "Pending appointments",
+        "DESC": "Remind confirmations"
+      },
+      "DAILY_SUMMARY": {
+        "TITLE": "Daily summary",
+        "DESC": "At the start of the day"
+      },
+      "TOMORROW_APPOINTMENTS": {
+        "TITLE": "Tomorrow appointments",
+        "DESC": "Nightly reminder"
+      }
+    }
   }
 }

@@ -41,7 +41,9 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
 
     form!: FormGroup;
     loading$!: Observable<boolean>;
+    profile$!: Observable<any>;
     categories = Object.values(ServiceCategory);
+    selectedCoverImage: string | null = null;
 
     private destroy$ = new Subject<void>();
 
@@ -53,6 +55,7 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.loading$ = this.store.loading$;
+        this.profile$ = this.store.profile$;
 
         this.form = this.fb.group({
             publicDisplayName: ['', [Validators.required, Validators.minLength(3)]],
@@ -81,6 +84,10 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
                     city: profile.address.city,
                     reference: profile.address.reference
                 });
+                
+                if (profile.coverImage) {
+                    this.selectedCoverImage = profile.coverImage;
+                }
             });
     }
 
@@ -89,6 +96,20 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
             this.form.markAllAsTouched();
             return;
         }
+
+        const vals = this.form.value;
+        this.store.updateProfileData({
+            legalName: vals.legalName,
+            publicDisplayName: vals.publicDisplayName,
+            category: vals.category,
+            description: vals.description,
+            phone: vals.phone,
+            street: vals.street,
+            city: vals.city,
+            reference: vals.reference,
+            coverImage: this.selectedCoverImage || undefined
+        });
+
         this.snackBar.open('Cambios guardados correctamente', 'Cerrar', {
             duration: 3000,
             panelClass: ['snack-success']
@@ -99,6 +120,18 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
         this.snackBar.open('Vista previa no disponible en modo demo', 'Cerrar', {
             duration: 2500
         });
+    }
+
+    onCoverFileSelected(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                this.selectedCoverImage = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
     }
 
     ngOnDestroy(): void {

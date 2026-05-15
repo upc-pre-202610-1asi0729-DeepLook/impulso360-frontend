@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { BusinessProfileResource } from '../resources/business-profile.resource'
 @Injectable({ providedIn: 'root' })
 export class BusinessProfileService implements BusinessProfileRepository {
 
-    private readonly dataUrl = 'assets/data/business-profile.json';
+    private readonly dataUrl = '/assets/data/business-profile.json';
 
     constructor(
         private http: HttpClient,

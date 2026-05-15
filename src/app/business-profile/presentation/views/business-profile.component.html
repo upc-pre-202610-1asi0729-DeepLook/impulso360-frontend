@@ -12,6 +12,30 @@
         </div>
     }
 
+    <!-- Profile Presentation Block -->
+    @if (profile$ | async; as profile) {
+        <div class="profile-presentation-card">
+            <div class="profile-presentation-cover">
+                @if (profile.coverImage) {
+                    <img [src]="profile.coverImage" alt="Cover" class="cover-image-preview" />
+                } @else {
+                    <div class="cover-placeholder-preview">
+                        <mat-icon>storefront</mat-icon>
+                    </div>
+                }
+            </div>
+            <div class="profile-presentation-info">
+                <h2 class="profile-name">{{ profile.name.publicDisplayName }}</h2>
+                <p class="profile-category">{{ profile.category | titlecase }}</p>
+                <p class="profile-description">{{ profile.description }}</p>
+                <div class="profile-contact">
+                    <span class="contact-item"><mat-icon>phone</mat-icon> {{ profile.phone }}</span>
+                    <span class="contact-item"><mat-icon>location_on</mat-icon> {{ profile.address.street }}, {{ profile.address.city }}</span>
+                </div>
+            </div>
+        </div>
+    }
+
     @if (!(loading$ | async)) {
 
         <!-- Imagen y datos básicos -->
@@ -25,9 +49,15 @@
 
                     <!-- Cover image placeholder -->
                     <span class="cover-label">{{ 'BUSINESS.FIELDS.COVER_IMAGE' | translate }}</span>
-                    <div class="cover-placeholder">
-                        <mat-icon>image</mat-icon>
-                        <span>{{ 'BUSINESS.FIELDS.CHANGE_COVER' | translate }}</span>
+                    <input type="file" #coverInput style="display: none;" accept="image/*" (change)="onCoverFileSelected($event)">
+                    
+                    <div class="cover-placeholder" (click)="coverInput.click()">
+                        @if (selectedCoverImage) {
+                            <img [src]="selectedCoverImage" alt="Cover Preview" class="cover-image-preview" style="border-radius: 10px;"/>
+                        } @else {
+                            <mat-icon>image</mat-icon>
+                            <span>{{ 'BUSINESS.FIELDS.CHANGE_COVER' | translate }}</span>
+                        }
                     </div>
 
                     <!-- Fila: Nombre + Categoría -->
