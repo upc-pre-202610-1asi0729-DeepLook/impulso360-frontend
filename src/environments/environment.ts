@@ -3,6 +3,5 @@
  */
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:3000'
+  baseUrl: 'https://impulso360-frontend-default-rtdb.firebaseio.com'
 };
-
