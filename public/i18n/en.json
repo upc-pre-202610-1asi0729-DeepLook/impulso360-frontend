@@ -23,7 +23,8 @@
     "LANGUAGE": "Language",
     "LANGUAGE_ARIA": "Select application language",
     "LANG_ES": "ES",
-    "LANG_EN": "EN"
+    "LANG_EN": "EN",
+    "LOGOUT": "Log out"
   },
   "VIEWS": {
     "PANEL": "Overview",
@@ -257,6 +258,48 @@
       "IN_PROGRESS": "In progress",
       "PENDING": "Pending"
     }
+  },
+  "CLIENT": {
+    "NAV_HOME": "Home",
+    "NAV_MY_APPOINTMENTS": "My Appointments",
+    "NAV_PROFILE": "My Profile",
+    "PROFILE_TITLE": "My Profile",
+    "PROFILE_SUBTITLE": "Update your personal information",
+    "PROFILE_NAME": "Full name",
+    "PROFILE_EMAIL": "Email",
+    "PROFILE_EMAIL_HINT": "Email cannot be changed",
+    "PROFILE_PHONE": "Phone",
+    "PROFILE_SAVE_BTN": "Save changes",
+    "PROFILE_SAVED": "Profile updated successfully",
+    "WELCOME": "Welcome",
+    "MY_APPOINTMENTS": "My appointments",
+    "BACK_TO_BUSINESSES": "View businesses",
+    "MY_APPOINTMENTS_TITLE": "My scheduled appointments",
+    "NO_APPOINTMENTS": "You have no scheduled appointments.",
+    "BUSINESS": "Business",
+    "STATUS": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled",
+      "ATTENDED": "Attended"
+    },
+    "SEARCH_TITLE": "Search for a business to book your appointment",
+    "SEARCH_PLACEHOLDER": "Search by name, category...",
+    "SEARCH_EXAMPLE": "Ex: Veterinary, Grooming...",
+    "LOADING_BUSINESSES": "Loading businesses...",
+    "NO_BUSINESSES": "No businesses found.",
+    "BACK_TO_RESULTS": "Back to results",
+    "SERVICES": "Services",
+    "MIN": "min",
+    "BOOK_TITLE": "Book an appointment",
+    "BOOK_SUCCESS": "Appointment booked successfully!",
+    "BOOK_ANOTHER": "Book another",
+    "SELECT_SERVICE": "Select a service",
+    "SELECT_SERVICE_FIRST": "Please select a service first",
+    "SELECT_DATE": "Select a date",
+    "AVAILABLE_TIMES": "Available times",
+    "NO_TIMES": "No available times for this date.",
+    "CONFIRM_BOOKING": "Confirm booking"
   },
   "NOTIFICATIONS": {
     "TITLE": "Notifications",

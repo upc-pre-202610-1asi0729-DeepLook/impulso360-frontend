@@ -2,7 +2,7 @@
 import { Service } from './service.entity';
 
 export abstract class ServiceRepository {
-    abstract getAll(): Observable<Service[]>;
+    abstract getAll(businessId?: number | string): Observable<Service[]>;
     abstract getById(id: string): Observable<Service | undefined>;
     abstract save(service: Service): Observable<Service>;
     abstract delete(id: string): Observable<void>;

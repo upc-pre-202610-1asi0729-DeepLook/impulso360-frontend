@@ -26,7 +26,7 @@ export interface ServiceResource {
 }
 
 export interface BusinessProfileResource {
-    id: number;
+    id: number | string;
     name: BusinessNameResource;
     address: AddressResource;
     description: string;
@@ -35,4 +35,5 @@ export interface BusinessProfileResource {
     isPublished: boolean;
     services: ServiceResource[];
     coverImage?: string;
+    ownerId?: string;
 }

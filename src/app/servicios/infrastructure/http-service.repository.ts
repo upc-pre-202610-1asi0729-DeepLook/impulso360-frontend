@@ -11,8 +11,9 @@ export class HttpServiceRepository extends ServiceRepository {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = 'http://localhost:3000/services';
 
-  override getAll(): Observable<Service[]> {
-    return this.http.get<ServiceProps[]>(this.baseUrl).pipe(
+  override getAll(businessId?: number | string): Observable<Service[]> {
+    const params = businessId ? `?businessId=${businessId}` : '';
+    return this.http.get<ServiceProps[]>(`${this.baseUrl}${params}`).pipe(
       map(props => props.map(p => Service.create(p)))
     );
   }

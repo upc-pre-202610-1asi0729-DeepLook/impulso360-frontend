@@ -15,7 +15,8 @@ export class ClientAssembler {
             resource.lastAppointment,
             resource.totalAppointments,
             resource.attendedAppointments,
-            resource.history ?? []
+            resource.history ?? [],
+            resource.businessId
         );
     }
 
@@ -35,7 +36,8 @@ export class ClientAssembler {
             lastAppointment: client.lastAppointment ?? '',
             totalAppointments: client.totalAppointments ?? 0,
             attendedAppointments: client.attendedAppointments ?? 0,
-            history: client.history ?? []
+            history: client.history ?? [],
+            businessId: client.businessId
         };
     }
 }

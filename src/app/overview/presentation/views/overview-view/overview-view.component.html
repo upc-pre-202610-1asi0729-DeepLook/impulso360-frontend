@@ -100,11 +100,24 @@
                         <span class="appt-badge" [attr.data-status]="appt.status">
               {{ 'OVERVIEW.STATUS.' + (appt.status | uppercase) | translate }}
             </span>
-                        @if (appt.status === 'confirmed' || appt.status === 'pending') {
-                            <button class="appt-action-btn" type="button" [title]="'CLIENTS.ACTIONS.EDIT' | translate">
+                        <div class="appt-status-editor">
+                            <button class="appt-action-btn" type="button" [title]="'CLIENTS.ACTIONS.EDIT' | translate" (click)="toggleStatusEditor(appt)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                        }
+                            @if (editingAppointmentId() === appt.id) {
+                                <div class="status-menu">
+                                    <button type="button" [class.active]="appt.status === 'confirmed'" (click)="updateStatus(appt, 'confirmed')">
+                                        {{ 'OVERVIEW.STATUS.CONFIRMED' | translate }}
+                                    </button>
+                                    <button type="button" [class.active]="appt.status === 'pending'" (click)="updateStatus(appt, 'pending')">
+                                        {{ 'OVERVIEW.STATUS.PENDING' | translate }}
+                                    </button>
+                                    <button type="button" [class.active]="appt.status === 'cancelled'" (click)="updateStatus(appt, 'cancelled')">
+                                        {{ 'OVERVIEW.STATUS.CANCELLED' | translate }}
+                                    </button>
+                                </div>
+                            }
+                        </div>
                         @if (appt.status === 'pending') {
                             <button class="appt-action-btn appt-action-btn--confirm"
                                     type="button" title="Confirmar" (click)="confirm(appt)">
@@ -201,7 +214,6 @@
                 <th>{{ 'OVERVIEW.TABLE.SERVICE' | translate }}</th>
                 <th>{{ 'OVERVIEW.TABLE.LAST_APPOINTMENT' | translate }}</th>
                 <th>{{ 'OVERVIEW.TABLE.STATUS' | translate }}</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -223,13 +235,10 @@
                 {{ 'OVERVIEW.STATUS.' + (c.status | uppercase) | translate }}
               </span>
                         </td>
-                        <td>
-                            <button class="btn-history" type="button">{{ 'OVERVIEW.VIEW_HISTORY' | translate }}</button>
-                        </td>
                     </tr>
                 } @empty {
                     <tr>
-                        <td colspan="5" class="clients-empty">{{ 'OVERVIEW.EMPTY_CLIENTS' | translate }}</td>
+                        <td colspan="4" class="clients-empty">{{ 'OVERVIEW.EMPTY_CLIENTS' | translate }}</td>
                     </tr>
                 }
             </tbody>

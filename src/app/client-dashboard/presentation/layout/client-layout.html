@@ -1,0 +1,75 @@
+<div class="shell">
+    <aside class="sidebar">
+        <div class="brand">Impulso360</div>
+
+        <div class="nav-scroll">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        routerLink="/cliente"
+                        routerLinkActive="nav-link--active"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                        <mat-icon>storefront</mat-icon>
+                        {{ 'CLIENT.NAV_HOME' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        routerLink="/cliente/mis-citas"
+                        routerLinkActive="nav-link--active"
+                    >
+                        <mat-icon>event</mat-icon>
+                        {{ 'CLIENT.NAV_MY_APPOINTMENTS' | translate }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        routerLink="/cliente/perfil"
+                        routerLinkActive="nav-link--active"
+                    >
+                        <mat-icon>account_circle</mat-icon>
+                        {{ 'CLIENT.NAV_PROFILE' | translate }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-avatar">{{ userAvatar() }}</span>
+                <span class="user-name">{{ userName() }}</span>
+            </div>
+            <button class="logout-link" (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                {{ 'LAYOUT.LOGOUT' | translate }}
+            </button>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="main-header">
+            <div class="lang-switch" role="group">
+                <span class="lang-switch__label">{{ 'LAYOUT.LANGUAGE' | translate }}</span>
+                <button
+                    type="button"
+                    class="lang-btn"
+                    [class.lang-btn--active]="currentLang() === 'es'"
+                    (click)="setLanguage('es')"
+                >{{ 'LAYOUT.LANG_ES' | translate }}</button>
+                <button
+                    type="button"
+                    class="lang-btn"
+                    [class.lang-btn--active]="currentLang() === 'en'"
+                    (click)="setLanguage('en')"
+                >{{ 'LAYOUT.LANG_EN' | translate }}</button>
+            </div>
+        </header>
+        <div class="main-body">
+            <router-outlet />
+        </div>
+    </div>
+</div>

@@ -12,6 +12,7 @@ import { ServiceCardComponent } from '@app/servicios/presentation/components/ser
 import { ServiceFormComponent } from '@app/servicios/presentation/components/service-form-component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthStore } from '../../../auth/application/auth-store';
 
 @Component({
     selector: 'app-services-page',
@@ -28,6 +29,7 @@ export class ServicesPageComponent implements OnInit {
 
     readonly maxFeatured = MAX_FEATURED_SERVICES;
     private readonly refresh$ = new BehaviorSubject<void>(void 0);
+    private readonly authStore = inject(AuthStore);
 
     constructor(
         private readonly getServicesUseCase: GetServicesUseCase,
@@ -38,24 +40,27 @@ export class ServicesPageComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        const businessId = this.authStore.currentUser()?.businessId;
+
         this.services$ = this.refresh$.pipe(
-            switchMap(() => this.getServicesUseCase.execute())
+            switchMap(() => this.getServicesUseCase.execute(businessId))
         );
 
         this.featuredCount$ = this.refresh$.pipe(
-            switchMap(() => this.serviceRepository.getAll()),
+            switchMap(() => this.serviceRepository.getAll(businessId)),
             map((services: Service[]) => this.featuredDomainService.featuredCount(services))
         );
 
         this.canFeature$ = this.refresh$.pipe(
-            switchMap(() => this.serviceRepository.getAll()),
+            switchMap(() => this.serviceRepository.getAll(businessId)),
             map((services: Service[]) => this.featuredDomainService.canFeature(services))
         );
     }
 
     onToggleFeature(serviceId: string): void {
         this.errorMessage = null;
-        this.toggleFeatureUseCase.execute(serviceId).subscribe({
+        const businessId = this.authStore.currentUser()?.businessId;
+        this.toggleFeatureUseCase.execute(serviceId, businessId).subscribe({
             next: () => this.refresh$.next(),
             error: (err) => {
                 this.errorMessage = err.message;
@@ -104,7 +109,8 @@ export class ServicesPageComponent implements OnInit {
             if (result) {
                 const newService = Service.create({
                     id: Math.random().toString(36).substr(2, 9),
-                    ...result
+                    ...result,
+                    businessId: this.authStore.currentUser()?.businessId
                 });
                 this.serviceRepository.save(newService).subscribe(() => {
                     this.refresh$.next();

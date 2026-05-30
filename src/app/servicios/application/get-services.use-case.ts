@@ -7,8 +7,8 @@ import { ServiceDto } from '@app/servicios/application/dtos/service.dto';
 export class GetServicesUseCase {
     constructor(private readonly serviceRepository: ServiceRepository) {}
 
-    execute(): Observable<ServiceDto[]> {
-        return this.serviceRepository.getAll().pipe(
+    execute(businessId?: number | string): Observable<ServiceDto[]> {
+        return this.serviceRepository.getAll(businessId).pipe(
             map(services => services.map(s => ({
                 id: s.id,
                 name: s.name,
@@ -18,6 +18,7 @@ export class GetServicesUseCase {
                 status: s.status,
                 isFeatured: s.isFeatured,
                 isActive: s.isActive,
+                businessId: s.businessId,
             })))
         );
     }

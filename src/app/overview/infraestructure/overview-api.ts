@@ -3,9 +3,9 @@
  * Consume el json-server para obtener datos del panel general.
  */
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { BaseApi } from '../../shared/infrastructure/base-api';
-import { AppointmentSummary } from '../domain/model/appointment-summary.entity';
+import { AppointmentSummary, AppointmentStatus } from '../domain/model/appointment-summary.entity';
 import { ClientSummary } from '../domain/model/client-summary.entity';
 import { OverviewStats } from '../domain/model/overview-stats.entity';
 import { AppointmentSummaryAssembler } from './appointment-summary.assembler';
@@ -18,17 +18,20 @@ export class OverviewApi extends BaseApi {
 
     override get resourcePath(): string { return '/appointments'; }
 
-    getStats(): Observable<OverviewStats> {
-        // Se derivan de los appointments; json-server no tiene endpoint de stats
+    getStats(businessId?: number | string): Observable<OverviewStats> {
         return this.http.get<any[]>(`${this.baseUrl}/appointments`).pipe(
             map(list => {
+                const today = this.formatLocalDate(new Date());
+                const filtered = list.filter(a =>
+                    (!businessId || String(a.businessId) === String(businessId)) && a.date === today
+                );
                 const stats = new OverviewStats();
-                stats.todayAppointments   = list.length;
+                stats.todayAppointments   = filtered.length;
                 stats.todayVsYesterday    = 2;
-                stats.confirmed           = list.filter(a => a.status === 'confirmed').length;
-                stats.confirmedPercent    = list.length
-                    ? Math.round((stats.confirmed / list.length) * 100) : 0;
-                stats.pending             = list.filter(a => a.status === 'pending').length;
+                stats.confirmed           = filtered.filter(a => a.status === 'confirmed').length;
+                stats.confirmedPercent    = filtered.length
+                    ? Math.round((stats.confirmed / filtered.length) * 100) : 0;
+                stats.pending             = filtered.filter(a => a.status === 'pending').length;
                 stats.activeClients       = 42;
                 stats.newClientsThisMonth = 5;
                 return stats;
@@ -36,23 +39,95 @@ export class OverviewApi extends BaseApi {
         );
     }
 
-    getTodayAppointments(): Observable<AppointmentSummary[]> {
-        return this.http
-            .get<any[]>(`${this.baseUrl}/appointments`)
-            .pipe(map(list => list.map(r => this.apptAssembler.toEntity(r))));
+    getTodayAppointments(businessId?: number | string): Observable<AppointmentSummary[]> {
+        return this.http.get<any[]>(`${this.baseUrl}/appointments`).pipe(
+            map(list => {
+                const today = this.formatLocalDate(new Date());
+                const filtered = list.filter(a =>
+                    (!businessId || String(a.businessId) === String(businessId)) && a.date === today
+                );
+                return filtered.map(r => this.apptAssembler.toEntity(r));
+            })
+        );
     }
 
-    getRecentClients(): Observable<ClientSummary[]> {
-        return this.http
-            .get<any[]>(`${this.baseUrl}/clients`)
-            .pipe(map(list => list.map(r => this.clientAssembler.toEntity(r))));
+    getRecentClients(businessId?: number | string): Observable<ClientSummary[]> {
+        return forkJoin({
+            clients: this.http.get<any[]>(`${this.baseUrl}/clients`),
+            appointments: this.http.get<any[]>(`${this.baseUrl}/appointments`),
+        }).pipe(
+            map(({ clients, appointments }) => {
+                const today = this.formatLocalDate(new Date());
+                const businessClients = clients.filter(client =>
+                    !businessId || String(client.businessId) === String(businessId)
+                );
+                const businessAppointments = appointments.filter(appt =>
+                    (!businessId || String(appt.businessId) === String(businessId)) && appt.date < today
+                );
+
+                return businessClients
+                    .map(client => {
+                        const clientName = this.getClientFullName(client);
+                        const pastAppointments = businessAppointments
+                            .filter(appt =>
+                                (client.id && String(appt.clientId) === String(client.id)) ||
+                                this.normalizeName(appt.clientName) === this.normalizeName(clientName)
+                            )
+                            .sort((a, b) => `${b.date} ${b.time}`.localeCompare(`${a.date} ${a.time}`));
+
+                        const lastAppointment = pastAppointments[0];
+                        if (!lastAppointment) return null;
+
+                        return this.clientAssembler.toEntity({
+                            id: client.id,
+                            initials: this.getInitials(clientName),
+                            name: clientName,
+                            phone: client.phone || '-',
+                            usualService: lastAppointment.service,
+                            lastAppointment: lastAppointment.date,
+                            status: lastAppointment.status,
+                        });
+                    })
+                    .filter((client): client is ClientSummary => client !== null)
+                    .slice(0, 6);
+            })
+        );
     }
 
-    confirmAppointment(id: number): Observable<any> {
+    confirmAppointment(id: string | number): Observable<any> {
         return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status: 'confirmed' });
     }
 
-    cancelAppointment(id: number): Observable<any> {
+    cancelAppointment(id: string | number): Observable<any> {
         return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status: 'cancelled' });
+    }
+
+    updateAppointmentStatus(id: string | number, status: AppointmentStatus): Observable<any> {
+        return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status });
+    }
+
+    private formatLocalDate(d: Date): string {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    private getClientFullName(client: any): string {
+        const fullName = `${client.firstName ?? ''} ${client.lastName ?? ''}`.trim();
+        return fullName || client.name || 'Cliente';
+    }
+
+    private getInitials(name: string): string {
+        return name
+            .split(' ')
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(part => part[0]?.toUpperCase())
+            .join('') || 'CL';
+    }
+
+    private normalizeName(name: string): string {
+        return name.trim().toLowerCase().replace(/\s+/g, ' ');
     }
 }

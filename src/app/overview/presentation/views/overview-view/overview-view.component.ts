@@ -9,10 +9,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { OverviewService } from '../../../application/overview.service';
 import { OverviewStore, AppointmentFilter } from '../../../application/overview.store';
-import { AppointmentSummary } from '../../../domain/model/appointment-summary.entity';
+import { AppointmentStatus, AppointmentSummary } from '../../../domain/model/appointment-summary.entity';
 import { AppointmentFormComponent } from '../../../../agenda/presentation/components/appointment-form/appointment-form.component';
 import { AgendaApi } from '../../../../agenda/infrastructure/agenda-api';
 import { Appointment } from '../../../../agenda/domain/model/appointment.entity';
+import { AuthStore } from '../../../../auth/application/auth-store';
 
 @Component({
     selector: 'app-overview-view',
@@ -27,7 +28,9 @@ export class OverviewViewComponent implements OnInit {
     private readonly translate = inject(TranslateService);
     private readonly dialog = inject(MatDialog);
     private readonly agendaApi = inject(AgendaApi);
+    private readonly authStore = inject(AuthStore);
     protected readonly currentLang = signal(this.translate.currentLang || 'es');
+    protected readonly editingAppointmentId = signal<string | number | null>(null);
 
     // ── Mini-calendario ───────────────────────────────────
     protected readonly calendarDays = computed(() => this.buildCalendar(this.store.selectedDate()));
@@ -67,6 +70,15 @@ export class OverviewViewComponent implements OnInit {
         this.service.cancelAppointment(appt.id!);
     }
 
+    protected toggleStatusEditor(appt: AppointmentSummary): void {
+        this.editingAppointmentId.update(id => id === appt.id ? null : appt.id!);
+    }
+
+    protected updateStatus(appt: AppointmentSummary, status: AppointmentStatus): void {
+        this.service.updateAppointmentStatus(appt.id!, status);
+        this.editingAppointmentId.set(null);
+    }
+
     protected openNewAppointmentForm(): void {
         const dialogRef = this.dialog.open(AppointmentFormComponent, {
             width: '800px',
@@ -86,7 +98,8 @@ export class OverviewViewComponent implements OnInit {
                     service: result.service,
                     category: 'Veterinaria',
                     status: result.status,
-                    note: result.notes
+                    note: result.notes,
+                    businessId: this.authStore.currentUser()?.businessId
                 };
 
                 this.agendaApi.createAppointment(newAppointment).subscribe({
