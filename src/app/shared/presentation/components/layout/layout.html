@@ -8,7 +8,7 @@
                 <li class="nav-item">
                     <a
                             class="nav-link"
-                            routerLink="/"
+                            routerLink="/admin"
                             routerLinkActive="nav-link--active"
                             [routerLinkActiveOptions]="{ exact: true }"
                     >
@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/agenda" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/agenda" routerLinkActive="nav-link--active">
                         <mat-icon>event</mat-icon>
                         {{ 'LAYOUT.NAV_AGENDA' | translate }}
                         @if (agendaNavBadgeCount() > 0) {
@@ -26,13 +26,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/clientes" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/clientes" routerLinkActive="nav-link--active">
                         <mat-icon>people</mat-icon>
                         {{ 'LAYOUT.NAV_CLIENTS' | translate }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/servicios" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/servicios" routerLinkActive="nav-link--active">
                         <mat-icon>design_services</mat-icon>
                         {{ 'LAYOUT.NAV_SERVICES' | translate }}
                     </a>
@@ -42,13 +42,13 @@
             <p class="nav-group-label">{{ 'LAYOUT.GROUP_TOOLS' | translate }}</p>
             <ul class="nav-list">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/perfil-negocio" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/perfil-negocio" routerLinkActive="nav-link--active">
                         <mat-icon>storefront</mat-icon>
                         {{ 'LAYOUT.NAV_BUSINESS' | translate }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/ayuda" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/ayuda" routerLinkActive="nav-link--active">
                         <mat-icon>help_outline</mat-icon>
                         {{ 'LAYOUT.NAV_HELP' | translate }}
                     </a>
@@ -56,7 +56,13 @@
             </ul>
         </div>
 
-        <app-sidebar-user-profile />
+        <div class="sidebar-footer">
+            <app-sidebar-user-profile />
+            <button class="logout-link" (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                {{ 'LAYOUT.LOGOUT' | translate }}
+            </button>
+        </div>
     </aside>
 
     <div class="main">
@@ -81,7 +87,6 @@
                 </button>
             </div>
 
-            <!-- Campana global: siempre visible sin importar la ruta activa -->
             <app-notification-bell />
         </header>
         <div class="main-body">

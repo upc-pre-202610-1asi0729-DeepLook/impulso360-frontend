@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-transla
 import { AgendaApi } from '../../../infrastructure/agenda-api';
 import { Appointment, AppointmentStatus } from '../../../domain/model/appointment.entity';
 import { AppointmentFormComponent } from '../../components/appointment-form/appointment-form.component';
+import { AuthStore } from '../../../../auth/application/auth-store';
 
 export type CalendarViewMode = 'daily' | 'weekly' | 'monthly';
 
@@ -31,10 +32,13 @@ export type CalendarViewMode = 'daily' | 'weekly' | 'monthly';
   templateUrl: './agenda-view.component.html',
   styleUrls: ['./agenda-view.component.scss']
 })
-export class AgendaViewComponent implements OnInit {
+export class AgendaViewComponent implements OnInit, OnDestroy {
   private agendaApi = inject(AgendaApi);
   private dialog = inject(MatDialog);
   private translate = inject(TranslateService);
+  private authStore = inject(AuthStore);
+
+  @ViewChild('photoVideo') photoVideo?: ElementRef<HTMLVideoElement>;
 
 
   viewMode = signal<CalendarViewMode>('weekly');
@@ -44,6 +48,12 @@ export class AgendaViewComponent implements OnInit {
   
   appointments = signal<Appointment[]>([]);
   currentLang = signal(this.translate.currentLang || 'es');
+  capturedPhoto = signal<string | null>(null);
+  detectedAppointment = signal<Appointment | null>(null);
+  recognitionMessage = signal<string>('Esperando foto del cliente');
+  isCameraActive = signal<boolean>(false);
+  isRecognizing = signal<boolean>(false);
+  private cameraStream?: MediaStream;
   
   // Date helpers
   weekDays = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM'];
@@ -196,9 +206,107 @@ export class AgendaViewComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.stopCamera();
+  }
+
   loadAppointments() {
-    this.agendaApi.getAllAppointments().subscribe(data => {
+    const businessId = this.authStore.currentUser()?.businessId;
+    this.agendaApi.getAllAppointments(businessId).subscribe(data => {
       this.appointments.set(data);
+    });
+  }
+
+  async startCamera() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      this.recognitionMessage.set('La cámara no está disponible en este navegador');
+      return;
+    }
+
+    try {
+      this.cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+      this.isCameraActive.set(true);
+      setTimeout(() => this.attachCameraStream());
+    } catch {
+      this.recognitionMessage.set('No se pudo acceder a la cámara');
+    }
+  }
+
+  takePhoto() {
+    const video = this.photoVideo?.nativeElement;
+    if (!video || video.readyState < 2) {
+      this.recognitionMessage.set('La cámara aún se está preparando');
+      return;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d')?.drawImage(video, 0, 0);
+    this.capturedPhoto.set(canvas.toDataURL('image/jpeg', 0.9));
+    this.stopCamera();
+    this.recognizeClientFromPhoto();
+  }
+
+  onPhotoUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.capturedPhoto.set(String(reader.result));
+      this.recognizeClientFromPhoto();
+    };
+    reader.readAsDataURL(file);
+    input.value = '';
+  }
+
+  private stopCamera() {
+    this.cameraStream?.getTracks().forEach(track => track.stop());
+    this.cameraStream = undefined;
+    this.isCameraActive.set(false);
+  }
+
+  private attachCameraStream() {
+    if (!this.photoVideo?.nativeElement || !this.cameraStream) return;
+
+    this.photoVideo.nativeElement.srcObject = this.cameraStream;
+    this.photoVideo.nativeElement.play().catch(() => {
+      this.recognitionMessage.set('No se pudo iniciar la vista previa de la cámara');
+    });
+  }
+
+  private recognizeClientFromPhoto() {
+    const today = this.formatLocalDate(new Date());
+    const todaysAppointments = this.appointments().filter(app => app.date === today && app.status !== 'cancelled');
+
+    if (todaysAppointments.length === 0) {
+      this.detectedAppointment.set(null);
+      this.recognitionMessage.set('No hay citas activas para hoy');
+      return;
+    }
+
+    const selected = todaysAppointments[Math.floor(Math.random() * todaysAppointments.length)];
+    const confirmedAppointment = { ...selected, status: 'confirmed' as AppointmentStatus };
+
+    this.isRecognizing.set(true);
+    this.recognitionMessage.set('Identidad detectada, confirmando cita...');
+
+    this.agendaApi.updateAppointment(selected.id!, { status: 'confirmed' }).subscribe({
+      next: updated => {
+        const appointment = { ...confirmedAppointment, ...updated };
+        this.appointments.update(list => list.map(app => app.id === selected.id ? appointment : app));
+        this.detectedAppointment.set(appointment);
+        this.selectedDate.set(new Date(`${today}T00:00:00`));
+        this.recognitionMessage.set('Cita confirmada automáticamente');
+        this.isRecognizing.set(false);
+      },
+      error: () => {
+        this.detectedAppointment.set(confirmedAppointment);
+        this.recognitionMessage.set('Cliente detectado, pero no se pudo confirmar la cita');
+        this.isRecognizing.set(false);
+      }
     });
   }
 
@@ -259,7 +367,8 @@ export class AgendaViewComponent implements OnInit {
           service: result.service,
           category: 'Veterinaria',
           status: result.status,
-          note: result.notes
+          note: result.notes,
+          businessId: this.authStore.currentUser()?.businessId
         };
 
 

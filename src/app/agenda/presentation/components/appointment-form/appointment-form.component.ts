@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpServiceRepository } from '../../../../servicios/infrastructure/http-service.repository';
 import { Service } from '../../../../servicios/domain/model/service.entity';
 import { Observable, map, startWith } from 'rxjs';
+import { AuthStore } from '../../../../auth/application/auth-store';
 
 
 @Component({
@@ -50,6 +51,7 @@ export class AppointmentFormComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<AppointmentFormComponent>);
   private clientApi = inject(ClientApiService);
   private serviceApi = inject(HttpServiceRepository);
+  private authStore = inject(AuthStore);
 
   clients: Client[] = [];
   services: Service[] = [];
@@ -67,12 +69,14 @@ export class AppointmentFormComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.clientApi.getAll().subscribe(data => {
+    const businessId = this.authStore.currentUser()?.businessId;
+
+    this.clientApi.getAll(businessId).subscribe(data => {
       this.clients = data;
       this.setupAutocomplete();
     });
 
-    this.serviceApi.getAll().subscribe(data => {
+    this.serviceApi.getAll(businessId).subscribe(data => {
       this.services = data;
     });
   }

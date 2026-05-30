@@ -13,65 +13,46 @@
   "phone": "+51 987 654 321",
   "category": "VETERINARIA",
   "isPublished": true,
+  "coverImage": "",
   "services": [
     {
-      "id": 1,
-      "name": "Consulta Veterinaria General",
-      "description": "Evaluación completa del estado de salud de tu mascota, incluye revisión física, peso y recomendaciones nutricionales.",
+      "id": "1",
+      "name": "Consulta general",
+      "description": "Evaluación general del estado de salud de la mascota.",
       "durationMinutes": 30,
-      "price": { "amount": 80.00, "currency": "PEN" },
+      "price": { "amount": 50, "currency": "PEN" },
       "status": "ACTIVE",
-      "category": "PREVENCION",
+      "category": "Veterinaria",
       "isFeatured": true
     },
     {
-      "id": 2,
-      "name": "Baño y Corte de Pelo",
-      "description": "Servicio completo de grooming: baño con productos hipoalergénicos, secado, corte de pelo según raza y limpieza de oídos.",
-      "durationMinutes": 90,
-      "price": { "amount": 65.00, "currency": "PEN" },
-      "status": "ACTIVE",
-      "category": "ESTETICA",
-      "isFeatured": true
-    },
-    {
-      "id": 3,
-      "name": "Vacunación Múltiple",
-      "description": "Aplicación de vacunas antirrábica, parvovirus, distemper y leptospirosis. Incluye carnet de vacunación actualizado.",
+      "id": "2",
+      "name": "Vacunación",
+      "description": "Aplicación de vacunas según el calendario del animal.",
       "durationMinutes": 20,
-      "price": { "amount": 120.00, "currency": "PEN" },
+      "price": { "amount": 35, "currency": "PEN" },
       "status": "ACTIVE",
-      "category": "PREVENCION",
-      "isFeatured": false
+      "category": "Prevención",
+      "isFeatured": true
     },
     {
-      "id": 4,
-      "name": "Cirugía de Esterilización",
-      "description": "Procedimiento quirúrgico de esterilización para machos y hembras. Incluye anestesia, cirugía y control postoperatorio a los 7 días.",
-      "durationMinutes": 120,
-      "price": { "amount": 350.00, "currency": "PEN" },
-      "status": "ACTIVE",
-      "category": "CIRUGIA",
-      "isFeatured": false
-    },
-    {
-      "id": 5,
-      "name": "Desparasitación Interna y Externa",
-      "description": "Tratamiento completo contra parásitos internos y externos.",
-      "durationMinutes": 15,
-      "price": { "amount": 45.00, "currency": "PEN" },
-      "status": "ACTIVE",
-      "category": "PREVENCION",
-      "isFeatured": false
-    },
-    {
-      "id": 6,
-      "name": "Limpieza Dental Ultrasónica",
-      "description": "Remoción de sarro y placa bacteriana mediante ultrasonido.",
+      "id": "3",
+      "name": "Baño y corte",
+      "description": "Baño completo y corte de pelo a medida.",
       "durationMinutes": 60,
-      "price": { "amount": 180.00, "currency": "PEN" },
+      "price": { "amount": 45, "currency": "PEN" },
+      "status": "ACTIVE",
+      "category": "Estética",
+      "isFeatured": false
+    },
+    {
+      "id": "4",
+      "name": "Desparasitación",
+      "description": "Tratamiento contra parásitos internos y externos.",
+      "durationMinutes": 15,
+      "price": { "amount": 30, "currency": "PEN" },
       "status": "INACTIVE",
-      "category": "CIRUGIA",
+      "category": "Prevención",
       "isFeatured": false
     }
   ]

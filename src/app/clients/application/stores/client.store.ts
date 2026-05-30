@@ -1,8 +1,9 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal, inject } from '@angular/core';
 import { Client } from '../../domain/model/client.entity';
 import { ClientApiService } from '../../infrastructure/client-api.service';
 import { AgendaApi } from '../../../agenda/infrastructure/agenda-api';
 import { forkJoin, of, switchMap } from 'rxjs';
+import { AuthStore } from '../../../auth/application/auth-store';
 
 @Injectable({
     providedIn: 'root'
@@ -57,6 +58,8 @@ export class ClientStore {
         }).length;
     });
 
+    private authStore = inject(AuthStore);
+
     constructor(
         private readonly clientApiService: ClientApiService,
         private readonly agendaApi: AgendaApi
@@ -64,8 +67,9 @@ export class ClientStore {
 
     loadClients(): void {
         this.loadingSignal.set(true);
+        const businessId = this.authStore.currentUser()?.businessId;
 
-        this.clientApiService.getAll().subscribe({
+        this.clientApiService.getAll(businessId).subscribe({
             next: (clients) => {
                 this.clientsSignal.set(clients);
                 this.selectedClientSignal.set(clients[0] ?? null);

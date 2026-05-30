@@ -127,6 +127,63 @@
 
     <!-- Sidebar -->
     <aside class="agenda-sidebar">
+      <section class="photo-checkin card">
+        <div class="checkin-header">
+          <div>
+            <h3>Registro por foto</h3>
+            <span>{{ recognitionMessage() }}</span>
+          </div>
+          <mat-icon>face</mat-icon>
+        </div>
+
+        <div class="photo-preview" [class.empty]="!capturedPhoto()">
+          <video #photoVideo *ngIf="isCameraActive()" autoplay muted playsinline></video>
+          <img *ngIf="!isCameraActive() && capturedPhoto()" [src]="capturedPhoto()" alt="Foto del cliente">
+          <mat-icon *ngIf="!isCameraActive() && !capturedPhoto()">photo_camera</mat-icon>
+        </div>
+
+        <div class="checkin-actions">
+          <button mat-stroked-button type="button" (click)="startCamera()" *ngIf="!isCameraActive()">
+            <mat-icon>photo_camera</mat-icon>
+            Cámara
+          </button>
+          <button mat-flat-button color="primary" type="button" (click)="takePhoto()" *ngIf="isCameraActive()">
+            <mat-icon>camera</mat-icon>
+            Tomar
+          </button>
+          <button mat-stroked-button type="button" (click)="photoInput.click()">
+            <mat-icon>upload</mat-icon>
+            Subir
+          </button>
+          <input #photoInput type="file" accept="image/*" hidden (change)="onPhotoUpload($event)">
+        </div>
+
+        <div class="detected-client" *ngIf="detectedAppointment() as detected">
+          <div class="detected-client__top">
+            <span>Cliente detectado</span>
+            <strong>{{ detected.clientName }}</strong>
+          </div>
+          <dl>
+            <div>
+              <dt>Hora</dt>
+              <dd>{{ detected.time }}</dd>
+            </div>
+            <div>
+              <dt>Servicio</dt>
+              <dd>{{ detected.service }}</dd>
+            </div>
+            <div *ngIf="detected.clientEmail">
+              <dt>Email</dt>
+              <dd>{{ detected.clientEmail }}</dd>
+            </div>
+            <div>
+              <dt>Estado</dt>
+              <dd><span class="badge confirmed">Confirmada</span></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
       <!-- Day Details -->
 
       <section class="day-details card">

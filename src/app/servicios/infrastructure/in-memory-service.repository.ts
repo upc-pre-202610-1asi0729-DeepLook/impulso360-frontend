@@ -17,7 +17,7 @@ export class InMemoryServiceRepository extends ServiceRepository {
         MOCK_SERVICES.map(p => Service.create(p))
     );
 
-    getAll(): Observable<Service[]> {
+    getAll(_businessId?: number | string): Observable<Service[]> {
         return this.services$.asObservable();
     }
 

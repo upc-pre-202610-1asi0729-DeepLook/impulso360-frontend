@@ -1,8 +1,6 @@
-/**
- * @summary Bloque de perfil de usuario en la barra lateral (visible en todas las vistas).
- */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthStore } from '../../../../auth/application/auth-store';
 
 @Component({
   selector: 'app-sidebar-user-profile',
@@ -11,4 +9,8 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './sidebar-user-profile.component.html',
   styleUrl: './sidebar-user-profile.component.scss'
 })
-export class SidebarUserProfileComponent {}
+export class SidebarUserProfileComponent {
+  private authStore = inject(AuthStore);
+  protected userName = this.authStore.userName;
+  protected userRole = this.authStore.role;
+}

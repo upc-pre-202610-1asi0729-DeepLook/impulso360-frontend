@@ -22,6 +22,40 @@ body {
   color: #1a2332;
 }
 
+.mat-mdc-unelevated-button.mat-primary {
+  --mat-button-filled-container-color: #003366;
+  --mat-button-filled-label-text-color: #fff;
+  --mat-button-filled-container-height: 48px;
+  --mat-button-filled-container-shape: 12px;
+  box-shadow: 0 4px 12px rgba(0, 51, 102, 0.2);
+  font-weight: 600;
+}
+
+.mat-mdc-unelevated-button.mat-primary:not(:disabled):hover {
+  --mat-button-filled-container-color: #002244;
+  box-shadow: 0 6px 16px rgba(0, 51, 102, 0.3);
+  translate: 0 -2px;
+}
+
+.mat-mdc-unelevated-button.mat-primary:not(:disabled):active {
+  --mat-button-filled-container-color: #001a33;
+  translate: 0 0;
+}
+
+.mat-mdc-outlined-button.mat-primary {
+  --mat-button-outlined-outline-color: #003366;
+  --mat-button-outlined-label-text-color: #003366;
+  --mat-button-outlined-container-height: 48px;
+  --mat-button-outlined-container-shape: 12px;
+  font-weight: 600;
+}
+
+.mat-mdc-outlined-button.mat-primary:not(:disabled):hover {
+  --mat-button-outlined-container-color: rgba(0, 51, 102, 0.04);
+  --mat-button-outlined-outline-color: #002244;
+  --mat-button-outlined-label-text-color: #002244;
+}
+
 
 /* Fix for Material Datepicker transparency */
 .mat-datepicker-content,

@@ -44,15 +44,17 @@ export class OverviewStore {
     setFilter(f: AppointmentFilter): void      { this._filter.set(f); }
     setSelectedDate(d: Date): void             { this._selectedDate.set(d); }
 
-    confirmAppointment(id: number): void {
+    updateAppointmentStatus(id: string | number, status: AppointmentStatus): void {
         this._appointments.update(list =>
-            list.map(a => a.id === id ? { ...a, status: 'confirmed' as AppointmentStatus } : a)
+            list.map(a => a.id === id ? { ...a, status } : a)
         );
     }
 
-    cancelAppointment(id: number): void {
-        this._appointments.update(list =>
-            list.map(a => a.id === id ? { ...a, status: 'cancelled' as AppointmentStatus } : a)
-        );
+    confirmAppointment(id: string | number): void {
+        this.updateAppointmentStatus(id, 'confirmed');
+    }
+
+    cancelAppointment(id: string | number): void {
+        this.updateAppointmentStatus(id, 'cancelled');
     }
 }

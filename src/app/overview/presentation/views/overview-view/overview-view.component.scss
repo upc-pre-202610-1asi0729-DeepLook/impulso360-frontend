@@ -123,7 +123,7 @@
   background: #fff;
   border-radius: var(--card-r);
   box-shadow: var(--shadow);
-  overflow: hidden;
+  overflow: visible;
 
   &__header {
     display: flex;
@@ -273,6 +273,43 @@
   &:hover { border-color: var(--navy); color: var(--navy); }
   &--confirm:hover { border-color: #16a34a; color: #16a34a; }
   &--cancel:hover  { border-color: #ef4444; color: #ef4444; }
+}
+
+.appt-status-editor {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.status-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 5;
+  width: 132px;
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, .14);
+
+  button {
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #1a2332;
+    cursor: pointer;
+    font-size: .76rem;
+    font-weight: 600;
+    padding: .42rem .55rem;
+    text-align: left;
+
+    &:hover,
+    &.active {
+      background: #f4f6f9;
+      color: var(--navy);
+    }
+  }
 }
 
 .appt-empty {

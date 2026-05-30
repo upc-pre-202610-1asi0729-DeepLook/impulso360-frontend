@@ -59,16 +59,11 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
 
         this.form = this.fb.group({
             publicDisplayName: ['', [Validators.required, Validators.minLength(3)]],
-            legalName: ['', Validators.required],
             category: ['', Validators.required],
             description: ['', [Validators.required, Validators.maxLength(300)]],
             phone: ['', [Validators.required, Validators.pattern(/^\+?[\d\s]{7,15}$/)]],
-            street: ['', Validators.required],
-            city: ['', Validators.required],
-            reference: ['']
+            street: ['', Validators.required]
         });
-
-        this.store.loadProfile(1);
 
         this.store.profile$
             .pipe(takeUntil(this.destroy$))
@@ -76,43 +71,60 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
                 if (!profile) return;
                 this.form.patchValue({
                     publicDisplayName: profile.name.publicDisplayName,
-                    legalName: profile.name.legalName,
                     category: profile.category,
                     description: profile.description,
                     phone: profile.phone,
-                    street: profile.address.street,
-                    city: profile.address.city,
-                    reference: profile.address.reference
+                    street: profile.address.street
                 });
                 
                 if (profile.coverImage) {
                     this.selectedCoverImage = profile.coverImage;
                 }
             });
+
+        const userId = this.store.getCurrentUserId();
+        this.store.loadProfile(userId);
     }
 
     onSave(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
+            const invalidFields = Object.keys(this.form.controls)
+                .filter(k => this.form.get(k)?.invalid)
+                .join(', ');
+            this.snackBar.open('Campos inválidos: ' + invalidFields, 'Cerrar', {
+                duration: 5000
+            });
             return;
         }
 
         const vals = this.form.value;
-        this.store.updateProfileData({
-            legalName: vals.legalName,
+        const { saved, sync$ } = this.store.updateProfileData({
             publicDisplayName: vals.publicDisplayName,
             category: vals.category,
             description: vals.description,
             phone: vals.phone,
             street: vals.street,
-            city: vals.city,
-            reference: vals.reference,
             coverImage: this.selectedCoverImage || undefined
         });
 
-        this.snackBar.open('Cambios guardados correctamente', 'Cerrar', {
-            duration: 3000,
-            panelClass: ['snack-success']
+        if (!saved) {
+            this.snackBar.open('No se pudo guardar: el perfil no está cargado', 'Cerrar', {
+                duration: 3000
+            });
+            return;
+        }
+
+        sync$.subscribe(serverOk => {
+            if (serverOk) {
+                this.snackBar.open('Cambios guardados correctamente', 'Cerrar', {
+                    duration: 3000
+                });
+            } else {
+                this.snackBar.open('Guardado localmente, pero falló la sincronización con el servidor', 'Cerrar', {
+                    duration: 5000
+                });
+            }
         });
     }
 

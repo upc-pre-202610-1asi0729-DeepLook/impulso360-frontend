@@ -22,7 +22,8 @@ export class Client {
         public lastAppointment: string,
         public totalAppointments: number,
         public attendedAppointments: number,
-        public history: AppointmentHistoryItem[]
+        public history: AppointmentHistoryItem[],
+        public businessId?: number | string
     ) {}
 
     get fullName(): string {

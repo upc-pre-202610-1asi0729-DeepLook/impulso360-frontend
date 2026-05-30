@@ -1,0 +1,49 @@
+<div class="profile-page">
+  <h1 class="page-title">{{ 'CLIENT.PROFILE_TITLE' | translate }}</h1>
+  <p class="page-subtitle">{{ 'CLIENT.PROFILE_SUBTITLE' | translate }}</p>
+
+  @if (success()) {
+    <div class="success-banner">
+      <mat-icon>check_circle</mat-icon>
+      <span>{{ 'CLIENT.PROFILE_SAVED' | translate }}</span>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  <form (ngSubmit)="save()" class="profile-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'CLIENT.PROFILE_NAME' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="form.name" name="name" required>
+      <mat-icon matPrefix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'CLIENT.PROFILE_EMAIL' | translate }}</mat-label>
+      <input matInput type="email" [(ngModel)]="form.email" name="email" readonly>
+      <mat-icon matPrefix>email</mat-icon>
+      <mat-hint>{{ 'CLIENT.PROFILE_EMAIL_HINT' | translate }}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'CLIENT.PROFILE_PHONE' | translate }}</mat-label>
+      <input matInput type="tel" [(ngModel)]="form.phone" name="phone">
+      <mat-icon matPrefix>phone</mat-icon>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-flat-button color="primary" type="submit" [disabled]="saving()">
+        @if (saving()) {
+          <mat-spinner diameter="20" />
+        } @else {
+          <span>{{ 'CLIENT.PROFILE_SAVE_BTN' | translate }}</span>
+        }
+      </button>
+    </div>
+  </form>
+</div>
