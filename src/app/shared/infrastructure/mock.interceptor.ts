@@ -194,8 +194,14 @@ export class MockInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // If not in mock mode or not calling environment.baseUrl, pass-through
+    // If not in mock mode, pass-through
     if (!environment.mock) {
+      return next.handle(req);
+    }
+
+    // Only intercept requests targeting the mock backend URL
+    // All other requests (i18n files, CDN assets, etc.) pass through untouched
+    if (!req.url.includes(environment.baseUrl) && !req.url.startsWith('http://localhost:3000')) {
       return next.handle(req);
     }
 
