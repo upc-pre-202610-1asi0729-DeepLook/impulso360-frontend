@@ -27,6 +27,6 @@ export class NotificationBellComponent implements OnInit {
   }
 
   protected goToNotifications(): void {
-    this.router.navigate(['/notificaciones']);
+    this.router.navigate(['/admin/notificaciones']);
   }
 }
