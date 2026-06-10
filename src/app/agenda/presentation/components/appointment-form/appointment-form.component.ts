@@ -63,7 +63,7 @@ export class AppointmentFormComponent implements OnInit {
     date: [new Date(), Validators.required],
     time: ['09:00', Validators.required],
     duration: ['1 hora', Validators.required],
-    status: ['confirmed', Validators.required],
+    status: ['pending', Validators.required],
     notes: [''],
     sendReminder: [true]
   });
