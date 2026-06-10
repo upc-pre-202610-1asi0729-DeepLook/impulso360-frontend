@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
     providedIn: 'root'
 })
 export class ClientApiService {
-    private readonly baseUrl = 'http://localhost:3000/clients';
+    private readonly baseUrl = `${environment.baseUrl}/clients`;
 
     constructor(private readonly http: HttpClient) {}
 

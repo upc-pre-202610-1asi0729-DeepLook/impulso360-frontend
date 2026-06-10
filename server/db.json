@@ -881,6 +881,24 @@
       "role": "cliente",
       "phone": "99999999999999",
       "id": "T4Ni5gFkmdA"
+    },
+    {
+      "name": "jose",
+      "email": "jose@demo.com",
+      "password": "123456",
+      "role": "administrador",
+      "phone": "",
+      "id": "vIrFrjnJAVk",
+      "businessId": "RxB8cXJOawU"
+    },
+    {
+      "name": "jose",
+      "email": "1234@demo.com",
+      "password": "123456",
+      "role": "administrador",
+      "phone": "",
+      "id": "seiT3P-YsU0",
+      "businessId": "3clEdlRWuKY"
     }
   ],
   "business-profiles": [
@@ -1000,6 +1018,44 @@
       "ownerId": "e7NGlg8DeJs",
       "services": [],
       "id": "0GdLOijOUv4"
+    },
+    {
+      "name": {
+        "legalName": "",
+        "publicDisplayName": "jose"
+      },
+      "address": {
+        "street": "",
+        "city": "",
+        "reference": ""
+      },
+      "description": "",
+      "phone": "",
+      "category": "",
+      "isPublished": true,
+      "coverImage": "",
+      "ownerId": "vIrFrjnJAVk",
+      "services": [],
+      "id": "RxB8cXJOawU"
+    },
+    {
+      "name": {
+        "legalName": "",
+        "publicDisplayName": "jose"
+      },
+      "address": {
+        "street": "",
+        "city": "",
+        "reference": ""
+      },
+      "description": "",
+      "phone": "",
+      "category": "",
+      "isPublished": true,
+      "coverImage": "",
+      "ownerId": "seiT3P-YsU0",
+      "services": [],
+      "id": "3clEdlRWuKY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
