@@ -23,7 +23,8 @@
     "LANGUAGE": "Idioma",
     "LANGUAGE_ARIA": "Seleccionar idioma de la aplicación",
     "LANG_ES": "ES",
-    "LANG_EN": "EN"
+    "LANG_EN": "EN",
+    "LOGOUT": "Cerrar sesión"
   },
   "VIEWS": {
     "PANEL": "Panel general",
@@ -256,6 +257,48 @@
       "IN_PROGRESS": "En progreso",
       "PENDING": "Pendiente"
     }
+  },
+  "CLIENT": {
+    "NAV_HOME": "Inicio",
+    "NAV_MY_APPOINTMENTS": "Mis Citas",
+    "NAV_PROFILE": "Mi Perfil",
+    "PROFILE_TITLE": "Mi Perfil",
+    "PROFILE_SUBTITLE": "Actualiza tus datos personales",
+    "PROFILE_NAME": "Nombre completo",
+    "PROFILE_EMAIL": "Correo electrónico",
+    "PROFILE_EMAIL_HINT": "No se puede modificar el correo",
+    "PROFILE_PHONE": "Teléfono",
+    "PROFILE_SAVE_BTN": "Guardar cambios",
+    "PROFILE_SAVED": "Datos actualizados correctamente",
+    "WELCOME": "Bienvenido",
+    "MY_APPOINTMENTS": "Mis citas",
+    "BACK_TO_BUSINESSES": "Ver negocios",
+    "MY_APPOINTMENTS_TITLE": "Mis citas agendadas",
+    "NO_APPOINTMENTS": "No tienes citas agendadas.",
+    "BUSINESS": "Negocio",
+    "STATUS": {
+      "PENDING": "Pendiente",
+      "CONFIRMED": "Confirmada",
+      "CANCELLED": "Cancelada",
+      "ATTENDED": "Atendida"
+    },
+    "SEARCH_TITLE": "Busca un negocio para agendar tu cita",
+    "SEARCH_PLACEHOLDER": "Buscar por nombre, categoría...",
+    "SEARCH_EXAMPLE": "Ej: Veterinaria, Peluquería...",
+    "LOADING_BUSINESSES": "Cargando negocios...",
+    "NO_BUSINESSES": "No se encontraron negocios.",
+    "BACK_TO_RESULTS": "Volver a resultados",
+    "SERVICES": "Servicios",
+    "MIN": "min",
+    "BOOK_TITLE": "Agendar cita",
+    "BOOK_SUCCESS": "¡Cita agendada exitosamente!",
+    "BOOK_ANOTHER": "Agendar otra",
+    "SELECT_SERVICE": "Selecciona un servicio",
+    "SELECT_SERVICE_FIRST": "Primero selecciona un servicio",
+    "SELECT_DATE": "Selecciona una fecha",
+    "AVAILABLE_TIMES": "Horarios disponibles",
+    "NO_TIMES": "No hay horarios disponibles para esta fecha.",
+    "CONFIRM_BOOKING": "Confirmar cita"
   },
   "NOTIFICATIONS": {
     "TITLE": "Notificaciones",
