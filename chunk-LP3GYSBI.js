@@ -1,1 +1,0 @@
-import{a as o}from"./chunk-7Z5ZEYAF.js";import{a as r,c as t,d as i}from"./chunk-HMTWG3CZ.js";import{a as e}from"./chunk-UG6JUCT3.js";import"./chunk-BICKBV3Z.js";import"./chunk-Q2G5GA7L.js";var v=[{path:"",providers:[{provide:e,useClass:o},r,i,t],children:[{path:"",loadComponent:()=>import("./chunk-FFQ6K5NM.js").then(p=>p.ServicesPageComponent)}]}];export{v as SERVICIOS_ROUTES};
