@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     { provide: LOCALE_ID, useValue: 'es' },
     importProvidersFrom(MatNativeDateModule),
-    ...provideTranslateHttpLoader({ prefix: '/i18n/', suffix: '.json' }),
+    ...provideTranslateHttpLoader({ prefix: './i18n/', suffix: '.json' }),
     importProvidersFrom(
       TranslateModule.forRoot({
         lang: 'es',
