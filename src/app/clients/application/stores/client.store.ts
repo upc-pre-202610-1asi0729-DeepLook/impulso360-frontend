@@ -4,6 +4,7 @@ import { ClientApiService } from '../../infrastructure/client-api.service';
 import { AgendaApi } from '../../../agenda/infrastructure/agenda-api';
 import { forkJoin, of, switchMap } from 'rxjs';
 import { AuthStore } from '../../../auth/application/auth-store';
+import { Appointment } from '../../../agenda/domain/model/appointment.entity';
 
 @Injectable({
     providedIn: 'root'
@@ -69,10 +70,14 @@ export class ClientStore {
         this.loadingSignal.set(true);
         const businessId = this.authStore.currentUser()?.businessId;
 
-        this.clientApiService.getAll(businessId).subscribe({
-            next: (clients) => {
-                this.clientsSignal.set(clients);
-                this.selectedClientSignal.set(clients[0] ?? null);
+        forkJoin([
+            this.clientApiService.getAll(businessId),
+            this.agendaApi.getAllAppointments(businessId)
+        ]).subscribe({
+            next: ([clients, appointments]) => {
+                const enriched = clients.map(client => this.computeAppointmentStats(client, appointments));
+                this.clientsSignal.set(enriched);
+                this.selectedClientSignal.set(enriched[0] ?? null);
                 this.loadingSignal.set(false);
             },
             error: (error) => {
@@ -80,6 +85,20 @@ export class ClientStore {
                 this.loadingSignal.set(false);
             }
         });
+    }
+
+    private computeAppointmentStats(client: Client, appointments: Appointment[]): Client {
+        const clientFullName = client.fullName;
+        const clientEmail = client.email;
+
+        const matching = appointments.filter(a =>
+            a.clientEmail === clientEmail ||
+            a.clientName === clientFullName
+        );
+
+        client.totalAppointments = matching.length;
+        client.attendedAppointments = matching.filter(a => a.status === 'confirmed').length;
+        return client;
     }
 
     setSearchTerm(term: string): void {

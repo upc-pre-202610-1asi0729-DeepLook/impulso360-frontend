@@ -57,8 +57,12 @@ export class ClientHistoryPanelComponent implements OnChanges {
         this.agendaApi.getAllAppointments(businessId).subscribe(appointments => {
             const key = (item: HistoryItem) => `${item.date}|${item.time}|${item.service}`;
             const localKeys = new Set(localHistory.map(key));
+            const clientFullName = client.fullName;
             const fromAppointments: HistoryItem[] = appointments
-                .filter(a => a.clientEmail === client.email && !localKeys.has(key(a)))
+                .filter(a =>
+                    (a.clientEmail === client.email || a.clientName === clientFullName) &&
+                    !localKeys.has(key(a))
+                )
                 .map(a => ({ service: a.service, date: a.date, time: a.time, status: a.status }));
 
             this.combinedHistory = [...localHistory, ...fromAppointments].sort((a, b) =>

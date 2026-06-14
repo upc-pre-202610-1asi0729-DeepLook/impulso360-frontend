@@ -307,18 +307,35 @@ export class MockInterceptor implements HttpInterceptor {
           responseBody = appointments.find(a => String(a.id) === String(id)) || null;
           if (!responseBody) status = 404;
         } else {
+          let result = appointments;
           const businessIdQuery = getParam('businessId');
+          const clientNameQuery = getParam('clientName');
           if (businessIdQuery) {
-            responseBody = appointments.filter(a => String(a.businessId) === String(businessIdQuery));
-          } else {
-            responseBody = appointments;
+            result = result.filter(a => String(a.businessId) === String(businessIdQuery));
           }
+          if (clientNameQuery) {
+            result = result.filter(a => a.clientName === clientNameQuery);
+          }
+          responseBody = result;
         }
       } else if (req.method === 'POST') {
         const newAppointment = { ...req.body, id: String(Date.now()) };
         appointments.push(newAppointment);
         this.saveCollection('mock_appointments', appointments);
         responseBody = newAppointment;
+      } else if (req.method === 'PATCH' && id) {
+        const index = appointments.findIndex(a => String(a.id) === String(id));
+        if (index !== -1) {
+          appointments[index] = { ...appointments[index], ...req.body };
+          this.saveCollection('mock_appointments', appointments);
+          responseBody = appointments[index];
+        } else {
+          status = 404;
+        }
+      } else if (req.method === 'DELETE' && id) {
+        const filtered = appointments.filter(a => String(a.id) !== String(id));
+        this.saveCollection('mock_appointments', filtered);
+        responseBody = {};
       }
     }
 

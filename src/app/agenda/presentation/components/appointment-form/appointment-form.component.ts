@@ -103,7 +103,14 @@ export class AppointmentFormComponent implements OnInit {
 
   submit() {
     if (this.appointmentForm.valid) {
-      this.dialogRef.close(this.appointmentForm.value);
+      const formValue = this.appointmentForm.value;
+      const matchedClient = this.clients.find(c =>
+        `${c.firstName} ${c.lastName}` === formValue.client
+      );
+      this.dialogRef.close({
+        ...formValue,
+        clientEmail: matchedClient?.email ?? ''
+      });
     } else {
       this.appointmentForm.markAllAsTouched();
     }
