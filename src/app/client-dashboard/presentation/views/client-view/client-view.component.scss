@@ -452,3 +452,43 @@
   background: #e0f2fe;
   color: #075985;
 }
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.2rem;
+  }
+
+  .business-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .booking-panel {
+    position: static;
+  }
+
+  .times-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .appointment-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .times-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .time-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
+}

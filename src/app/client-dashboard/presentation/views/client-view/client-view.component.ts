@@ -84,7 +84,7 @@ export class ClientViewComponent implements OnInit {
     const bizId = business.id;
     const serverServices = this.servicesFromServer();
     return serverServices
-      .filter(s => s.status === 'activo' && String(s.businessId) === String(bizId))
+      .filter(s => (s.status === 'activo' || s.status === 'ACTIVE') && String(s.businessId) === String(bizId))
       .map(s => ({
         id: s.id,
         name: s.name,
@@ -291,7 +291,7 @@ export class ClientViewComponent implements OnInit {
 
   getServicesForBusiness(bizId: number | string): any[] {
     return (this.servicesFromServer() || [])
-      .filter(s => s.status === 'activo' && String(s.businessId) === String(bizId));
+      .filter(s => (s.status === 'activo' || s.status === 'ACTIVE') && String(s.businessId) === String(bizId));
   }
 
   private loadAllServices(): void {

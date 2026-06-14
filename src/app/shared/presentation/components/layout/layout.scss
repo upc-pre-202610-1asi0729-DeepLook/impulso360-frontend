@@ -204,11 +204,11 @@
   width: 100%;
 }
 
-@media (max-width: 900px) {
-  .mobile-menu-toggle {
-    display: none;
-  }
+.mobile-menu-toggle {
+  display: none;
+}
 
+@media (max-width: 900px) {
   .shell {
     flex-direction: column;
   }
