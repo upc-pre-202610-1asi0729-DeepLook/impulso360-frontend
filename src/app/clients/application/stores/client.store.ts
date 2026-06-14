@@ -106,7 +106,8 @@ export class ClientStore {
     }
 
     createClient(client: Partial<Client>): void {
-        this.clientApiService.create(client).subscribe({
+        const businessId = this.authStore.currentUser()?.businessId;
+        this.clientApiService.create({ ...client, businessId }).subscribe({
             next: (createdClient) => {
                 this.clientsSignal.update((clients) => [...clients, createdClient]);
                 this.selectedClientSignal.set(createdClient);
