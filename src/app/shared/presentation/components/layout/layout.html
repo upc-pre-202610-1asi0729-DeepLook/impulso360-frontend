@@ -1,5 +1,9 @@
 <div class="shell">
-    <aside class="sidebar" aria-label="{{ 'LAYOUT.NAV_LABEL' | translate }}">
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" type="button" [attr.aria-label]="'LAYOUT.NAV_LABEL' | translate">
+        <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+    <aside class="sidebar" [class.sidebar--open]="mobileMenuOpen()" aria-label="{{ 'LAYOUT.NAV_LABEL' | translate }}">
         <div class="brand">Impulso360</div>
 
         <div class="nav-scroll">
@@ -11,13 +15,14 @@
                             routerLink="/admin"
                             routerLinkActive="nav-link--active"
                             [routerLinkActiveOptions]="{ exact: true }"
+                            (click)="closeMobileMenu()"
                     >
                         <mat-icon>dashboard</mat-icon>
                         {{ 'LAYOUT.NAV_DASHBOARD' | translate }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/agenda" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/agenda" routerLinkActive="nav-link--active" (click)="closeMobileMenu()">
                         <mat-icon>event</mat-icon>
                         {{ 'LAYOUT.NAV_AGENDA' | translate }}
                         @if (agendaNavBadgeCount() > 0) {
@@ -26,13 +31,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/clientes" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/clientes" routerLinkActive="nav-link--active" (click)="closeMobileMenu()">
                         <mat-icon>people</mat-icon>
                         {{ 'LAYOUT.NAV_CLIENTS' | translate }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/servicios" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/servicios" routerLinkActive="nav-link--active" (click)="closeMobileMenu()">
                         <mat-icon>design_services</mat-icon>
                         {{ 'LAYOUT.NAV_SERVICES' | translate }}
                     </a>
@@ -42,13 +47,13 @@
             <p class="nav-group-label">{{ 'LAYOUT.GROUP_TOOLS' | translate }}</p>
             <ul class="nav-list">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/perfil-negocio" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/perfil-negocio" routerLinkActive="nav-link--active" (click)="closeMobileMenu()">
                         <mat-icon>storefront</mat-icon>
                         {{ 'LAYOUT.NAV_BUSINESS' | translate }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/ayuda" routerLinkActive="nav-link--active">
+                    <a class="nav-link" routerLink="/admin/ayuda" routerLinkActive="nav-link--active" (click)="closeMobileMenu()">
                         <mat-icon>help_outline</mat-icon>
                         {{ 'LAYOUT.NAV_HELP' | translate }}
                     </a>

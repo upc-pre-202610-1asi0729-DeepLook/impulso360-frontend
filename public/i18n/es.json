@@ -194,6 +194,7 @@
     "STATUS": {
       "ACTIVE": "Activo",
       "INACTIVE": "Inactivo",
+      "CONFIRMED": "Confirmada",
       "ATTENDED": "Atendida",
       "PENDING": "Pendiente",
       "CANCELLED": "Cancelada"

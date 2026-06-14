@@ -575,3 +575,145 @@
         margin-bottom: 16px;
     }
 }
+
+@media (max-width: 1100px) {
+  .agenda-container {
+    .agenda-content {
+      flex-direction: column;
+    }
+
+    .agenda-sidebar {
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .card {
+        flex: 1;
+        min-width: 280px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .agenda-container {
+    padding: 16px;
+
+    .agenda-header {
+      gap: 12px;
+      margin-bottom: 20px;
+
+      .header-top {
+        flex-wrap: wrap;
+        gap: 12px;
+
+        .page-title {
+          font-size: 1.4rem;
+        }
+
+        .btn-new-appointment {
+          height: 40px;
+          padding: 0 16px;
+          font-size: 0.85rem;
+        }
+      }
+
+      .header-controls {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .view-selectors, .status-filters {
+        flex-wrap: wrap;
+        gap: 2px;
+
+        button {
+          padding: 6px 12px;
+          font-size: 0.8rem;
+        }
+      }
+
+      .search-bar {
+        max-width: 100%;
+        order: 10;
+      }
+    }
+
+    .agenda-content {
+      gap: 16px;
+
+      .calendar-main {
+        padding: 16px;
+        border-radius: 12px;
+
+        .calendar-header {
+          margin-bottom: 20px;
+
+          .navigation {
+            gap: 10px;
+
+            .current-range {
+              font-size: 1rem;
+            }
+          }
+        }
+
+        .grid-header {
+          grid-template-columns: 60px repeat(7, 1fr);
+          padding-bottom: 10px;
+        }
+
+        .grid-body .grid-row {
+          grid-template-columns: 60px repeat(7, 1fr);
+          min-height: 60px;
+        }
+      }
+
+      .agenda-sidebar {
+        flex-direction: column;
+
+        .card {
+          min-width: auto;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .agenda-container {
+    padding: 12px;
+
+    .agenda-header .header-top .page-title {
+      font-size: 1.2rem;
+    }
+
+    .agenda-content .calendar-main {
+      padding: 12px;
+
+      .grid-header {
+        grid-template-columns: 45px repeat(7, 1fr);
+
+        .day-column .day-number {
+          width: 30px;
+          height: 30px;
+          font-size: 0.9rem;
+        }
+      }
+
+      .grid-body .grid-row {
+        grid-template-columns: 45px repeat(7, 1fr);
+        min-height: 50px;
+
+        .time-cell {
+          font-size: 0.65rem;
+        }
+
+        .day-cell .appointment-card {
+          padding: 4px 6px;
+          font-size: 0.65rem;
+        }
+      }
+    }
+  }
+}

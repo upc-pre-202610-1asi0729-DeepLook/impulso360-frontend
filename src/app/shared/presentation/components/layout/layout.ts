@@ -30,6 +30,7 @@ export class LayoutComponent {
   protected readonly agendaNavBadgeCount = signal(0);
   protected readonly currentLang = signal(this.translate.getCurrentLang() ?? 'es');
   protected readonly userName = this.authStore.userName;
+  protected readonly mobileMenuOpen = signal(false);
 
   constructor() {
     this.translate.onLangChange.subscribe(ev => this.currentLang.set(ev.lang));
@@ -44,5 +45,13 @@ export class LayoutComponent {
 
   protected logout(): void {
     this.authService.logout();
+  }
+
+  protected toggleMobileMenu(): void {
+    this.mobileMenuOpen.update(v => !v);
+  }
+
+  protected closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
   }
 }

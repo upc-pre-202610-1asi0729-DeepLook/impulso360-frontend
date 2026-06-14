@@ -277,3 +277,123 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 768px) {
+  .clients-header {
+    padding: 0 16px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    h1 {
+      font-size: 1.2rem;
+    }
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .primary-button {
+    padding: 0 14px;
+    min-height: 40px;
+    font-size: 0.85rem;
+  }
+
+  .clients-content {
+    padding: 0 16px 16px;
+    gap: 12px;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .search-box {
+    width: 100%;
+    order: -1;
+  }
+
+  .secondary-button,
+  .link-button {
+    padding: 0 12px;
+    min-height: 36px;
+    font-size: 0.82rem;
+  }
+
+  .export-button {
+    margin-left: 0;
+  }
+
+  .clients-table {
+    th, td {
+      padding: 10px 12px;
+      font-size: 0.8rem;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+      display: none;
+    }
+  }
+
+  .client-cell strong {
+    font-size: 0.82rem;
+  }
+
+  .status-badge {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+  }
+
+  .row-actions .icon-button {
+    width: 30px;
+    height: 30px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .see-all-button {
+    font-size: 0.85rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clients-header {
+    padding: 0 12px;
+  }
+
+  .clients-content {
+    padding: 0 12px 12px;
+  }
+
+  .toolbar {
+    padding: 10px;
+  }
+
+  .secondary-button {
+    display: none;
+  }
+
+  .clients-table {
+    th:nth-child(4),
+    td:nth-child(4) {
+      display: none;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+      display: none;
+    }
+  }
+}
