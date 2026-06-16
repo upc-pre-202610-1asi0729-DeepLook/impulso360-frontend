@@ -26,7 +26,7 @@
     </section>
 
     <section class="history-list">
-        <article class="history-item" *ngFor="let item of client.history">
+        <article class="history-item" *ngFor="let item of combinedHistory">
             <span class="dot" [class.cancelled]="item.status === 'cancelled'"></span>
 
             <div>

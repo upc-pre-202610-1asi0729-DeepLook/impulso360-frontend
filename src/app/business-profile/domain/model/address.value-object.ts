@@ -4,13 +4,8 @@
     private readonly _reference: string;
 
     constructor(street: string, city: string, reference: string) {
-        if (!street || street.trim().length === 0)
-            throw new Error('La calle no puede estar vacía');
-        if (!city || city.trim().length === 0)
-            throw new Error('La ciudad no puede estar vacía');
-
-        this._street = street.trim();
-        this._city = city.trim();
+        this._street = street?.trim() ?? '';
+        this._city = city?.trim() ?? '';
         this._reference = reference?.trim() ?? '';
     }
 

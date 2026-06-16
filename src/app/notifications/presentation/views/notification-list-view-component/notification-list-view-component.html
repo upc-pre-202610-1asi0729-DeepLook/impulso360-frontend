@@ -3,11 +3,11 @@
 
     <!-- ── Cabecera de página ─────────────────────────────── -->
     <div class="page-header">
-        <h1 class="page-title">Notificaciones</h1>
+        <h1 class="page-title">{{ 'NOTIFICATIONS.TITLE' | translate }}</h1>
         <div class="page-header__actions">
-            <span class="page-date">Lunes, 26 de abril de 2026</span>
+            <span class="page-date">{{ 'NOTIFICATIONS.MOCK_DATE' | translate }}</span>
             <button class="mark-all-btn" type="button" (click)="markAllAsRead()">
-                Marcar todo como leído
+                {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
             </button>
         </div>
     </div>
@@ -18,21 +18,21 @@
         <!-- Columna izquierda: lista -->
         <div class="notif-card">
             <div class="notif-card__header">
-                <h2 class="notif-card__title">Todas las notificaciones</h2>
+                <h2 class="notif-card__title">{{ 'NOTIFICATIONS.ALL_NOTIFICATIONS' | translate }}</h2>
                 <div class="filter-tabs" role="tablist">
                     <button
                             class="filter-tab"
                             [class.filter-tab--active]="activeTab() === 'all'"
                             (click)="setTab('all')"
                             role="tab"
-                    >Todas</button>
+                    >{{ 'NOTIFICATIONS.TABS.ALL' | translate }}</button>
                     <button
                             class="filter-tab"
                             [class.filter-tab--active]="activeTab() === 'unread'"
                             (click)="setTab('unread')"
                             role="tab"
                     >
-                        No leídas
+                        {{ 'NOTIFICATIONS.TABS.UNREAD' | translate }}
                         @if (store.unreadCount() > 0) {
                             <span class="tab-badge">{{ store.unreadCount() }}</span>
                         }
@@ -42,7 +42,7 @@
                             [class.filter-tab--active]="activeTab() === 'alerts'"
                             (click)="setTab('alerts')"
                             role="tab"
-                    >Alertas</button>
+                    >{{ 'NOTIFICATIONS.TABS.ALERTS' | translate }}</button>
                 </div>
             </div>
 
@@ -68,17 +68,17 @@
                             @if (notif.type === 'alert' && !notif.read) {
                                 <div class="notif-item__actions">
                                     <button class="action-btn action-btn--primary" type="button">
-                                        Ver cita
+                                        {{ 'NOTIFICATIONS.ACTIONS.VIEW_APPOINTMENT' | translate }}
                                     </button>
                                 </div>
                             }
                             @if (notif.type === 'pending' && !notif.read) {
                                 <div class="notif-item__actions">
                                     <button class="action-btn action-btn--primary" type="button">
-                                        Confirmar
+                                        {{ 'NOTIFICATIONS.ACTIONS.CONFIRM' | translate }}
                                     </button>
                                     <button class="action-btn action-btn--ghost" type="button">
-                                        Ver
+                                        {{ 'NOTIFICATIONS.ACTIONS.VIEW' | translate }}
                                     </button>
                                 </div>
                             }
@@ -88,13 +88,13 @@
 
                         <!-- Punto no leído -->
                         @if (!notif.read) {
-                            <span class="notif-item__dot" aria-label="No leída"></span>
+                            <span class="notif-item__dot" [attr.aria-label]="'NOTIFICATIONS.ACCESSIBILITY.UNREAD' | translate"></span>
                         }
                     </li>
                 } @empty {
                     <li class="notif-empty">
                         <mat-icon>notifications_off</mat-icon>
-                        <p>No hay notificaciones</p>
+                        <p>{{ 'NOTIFICATIONS.EMPTY' | translate }}</p>
                     </li>
                 }
             </ul>
@@ -105,18 +105,18 @@
 
             <!-- Resumen del día -->
             <div class="aside-card">
-                <h3 class="aside-card__title">Resumen del día</h3>
+                <h3 class="aside-card__title">{{ 'NOTIFICATIONS.SUMMARY.TITLE' | translate }}</h3>
                 <ul class="summary-list">
                     <li class="summary-item summary-item--pending">
-                        <span class="summary-item__label">Pendientes de confirmar</span>
+                        <span class="summary-item__label">{{ 'NOTIFICATIONS.SUMMARY.PENDING' | translate }}</span>
                         <span class="summary-item__count">{{ pendingCount() }}</span>
                     </li>
                     <li class="summary-item summary-item--confirmed">
-                        <span class="summary-item__label">Confirmadas hoy</span>
+                        <span class="summary-item__label">{{ 'NOTIFICATIONS.SUMMARY.CONFIRMED' | translate }}</span>
                         <span class="summary-item__count">{{ confirmedCount() }}</span>
                     </li>
                     <li class="summary-item summary-item--neutral">
-                        <span class="summary-item__label">Canceladas</span>
+                        <span class="summary-item__label">{{ 'NOTIFICATIONS.SUMMARY.CANCELLED' | translate }}</span>
                         <span class="summary-item__count">{{ cancelledCount() }}</span>
                     </li>
                 </ul>
@@ -124,12 +124,12 @@
 
             <!-- Configurar alertas -->
             <div class="aside-card">
-                <h3 class="aside-card__title">Configurar alertas</h3>
+                <h3 class="aside-card__title">{{ 'NOTIFICATIONS.CONFIG.TITLE' | translate }}</h3>
                 <ul class="alert-config-list">
                     <li class="alert-config-item">
                         <div class="alert-config-item__info">
-                            <span class="alert-config-item__name">Cita próxima (30 min)</span>
-                            <span class="alert-config-item__desc">Alerta antes de cada cita</span>
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.NEXT_APPOINTMENT.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.NEXT_APPOINTMENT.DESC' | translate }}</span>
                         </div>
                         <button
                                 class="toggle-btn"
@@ -143,8 +143,8 @@
                     </li>
                     <li class="alert-config-item">
                         <div class="alert-config-item__info">
-                            <span class="alert-config-item__name">Citas pendientes</span>
-                            <span class="alert-config-item__desc">Recordar confirmaciones</span>
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.PENDING.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.PENDING.DESC' | translate }}</span>
                         </div>
                         <button
                                 class="toggle-btn"
@@ -158,8 +158,8 @@
                     </li>
                     <li class="alert-config-item">
                         <div class="alert-config-item__info">
-                            <span class="alert-config-item__name">Resumen diario</span>
-                            <span class="alert-config-item__desc">Al inicio del día</span>
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.DAILY_SUMMARY.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.DAILY_SUMMARY.DESC' | translate }}</span>
                         </div>
                         <button
                                 class="toggle-btn"
@@ -173,8 +173,8 @@
                     </li>
                     <li class="alert-config-item">
                         <div class="alert-config-item__info">
-                            <span class="alert-config-item__name">Citas mañana</span>
-                            <span class="alert-config-item__desc">Recordatorio nocturno</span>
+                            <span class="alert-config-item__name">{{ 'NOTIFICATIONS.CONFIG.TOMORROW_APPOINTMENTS.TITLE' | translate }}</span>
+                            <span class="alert-config-item__desc">{{ 'NOTIFICATIONS.CONFIG.TOMORROW_APPOINTMENTS.DESC' | translate }}</span>
                         </div>
                         <button
                                 class="toggle-btn"

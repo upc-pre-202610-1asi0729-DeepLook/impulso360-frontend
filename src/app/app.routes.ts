@@ -1,18 +1,24 @@
-/**
- * @summary Main routing configuration for the application.
- */
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './shared/presentation/components/layout/layout';
+import { ClientLayoutComponent } from './client-dashboard/presentation/layout/client-layout';
+import { authGuard, loginGuard } from './auth/presentation/guards/auth.guard';
+
 export const routes: Routes = [
   {
-    path: '',
+    path: 'login',
+    canActivate: [loginGuard()],
+    loadChildren: () => import('./auth/presentation/auth.routes').then(m => m.AUTH_ROUTES)
+  },
+  {
+    path: 'admin',
     component: LayoutComponent,
+    canActivate: [authGuard(['administrador'])],
     children: [
       {
         path: '',
         pathMatch: 'full',
         loadChildren: () =>
-            import('../../src/app/overview/presentation/views/overview.routes').then(m => m.OVERVIEW_ROUTES)
+          import('./overview/presentation/views/overview.routes').then(m => m.OVERVIEW_ROUTES)
       },
       {
         path: 'agenda',
@@ -26,11 +32,10 @@ export const routes: Routes = [
         path: 'servicios',
         loadChildren: () => import('./servicios/presentation/servicios.routes').then(m => m.SERVICIOS_ROUTES)
       },
-
       {
         path: 'perfil-negocio',
         loadChildren: () => import('./business-profile/presentation/perfil-negocio.routes')
-            .then(m => m.PERFIL_NEGOCIO_ROUTES)
+          .then(m => m.PERFIL_NEGOCIO_ROUTES)
       },
       {
         path: 'ayuda',
@@ -39,10 +44,18 @@ export const routes: Routes = [
       {
         path: 'notificaciones',
         loadChildren: () =>
-            import('./notifications/presentation/notification.routes').then(m =>
-                m.NOTIFICATIONS_ROUTES)
+          import('./notifications/presentation/notification.routes').then(m =>
+            m.NOTIFICATIONS_ROUTES)
       }
-      ]
+    ]
   },
-  { path: '**', redirectTo: '' }
+  {
+    path: 'cliente',
+    component: ClientLayoutComponent,
+    canActivate: [authGuard(['cliente'])],
+    loadChildren: () =>
+      import('./client-dashboard/presentation/client-dashboard.routes').then(m => m.CLIENT_DASHBOARD_ROUTES)
+  },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];

@@ -1,0 +1,59 @@
+﻿{
+  "id": 1,
+  "name": {
+    "legalName": "Veterinaria & Estética Canina San Isidro S.A.C.",
+    "publicDisplayName": "PetCare San Isidro"
+  },
+  "address": {
+    "street": "Av. Conquistadores 850, San Isidro",
+    "city": "Lima",
+    "reference": "A media cuadra del Óvalo Gutiérrez, frente al Banco de Crédito"
+  },
+  "description": "Centro especializado en salud y estética para mascotas en el corazón de San Isidro. Contamos con veterinarios certificados y más de 10 años de experiencia atendiendo a las familias de Lima.",
+  "phone": "+51 987 654 321",
+  "category": "VETERINARIA",
+  "isPublished": true,
+  "coverImage": "",
+  "services": [
+    {
+      "id": "1",
+      "name": "Consulta general",
+      "description": "Evaluación general del estado de salud de la mascota.",
+      "durationMinutes": 30,
+      "price": { "amount": 50, "currency": "PEN" },
+      "status": "ACTIVE",
+      "category": "Veterinaria",
+      "isFeatured": true
+    },
+    {
+      "id": "2",
+      "name": "Vacunación",
+      "description": "Aplicación de vacunas según el calendario del animal.",
+      "durationMinutes": 20,
+      "price": { "amount": 35, "currency": "PEN" },
+      "status": "ACTIVE",
+      "category": "Prevención",
+      "isFeatured": true
+    },
+    {
+      "id": "3",
+      "name": "Baño y corte",
+      "description": "Baño completo y corte de pelo a medida.",
+      "durationMinutes": 60,
+      "price": { "amount": 45, "currency": "PEN" },
+      "status": "ACTIVE",
+      "category": "Estética",
+      "isFeatured": false
+    },
+    {
+      "id": "4",
+      "name": "Desparasitación",
+      "description": "Tratamiento contra parásitos internos y externos.",
+      "durationMinutes": 15,
+      "price": { "amount": 30, "currency": "PEN" },
+      "status": "INACTIVE",
+      "category": "Prevención",
+      "isFeatured": false
+    }
+  ]
+}

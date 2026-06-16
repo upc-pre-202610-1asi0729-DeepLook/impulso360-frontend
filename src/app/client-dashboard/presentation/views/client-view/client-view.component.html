@@ -1,0 +1,196 @@
+<div class="client-content">
+  <div class="page-top">
+    <div>
+      <h1 class="page-title">{{ currentUserName }}</h1>
+    </div>
+    <button mat-stroked-button (click)="toggleMyAppointments()" class="my-appts-btn">
+      <mat-icon>event_note</mat-icon>
+      {{ showMyAppointments() ? ('CLIENT.BACK_TO_BUSINESSES' | translate) : ('CLIENT.MY_APPOINTMENTS' | translate) }}
+    </button>
+  </div>
+
+  @if (showMyAppointments()) {
+    <div class="my-appointments-section">
+      @if (myAppointmentsLoading()) {
+        <div class="loading-state">
+          <mat-spinner diameter="32" />
+        </div>
+      } @else if (myAppointments().length === 0) {
+        <p class="empty-state">{{ 'CLIENT.NO_APPOINTMENTS' | translate }}</p>
+      } @else {
+        <div class="appointments-list">
+          @for (appt of myAppointments(); track appt.id) {
+            <div class="appointment-card">
+              <div class="appt-info">
+                <span class="appt-business">{{ appt.businessName || ('CLIENT.BUSINESS' | translate) }}</span>
+                <span class="appt-service">{{ appt.service }}</span>
+                <span class="appt-datetime">{{ appt.date | date:'dd/MM/yyyy' }} - {{ appt.time }}</span>
+              </div>
+              <span class="appt-status {{ getStatusClass(appt.status) }}">{{ ('CLIENT.STATUS.' + (appt.status | uppercase)) | translate }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  @if (!selectedBusiness() && !showMyAppointments()) {
+    <div class="search-section">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>{{ 'CLIENT.SEARCH_PLACEHOLDER' | translate }}</mat-label>
+        <input matInput type="text" [(ngModel)]="searchQuery" [placeholder]="'CLIENT.SEARCH_EXAMPLE' | translate">
+        <mat-icon matPrefix>search</mat-icon>
+        @if (searchQuery()) {
+          <button matSuffix mat-icon-button (click)="searchQuery.set('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+    </div>
+
+    @if (loading()) {
+      <div class="loading-state">
+        <mat-spinner diameter="40" />
+        <p>{{ 'CLIENT.LOADING_BUSINESSES' | translate }}</p>
+      </div>
+    } @else if (filteredBusinesses().length === 0) {
+      <div class="empty-state">
+        <mat-icon>store</mat-icon>
+        <p>{{ 'CLIENT.NO_BUSINESSES' | translate }}</p>
+      </div>
+    } @else {
+      <div class="business-grid">
+        @for (b of filteredBusinesses(); track b.id) {
+          <mat-card class="business-card" (click)="selectBusiness(b)">
+            @if (b.coverImage) {
+              <img [src]="b.coverImage" alt="" class="card-cover">
+            }
+            <mat-card-header>
+              <mat-card-title>{{ b.name.publicDisplayName }}</mat-card-title>
+              <mat-card-subtitle>{{ b.category }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="business-desc">{{ b.description }}</p>
+              <div class="business-meta">
+                <span><mat-icon>phone</mat-icon> {{ b.phone }}</span>
+                <span><mat-icon>location_on</mat-icon> {{ b.address.city }}</span>
+              </div>
+              <div class="service-tags">
+                @for (s of getServicesForBusiness(b.id).slice(0, 3); track s.id) {
+                  <span class="service-tag">{{ s.name }}</span>
+                }
+                @if (getServicesForBusiness(b.id).length > 3) {
+                  <span class="service-tag more">+{{ getServicesForBusiness(b.id).length - 3 }}</span>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  }
+
+  @if (selectedBusiness() && !showMyAppointments()) {
+    <div class="business-detail">
+      <button mat-stroked-button (click)="backToList()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+        {{ 'CLIENT.BACK_TO_RESULTS' | translate }}
+      </button>
+
+      @if (selectedBusiness()!.coverImage) {
+        <div class="cover-image-wrapper">
+          <img [src]="selectedBusiness()!.coverImage" alt="" class="cover-image">
+        </div>
+      }
+      <div class="detail-layout">
+        <div class="detail-info">
+          <h2>{{ selectedBusiness()!.name.publicDisplayName }}</h2>
+          <p class="detail-category">{{ selectedBusiness()!.category }}</p>
+          <p class="detail-desc">{{ selectedBusiness()!.description }}</p>
+
+          <div class="detail-contact">
+            <p><mat-icon>phone</mat-icon> {{ selectedBusiness()!.phone }}</p>
+            <p><mat-icon>location_on</mat-icon> {{ selectedBusiness()!.address.street }}, {{ selectedBusiness()!.address.city }}</p>
+          </div>
+
+          <h3>{{ 'CLIENT.SERVICES' | translate }}</h3>
+          <div class="services-list">
+            @for (s of activeServices(); track s.id) {
+              <div class="service-item">
+                <div class="service-info">
+                  <span class="service-name">{{ s.name }}</span>
+                  <span class="service-duration">{{ s.durationMinutes }} {{ 'CLIENT.MIN' | translate }}</span>
+                </div>
+                <span class="service-price">S/ {{ s.price.amount.toFixed(2) }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="booking-panel">
+          <h3>{{ 'CLIENT.BOOK_TITLE' | translate }}</h3>
+
+          @if (bookingSuccess()) {
+            <div class="success-message">
+              <mat-icon>check_circle</mat-icon>
+              <p>{{ 'CLIENT.BOOK_SUCCESS' | translate }}</p>
+              <button mat-stroked-button (click)="bookingSuccess.set(false)">{{ 'CLIENT.BOOK_ANOTHER' | translate }}</button>
+            </div>
+          } @else {
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'CLIENT.SELECT_SERVICE' | translate }}</mat-label>
+              <mat-select [ngModel]="selectedService" (ngModelChange)="onServiceChange($event)">
+                @for (s of activeServices(); track s.id) {
+                  <mat-option [value]="s.name">{{ s.name }} - S/ {{ s.price.amount.toFixed(2) }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width" (click)="openDatepicker()">
+              <mat-label>{{ 'CLIENT.SELECT_DATE' | translate }}</mat-label>
+              <input matInput [matDatepicker]="datepicker" (dateChange)="onDateSelected($event.value)" readonly>
+              <mat-datepicker-toggle matSuffix [for]="datepicker" />
+              <mat-datepicker #datepicker></mat-datepicker>
+            </mat-form-field>
+
+            @if (selectedDate()) {
+              <div class="time-slots">
+                <h4>{{ 'CLIENT.AVAILABLE_TIMES' | translate }} - {{ selectedDate() }}</h4>
+                @if (availableTimes().length === 0) {
+                  <p class="no-slots">{{ 'CLIENT.NO_TIMES' | translate }}</p>
+                } @else {
+                  <div class="times-grid">
+                    @for (t of availableTimes(); track t) {
+                      <button
+                        type="button"
+                        class="time-btn"
+                        [class.selected]="selectedTime() === t"
+                        (click)="selectTime(t)"
+                      >
+                        {{ t }}
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+            }
+
+            @if (selectedTime() && selectedDate() && selectedService) {
+              <button mat-flat-button color="primary" class="full-width book-btn" (click)="bookAppointment()" [disabled]="bookingLoading()">
+                @if (bookingLoading()) {
+                  <mat-spinner diameter="20" />
+                } @else {
+                  <span>{{ 'CLIENT.CONFIRM_BOOKING' | translate }}</span>
+                }
+              </button>
+            }
+
+            @if (bookingError()) {
+              <p class="error-msg">{{ bookingError() }}</p>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

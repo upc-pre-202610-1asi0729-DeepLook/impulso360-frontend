@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
@@ -6,39 +6,60 @@ import { BusinessProfile } from '../../domain/model/business-profile.entity';
 import { BusinessProfileRepository } from '../../domain/model/business-profile.repository';
 import { BusinessProfileAssembler } from '../assemblers/business-profile.assembler';
 import { BusinessProfileResource } from '../resources/business-profile.resource';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class BusinessProfileService implements BusinessProfileRepository {
 
-    private readonly dataUrl = 'assets/data/business-profile.json';
+    private http = inject(HttpClient);
+    private assembler = inject(BusinessProfileAssembler);
 
-    constructor(
-        private http: HttpClient,
-        private assembler: BusinessProfileAssembler
-    ) {}
-
-    getById(id: number): Observable<BusinessProfile | null> {
-        return this.http.get<BusinessProfileResource>(this.dataUrl).pipe(
-            map(resource => resource.id === id ? this.assembler.toEntity(resource) : null)
-        );
+    private get baseUrl(): string {
+        return environment.baseUrl;
     }
 
-    getByOwnerId(_ownerId: number): Observable<BusinessProfile | null> {
-        return this.http.get<BusinessProfileResource>(this.dataUrl).pipe(
+    getById(id: string | number): Observable<BusinessProfile | null> {
+        return this.http.get<BusinessProfileResource>(`${this.baseUrl}/business-profiles/${id}`).pipe(
             map(resource => this.assembler.toEntity(resource))
         );
     }
 
-    // Los siguientes métodos no aplican para JSON estático
-    save(_businessProfile: BusinessProfile): Observable<BusinessProfile> {
-        throw new Error('No disponible en modo JSON estático');
+    getByOwnerId(ownerId: string): Observable<BusinessProfile | null> {
+        return this.http.get<BusinessProfileResource[]>(`${this.baseUrl}/business-profiles`).pipe(
+            map(list => {
+                const filtered = list.filter(p => String(p.ownerId) === String(ownerId));
+                if (filtered.length === 0) return null;
+                const businessId = this.getCurrentUserBusinessId();
+                const match = businessId ? filtered.find(p => String(p.id) === String(businessId)) : null;
+                return this.assembler.toEntity(match ?? filtered[0]);
+            })
+        );
     }
 
-    update(_businessProfile: BusinessProfile): Observable<BusinessProfile> {
-        throw new Error('No disponible en modo JSON estático');
+    private getCurrentUserBusinessId(): string | null {
+        try {
+            const raw = localStorage.getItem('impulso360_user');
+            if (!raw) return null;
+            const user = JSON.parse(raw);
+            return user?.businessId ?? null;
+        } catch {
+            return null;
+        }
     }
 
-    delete(_id: number): Observable<void> {
-        throw new Error('No disponible en modo JSON estático');
+    save(businessProfile: BusinessProfile): Observable<BusinessProfile> {
+        return this.http.post<BusinessProfileResource>(`${this.baseUrl}/business-profiles`, businessProfile).pipe(
+            map(resource => this.assembler.toEntity(resource))
+        );
+    }
+
+    update(businessProfile: BusinessProfile): Observable<BusinessProfile> {
+        return this.http.put<BusinessProfileResource>(`${this.baseUrl}/business-profiles/${businessProfile.id}`, businessProfile).pipe(
+            map(resource => this.assembler.toEntity(resource))
+        );
+    }
+
+    delete(_id: string | number): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/business-profiles/${_id}`);
     }
 }

@@ -11,8 +11,8 @@ export class ToggleFeatureServiceUseCase {
         private readonly featuredDomainService: FeaturedServiceDomainService
     ) {}
 
-    execute(serviceId: string): Observable<ServiceDto> {
-        return this.serviceRepository.getAll().pipe(
+    execute(serviceId: string, businessId?: number | string): Observable<ServiceDto> {
+        return this.serviceRepository.getAll(businessId).pipe(
             switchMap(allServices => {
                 const target = allServices.find(s => s.id === serviceId);
                 if (!target) throw new Error(`Servicio ${serviceId} no encontrado`);

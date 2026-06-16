@@ -13,7 +13,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ClientApiService } from '../../../../clients/infrastructure/client-api.service';
 import { Client } from '../../../../clients/domain/model/client.entity';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpServiceRepository } from '../../../../servicios/infrastructure/http-service.repository';
+import { Service } from '../../../../servicios/domain/model/service.entity';
 import { Observable, map, startWith } from 'rxjs';
+import { AuthStore } from '../../../../auth/application/auth-store';
 
 
 @Component({
@@ -35,7 +39,8 @@ import { Observable, map, startWith } from 'rxjs';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    TranslateModule
   ],
   templateUrl: './appointment-form.component.html',
   styleUrls: ['./appointment-form.component.scss']
@@ -45,8 +50,11 @@ export class AppointmentFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<AppointmentFormComponent>);
   private clientApi = inject(ClientApiService);
+  private serviceApi = inject(HttpServiceRepository);
+  private authStore = inject(AuthStore);
 
   clients: Client[] = [];
+  services: Service[] = [];
   filteredClients!: Observable<Client[]>;
 
   appointmentForm: FormGroup = this.fb.group({
@@ -61,9 +69,15 @@ export class AppointmentFormComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.clientApi.getAll().subscribe(data => {
+    const businessId = this.authStore.currentUser()?.businessId;
+
+    this.clientApi.getAll(businessId).subscribe(data => {
       this.clients = data;
       this.setupAutocomplete();
+    });
+
+    this.serviceApi.getAll(businessId).subscribe(data => {
+      this.services = data;
     });
   }
 

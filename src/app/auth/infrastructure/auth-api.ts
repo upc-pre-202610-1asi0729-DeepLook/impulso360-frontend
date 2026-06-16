@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthApi {
   private http = inject(HttpClient);
-  private baseUrl = `${environment.baseUrl}/api/v1`;
+  private baseUrl = environment.baseUrl;
 
   login(email: string, password: string): Observable<User | null> {
     return this.http.get<User[]>(`${this.baseUrl}/users`).pipe(

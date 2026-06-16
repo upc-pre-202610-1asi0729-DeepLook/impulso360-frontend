@@ -14,6 +14,7 @@ export interface ServiceProps {
     price: number;
     status: ServiceStatus;
     isFeatured: boolean;
+    businessId?: number | string;
 }
 
 export class Service {
@@ -31,6 +32,7 @@ export class Service {
     get status(): ServiceStatus { return this.props.status; }
     get isFeatured(): boolean { return this.props.isFeatured; }
     get isActive(): boolean { return this.props.status === 'activo'; }
+    get businessId(): number | string | undefined { return this.props.businessId; }
 
     feature(): Service {
         return new Service({ ...this.props, isFeatured: true });

@@ -13,6 +13,7 @@ export interface ClientResource {
     totalAppointments: number;
     attendedAppointments: number;
     history: AppointmentHistoryItem[];
+    businessId?: number | string;
 }
 
 export interface CreateClientResource {
@@ -27,4 +28,5 @@ export interface CreateClientResource {
     totalAppointments: number;
     attendedAppointments: number;
     history: AppointmentHistoryItem[];
+    businessId?: number | string;
 }

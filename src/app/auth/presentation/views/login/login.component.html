@@ -1,0 +1,107 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1 class="brand">Impulso360</h1>
+      <p class="subtitle">
+        @if (mode() === 'login') {
+          Inicia sesión para continuar
+        } @else {
+          Crea una cuenta nueva
+        }
+      </p>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="error-banner">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
+
+    @if (mode() === 'login') {
+      <form (ngSubmit)="onLogin()" class="auth-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" [(ngModel)]="loginModel.email" name="email" required autocomplete="email">
+          <mat-icon matPrefix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" [(ngModel)]="loginModel.password" name="password" required autocomplete="current-password">
+          <mat-icon matPrefix>lock</mat-icon>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" class="full-width submit-btn" [disabled]="loading()">
+          @if (loading()) {
+            <span>Iniciando sesión...</span>
+          } @else {
+            <span>Iniciar sesión</span>
+          }
+        </button>
+
+        <p class="switch-text">
+          ¿No tienes cuenta?
+          <a href="#" (click)="$event.preventDefault(); switchMode('register')">Crear cuenta</a>
+        </p>
+      </form>
+    } @else {
+      <form (ngSubmit)="onRegister()" class="auth-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre completo</mat-label>
+          <input matInput type="text" [(ngModel)]="registerModel.name" name="name" required>
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" [(ngModel)]="registerModel.email" name="regEmail" required autocomplete="email" (input)="validateEmail()">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (emailError()) {
+            <mat-error>{{ emailError() }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo de cuenta</mat-label>
+          <mat-select [(ngModel)]="registerModel.role" name="role" required>
+            <mat-option value="cliente">Cliente</mat-option>
+            <mat-option value="administrador">Administrador de negocio</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>badge</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Teléfono (opcional)</mat-label>
+          <input matInput type="tel" [(ngModel)]="registerModel.phone" name="phone">
+          <mat-icon matPrefix>phone</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" [(ngModel)]="registerModel.password" name="regPassword" required autocomplete="new-password">
+          <mat-icon matPrefix>lock</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input matInput type="password" [(ngModel)]="registerModel.confirmPassword" name="confirmPassword" required>
+          <mat-icon matPrefix>lock</mat-icon>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" class="full-width submit-btn" [disabled]="loading()">
+          @if (loading()) {
+            <span>Creando cuenta...</span>
+          } @else {
+            <span>Crear cuenta</span>
+          }
+        </button>
+
+        <p class="switch-text">
+          ¿Ya tienes cuenta?
+          <a href="#" (click)="$event.preventDefault(); switchMode('login')">Iniciar sesión</a>
+        </p>
+      </form>
+    }
+  </div>
+</div>

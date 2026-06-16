@@ -1,4 +1,4 @@
-﻿/* ── Page layout ─────────────────────────── */
+/* ── Page layout ─────────────────────────── */
 .profile-page {
     padding: 24px 32px;
     max-width: 960px;
@@ -69,7 +69,14 @@
     gap: 8px;
     margin-bottom: 24px;
     color: rgba(255, 255, 255, 0.9);
-    cursor: default;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: filter 0.2s ease;
+}
+
+.cover-placeholder:hover {
+    filter: brightness(1.05);
 }
 
 .cover-placeholder mat-icon {
@@ -151,6 +158,92 @@
 ::ng-deep .snack-success {
     background-color: #2e7d32 !important;
     color: white !important;
+}
+
+/* ── Profile Presentation Card ───────────── */
+.profile-presentation-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e8eaf0;
+    margin-bottom: 24px;
+}
+
+.profile-presentation-cover {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #1a3a6b 0%, #1e88e5 100%);
+    position: relative;
+}
+
+.cover-image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cover-placeholder-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cover-placeholder-preview mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+}
+
+.profile-presentation-info {
+    padding: 24px;
+}
+
+.profile-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 4px;
+}
+
+.profile-category {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1565c0;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-description {
+    font-size: 1rem;
+    color: #4a4a5e;
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+.profile-contact {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #6a6a7e;
+}
+
+.contact-item mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #1e88e5;
 }
 
 /* ── Responsive ──────────────────────────── */

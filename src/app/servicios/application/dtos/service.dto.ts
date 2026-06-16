@@ -7,6 +7,7 @@
     status: 'activo' | 'inactivo';
     isFeatured: boolean;
     isActive: boolean;
+    businessId?: number | string;
 }
 
 export interface CreateServiceDto {
@@ -15,4 +16,5 @@ export interface CreateServiceDto {
     description: string;
     price: number;
     status: 'activo' | 'inactivo';
+    businessId?: number | string;
 }

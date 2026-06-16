@@ -16,22 +16,163 @@
     "NAV_AGENDA": "Planner",
     "NAV_CLIENTS": "Clients",
     "NAV_SERVICES": "Services",
-    "NAV_BUSINESS": "Business profile",
+    "NAV_BUSINESS": "Business Profile",
     "NAV_HELP": "Help",
     "USER_NAME": "User",
     "USER_ROLE": "Administrator",
     "LANGUAGE": "Language",
-    "LANGUAGE_ARIA": "Choose application language",
+    "LANGUAGE_ARIA": "Select application language",
     "LANG_ES": "ES",
-    "LANG_EN": "EN"
+    "LANG_EN": "EN",
+    "LOGOUT": "Log out"
   },
   "VIEWS": {
     "PANEL": "Overview",
     "AGENDA": "Planner",
     "CLIENTS": "Clients",
     "SERVICES": "Services",
-    "BUSINESS_PROFILE": "Business profile",
+    "BUSINESS_PROFILE": "Business Profile",
     "HELP": "Help"
+  },
+  "OVERVIEW": {
+    "TITLE": "Overview",
+    "NEW_APPOINTMENT": "New appointment",
+    "STATS": {
+      "TODAY_APPOINTMENTS": "Appointments today",
+      "VS_YESTERDAY": "vs. yesterday",
+      "CONFIRMED": "Confirmed",
+      "OF_TOTAL": "of total",
+      "PENDING": "Pending",
+      "REVIEW_SOON": "Review soon",
+      "ACTIVE_CLIENTS": "Active Clients",
+      "THIS_MONTH": "this month"
+    },
+    "APPOINTMENTS_TODAY": "Daily Appointments",
+    "FILTER_ALL": "All",
+    "FILTER_CONFIRMED": "Confirmed",
+    "FILTER_PENDING": "Pending",
+    "FILTER_CANCELLED": "Cancelled",
+    "BTN_FILTER": "Filter",
+    "STATUS": {
+      "CONFIRMED": "Confirmed",
+      "PENDING": "Pending",
+      "CANCELLED": "Cancelled"
+    },
+    "EMPTY_APPOINTMENTS": "No appointments for this filter",
+    "ALERT": {
+      "TITLE": "ALERT",
+      "SUBTITLE": "Next appointment starts soon",
+      "ETA": "In {{ mins }} mins",
+      "REVIEW": "Review"
+    },
+    "RECENT_CLIENTS": "Recent Clients",
+    "ADD_CLIENT": "Add client",
+    "TABLE": {
+      "CLIENT": "Client",
+      "SERVICE": "Usual service",
+      "LAST_APPOINTMENT": "Last appointment",
+      "STATUS": "Status"
+    },
+    "EMPTY_CLIENTS": "No registered clients",
+    "VIEW_HISTORY": "View history"
+  },
+  "AGENDA": {
+    "TITLE": "Planner",
+    "NEW_APPOINTMENT": "New appointment",
+    "VIEW_DAILY": "Daily",
+    "VIEW_WEEKLY": "Weekly",
+    "VIEW_MONTHLY": "Monthly",
+    "FILTER_ALL": "All",
+    "FILTER_CONFIRMED": "Confirmed",
+    "FILTER_PENDING": "Pending",
+    "FILTER_CANCELLED": "Cancelled",
+    "SEARCH_PLACEHOLDER": "Search client or service...",
+    "TODAY": "Today",
+    "SIDEBAR_TITLE": "Day details",
+    "SIDEBAR_SUBTITLE": "{{ count }} scheduled appointments",
+    "UPCOMING_TITLE": "UPCOMING APPOINTMENTS"
+  },
+  "APPOINTMENT": {
+    "FORM": {
+      "TITLE": "New appointment",
+      "REQUIRED_BANNER": "Fields marked with * are required",
+      "CLIENT_INFO": "Client Information",
+      "CLIENT_LABEL": "Client *",
+      "CLIENT_PLACEHOLDER": "Search client by name or phone...",
+      "CLIENT_HINT": "Start typing to search for existing clients",
+      "DETAILS_TITLE": "Appointment Details",
+      "SERVICE_LABEL": "Service *",
+      "SERVICE_PLACEHOLDER": "Select service",
+      "DATE_LABEL": "Date *",
+      "TIME_LABEL": "Time *",
+      "DURATION_LABEL": "Duration *",
+      "STATUS_LABEL": "Appointment Status *",
+      "STATUS_CONFIRMED": "Confirmed",
+      "STATUS_PENDING": "Pending",
+      "STATUS_CANCELLED": "Cancelled",
+      "NOTES_TITLE": "Additional Notes",
+      "NOTES_LABEL": "Notes",
+      "NOTES_PLACEHOLDER": "Additional info about the appointment...",
+      "NOTES_HINT": "Optional: Add relevant info about the appointment",
+      "REMINDER_LABEL": "Send automatic reminder to client",
+      "REMINDER_HINT": "A reminder will be sent 24 hours before the appointment",
+      "ERROR_SUMMARY": "Please review the fields marked in red.",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Create appointment"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Services",
+    "ADD": "Add service",
+    "FEATURED_LIMIT": "You have {{ count }} of {{ max }} featured services. To feature another, first remove one of the current ones.",
+    "FEATURED_LABEL": "Featured",
+    "LOADING": "Loading services...",
+    "ACTIONS": {
+        "EDIT": "Edit",
+        "DELETE": "Delete",
+        "FEATURE": "Feature",
+        "SAVE_SERVICE": "Save service"
+    },
+    "FIELDS": {
+        "NAME": "Service Name",
+        "CATEGORY": "Category",
+        "DESCRIPTION": "Description"
+    }
+  },
+  "BUSINESS": {
+    "TITLE": "Business Profile",
+    "SAVE": "Save changes",
+    "SECTIONS": {
+      "GENERAL": "Image and basic data",
+      "CONTACT": "Contact & Location",
+      "HOURS": "Business Hours"
+    },
+    "FIELDS": {
+      "NAME": "Business Name",
+      "NAME_PLACEHOLDER": "Ex. St. Mark Veterinary",
+      "CATEGORY": "Category",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Tell us about your business...",
+      "PHONE": "Phone",
+      "EMAIL": "Email",
+      "ADDRESS": "Address",
+      "CITY": "City",
+      "COVER_IMAGE": "Cover image",
+      "CHANGE_COVER": "Change cover"
+    },
+    "ACTIONS": {
+      "PREVIEW": "Preview"
+    },
+    "ERRORS": {
+      "REQUIRED_NAME": "Name is required",
+      "MIN_LENGTH": "Minimum 3 characters",
+      "REQUIRED_CATEGORY": "Select a category",
+      "REQUIRED_DESCRIPTION": "Description is required",
+      "MAX_LENGTH": "Maximum 300 characters",
+      "REQUIRED_PHONE": "Phone is required",
+      "INVALID_PHONE": "Enter a valid number",
+      "REQUIRED_ADDRESS": "Address is required"
+    }
   },
   "CLIENTS": {
     "TITLE": "Clients",
@@ -62,7 +203,7 @@
       "EDIT": "Edit",
       "DELETE": "Delete client",
       "SEE_ALL": "See all clients",
-      "EXPORT_HISTORY": "Export history as PDF",
+      "EXPORT_HISTORY": "Export history to PDF",
       "SAVE": "Save client",
       "CANCEL": "Cancel",
       "UPDATE": "Save changes"
@@ -85,13 +226,124 @@
       "EMAIL": "Email",
       "STATUS": "Client status",
       "NOTES": "Notes",
-      "FIRST_NAME_PLACEHOLDER": "Ex: John",
-      "LAST_NAME_PLACEHOLDER": "Ex: Garcia Lopez",
+      "FIRST_NAME_PLACEHOLDER": "Ex: John Doe",
+      "LAST_NAME_PLACEHOLDER": "Ex: Smith",
       "PHONE_PLACEHOLDER": "+51 987 654 321",
       "EMAIL_PLACEHOLDER": "client@example.com",
       "NOTES_PLACEHOLDER": "Additional client information, preferences, reminders, etc.",
-      "PHONE_HINT": "Include the international country code",
-      "NOTES_HINT": "Optional: Add relevant client information"
+      "PHONE_HINT": "Include country code if international",
+      "NOTES_HINT": "Optional: Add relevant information about the client"
+    }
+  },
+  "HELP": {
+    "EYEBROW": "Help center",
+    "TITLE": "How can we help you?",
+    "DESCRIPTION": "Search guides, tutorials, and quick answers to learn how to use Impulso360 easily.",
+    "SEARCH_PLACEHOLDER": "Search help...",
+
+    "TUTORIAL_TITLE": "Interactive tutorial",
+    "TUTORIAL_DESCRIPTION": "Complete these steps to set up your business and start using Impulso360.",
+    "QUICK_GUIDES_TITLE": "Quick guides",
+    "QUICK_GUIDES_DESCRIPTION": "Learn the main features in just a few minutes.",
+    "FAQ_TITLE": "Frequently asked questions",
+    "FAQ_DESCRIPTION": "Solve the most common questions about using the platform.",
+
+    "STEPS_LABEL": "steps",
+    "CONTINUE": "Continue",
+    "EMPTY_GUIDES": "No guides related to your search were found.",
+    "EMPTY_FAQS": "No questions related to your search were found.",
+
+    "STATUS": {
+      "COMPLETED": "Completed",
+      "IN_PROGRESS": "In progress",
+      "PENDING": "Pending"
+    }
+  },
+  "CLIENT": {
+    "NAV_HOME": "Home",
+    "NAV_MY_APPOINTMENTS": "My Appointments",
+    "NAV_PROFILE": "My Profile",
+    "PROFILE_TITLE": "My Profile",
+    "PROFILE_SUBTITLE": "Update your personal information",
+    "PROFILE_NAME": "Full name",
+    "PROFILE_EMAIL": "Email",
+    "PROFILE_EMAIL_HINT": "Email cannot be changed",
+    "PROFILE_PHONE": "Phone",
+    "PROFILE_SAVE_BTN": "Save changes",
+    "PROFILE_SAVED": "Profile updated successfully",
+    "WELCOME": "Welcome",
+    "MY_APPOINTMENTS": "My appointments",
+    "BACK_TO_BUSINESSES": "View businesses",
+    "MY_APPOINTMENTS_TITLE": "My scheduled appointments",
+    "NO_APPOINTMENTS": "You have no scheduled appointments.",
+    "BUSINESS": "Business",
+    "STATUS": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled",
+      "ATTENDED": "Attended"
+    },
+    "SEARCH_TITLE": "Search for a business to book your appointment",
+    "SEARCH_PLACEHOLDER": "Search by name, category...",
+    "SEARCH_EXAMPLE": "Ex: Veterinary, Grooming...",
+    "LOADING_BUSINESSES": "Loading businesses...",
+    "NO_BUSINESSES": "No businesses found.",
+    "BACK_TO_RESULTS": "Back to results",
+    "SERVICES": "Services",
+    "MIN": "min",
+    "BOOK_TITLE": "Book an appointment",
+    "BOOK_SUCCESS": "Appointment booked successfully!",
+    "BOOK_ANOTHER": "Book another",
+    "SELECT_SERVICE": "Select a service",
+    "SELECT_SERVICE_FIRST": "Please select a service first",
+    "SELECT_DATE": "Select a date",
+    "AVAILABLE_TIMES": "Available times",
+    "NO_TIMES": "No available times for this date.",
+    "CONFIRM_BOOKING": "Confirm booking"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "MOCK_DATE": "Monday, April 26, 2026",
+    "MARK_ALL_READ": "Mark all as read",
+    "ALL_NOTIFICATIONS": "All notifications",
+    "TABS": {
+      "ALL": "All",
+      "UNREAD": "Unread",
+      "ALERTS": "Alerts"
+    },
+    "ACTIONS": {
+      "VIEW_APPOINTMENT": "View appointment",
+      "CONFIRM": "Confirm",
+      "VIEW": "View"
+    },
+    "ACCESSIBILITY": {
+      "UNREAD": "Unread"
+    },
+    "EMPTY": "No notifications",
+    "SUMMARY": {
+      "TITLE": "Daily summary",
+      "PENDING": "Pending confirmation",
+      "CONFIRMED": "Confirmed today",
+      "CANCELLED": "Cancelled"
+    },
+    "CONFIG": {
+      "TITLE": "Configure alerts",
+      "NEXT_APPOINTMENT": {
+        "TITLE": "Next appointment (30 min)",
+        "DESC": "Alert before each appointment"
+      },
+      "PENDING": {
+        "TITLE": "Pending appointments",
+        "DESC": "Remind confirmations"
+      },
+      "DAILY_SUMMARY": {
+        "TITLE": "Daily summary",
+        "DESC": "At the start of the day"
+      },
+      "TOMORROW_APPOINTMENTS": {
+        "TITLE": "Tomorrow appointments",
+        "DESC": "Nightly reminder"
+      }
     }
   }
 }
