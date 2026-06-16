@@ -20,6 +20,7 @@ import { Client, ClientStatus } from '../../../domain/model/client.entity';
 })
 export class ClientFormModalComponent implements OnChanges {
   @Input() client: Client | null = null;
+  @Input() errorMessage: string | null = null;
 
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveClient = new EventEmitter<Partial<Client>>();
@@ -30,6 +31,8 @@ export class ClientFormModalComponent implements OnChanges {
   email = '';
   status: ClientStatus = 'active';
   notes = '';
+
+  validationErrors: string[] = [];
 
   get isEditMode(): boolean {
     return this.client !== null;
@@ -42,11 +45,24 @@ export class ClientFormModalComponent implements OnChanges {
   }
 
   close(): void {
+    this.validationErrors = [];
     this.closeModal.emit();
   }
 
   save(): void {
-    if (!this.firstName.trim() || !this.lastName.trim() || !this.phone.trim()) {
+    this.validationErrors = [];
+
+    if (!this.firstName.trim()) {
+      this.validationErrors.push('El nombre es obligatorio');
+    }
+    if (!this.lastName.trim()) {
+      this.validationErrors.push('El apellido es obligatorio');
+    }
+    if (!this.phone.trim()) {
+      this.validationErrors.push('El teléfono es obligatorio');
+    }
+
+    if (this.validationErrors.length > 0) {
       return;
     }
 

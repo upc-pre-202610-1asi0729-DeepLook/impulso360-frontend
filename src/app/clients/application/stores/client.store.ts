@@ -16,6 +16,7 @@ export class ClientStore {
     private readonly searchTermSignal = signal<string>('');
     private readonly loadingSignal = signal<boolean>(false);
     private readonly modalOpenSignal = signal<boolean>(false);
+    private readonly errorSignal = signal<string | null>(null);
 
     readonly clients = this.clientsSignal.asReadonly();
     readonly selectedClient = this.selectedClientSignal.asReadonly();
@@ -23,6 +24,7 @@ export class ClientStore {
     readonly searchTerm = this.searchTermSignal.asReadonly();
     readonly loading = this.loadingSignal.asReadonly();
     readonly modalOpen = this.modalOpenSignal.asReadonly();
+    readonly error = this.errorSignal.asReadonly();
 
     readonly filteredClients = computed(() => {
         const term = this.searchTermSignal().toLowerCase().trim();
@@ -111,21 +113,26 @@ export class ClientStore {
 
     openCreateModal(): void {
         this.clientToEditSignal.set(null);
+        this.errorSignal.set(null);
         this.modalOpenSignal.set(true);
     }
 
     openEditModal(client: Client): void {
         this.clientToEditSignal.set(client);
+        this.errorSignal.set(null);
         this.modalOpenSignal.set(true);
     }
 
     closeModal(): void {
         this.modalOpenSignal.set(false);
         this.clientToEditSignal.set(null);
+        this.errorSignal.set(null);
     }
 
     createClient(client: Partial<Client>): void {
         const businessId = this.authStore.currentUser()?.businessId;
+        this.errorSignal.set(null);
+
         this.clientApiService.create({ ...client, businessId }).subscribe({
             next: (createdClient) => {
                 this.clientsSignal.update((clients) => [...clients, createdClient]);
@@ -134,11 +141,20 @@ export class ClientStore {
             },
             error: (error) => {
                 console.error('Error creating client:', error);
+                let message = 'Error al crear el cliente';
+                if (error.error?.message) {
+                    message = error.error.message;
+                } else if (error.message) {
+                    message = error.message;
+                }
+                this.errorSignal.set(message);
             }
         });
     }
 
     updateClient(id: any, client: Partial<Client>): void {
+        this.errorSignal.set(null);
+
         this.clientApiService.update(id, client).subscribe({
             next: (updatedClient) => {
                 this.clientsSignal.update((clients) =>
@@ -152,6 +168,13 @@ export class ClientStore {
             },
             error: (error) => {
                 console.error('Error updating client:', error);
+                let message = 'Error al actualizar el cliente';
+                if (error.error?.message) {
+                    message = error.error.message;
+                } else if (error.message) {
+                    message = error.message;
+                }
+                this.errorSignal.set(message);
             }
         });
     }

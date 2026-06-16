@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, map, Observable } from 'rxjs';
+import { forkJoin, map, Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Client } from '../domain/model/client.entity';
 import { ClientAssembler } from './client-assembler';
 import { ClientResource, CreateClientResource } from './client.resource';
@@ -10,14 +11,14 @@ import { environment } from '../../../environments/environment';
     providedIn: 'root'
 })
 export class ClientApiService {
-    private readonly baseUrl = `${environment.baseUrl}/clients`;
+    private readonly baseUrl = `${environment.baseUrl}/api/v1/clients`;
 
     constructor(private readonly http: HttpClient) {}
 
     getAll(businessId?: number | string): Observable<Client[]> {
         return forkJoin([
-            this.http.get<ClientResource[]>(this.baseUrl),
-            this.http.get<any[]>(`${environment.baseUrl}/users`)
+            this.http.get<ClientResource[]>(this.baseUrl).pipe(catchError(() => of([] as ClientResource[]))),
+            this.http.get<any[]>(`${environment.baseUrl}/users`).pipe(catchError(() => of([] as any[])))
         ]).pipe(
             map(([clientResources, users]) => {
                 const nameByEmail = new Map<string, string>();

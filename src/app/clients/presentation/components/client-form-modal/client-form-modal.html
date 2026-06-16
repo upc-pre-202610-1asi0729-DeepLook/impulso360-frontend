@@ -20,6 +20,24 @@
                 <span>{{ 'CLIENTS.FORM.REQUIRED_HINT' | translate }}</span>
             </div>
 
+            @if (validationErrors.length > 0) {
+                <div class="error-box">
+                    <mat-icon>error</mat-icon>
+                    <div>
+                        @for (error of validationErrors; track error) {
+                            <div>{{ error }}</div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (errorMessage) {
+                <div class="error-box">
+                    <mat-icon>error</mat-icon>
+                    <span>{{ errorMessage }}</span>
+                </div>
+            }
+
             <h3>{{ 'CLIENTS.FORM.PERSONAL_INFO' | translate }}</h3>
 
             <div class="form-grid">
