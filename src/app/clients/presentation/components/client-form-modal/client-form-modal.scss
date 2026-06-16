@@ -91,6 +91,31 @@ padding-top: 1rem;
   }
 }
 
+.error-box {
+  background: #fef2f2;
+  color: #991b1b;
+  border-left: 4px solid #ef4444;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  margin-top: 12px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  mat-icon {
+    font-size: 17px;
+    width: 17px;
+    height: 17px;
+    color: #ef4444;
+    flex-shrink: 0;
+  }
+
+  span, div {
+    line-height: 1.4;
+  }
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

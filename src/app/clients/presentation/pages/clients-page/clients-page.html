@@ -115,6 +115,7 @@
     <app-client-form-modal
             *ngIf="clientStore.modalOpen()"
             [client]="clientStore.clientToEdit()"
+            [errorMessage]="clientStore.error()"
             (closeModal)="clientStore.closeModal()"
             (saveClient)="clientStore.saveClient($event)"
     />
