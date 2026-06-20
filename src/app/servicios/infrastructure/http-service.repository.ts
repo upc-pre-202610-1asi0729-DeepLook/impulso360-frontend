@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class HttpServiceRepository extends ServiceRepository {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.baseUrl}/services`;
+  private readonly baseUrl = `${environment.baseUrl}/api/v1/services`;
 
   override getAll(businessId?: number | string): Observable<Service[]> {
     const params = businessId ? `?businessId=${businessId}` : '';

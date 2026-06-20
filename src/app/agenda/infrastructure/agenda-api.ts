@@ -26,9 +26,9 @@ export class AgendaApi extends BaseApi {
   }
 
   getAllAppointments(businessId?: number | string): Observable<Appointment[]> {
-    return this.http.get<any[]>(`${this.resourceUrl}`).pipe(
-      map(list => list.map(a => this.normalizeAppointment(a))),
-      map(list => businessId ? list.filter(a => String(a.businessId) === String(businessId)) : list)
+    const url = businessId ? `${this.resourceUrl}?businessId=${businessId}` : `${this.resourceUrl}`;
+    return this.http.get<any[]>(url).pipe(
+      map(list => list.map(a => this.normalizeAppointment(a)))
     );
   }
 

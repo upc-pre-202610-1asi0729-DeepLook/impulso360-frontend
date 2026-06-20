@@ -84,7 +84,10 @@ export class ClientViewComponent implements OnInit {
     const bizId = business.id;
     const serverServices = this.servicesFromServer();
     return serverServices
-      .filter(s => (s.status === 'activo' || s.status === 'ACTIVE') && String(s.businessId) === String(bizId))
+      .filter(s => {
+        const status = (s.status || '').toLowerCase();
+        return (status === 'active' || status === 'activo' || status === 'ACTIVE') && String(s.businessId) === String(bizId);
+      })
       .map(s => ({
         id: s.id,
         name: s.name,
@@ -109,8 +112,20 @@ export class ClientViewComponent implements OnInit {
     this.authApi.getUsersByRole('administrador').subscribe({
       next: admins => {
         this.authApi.getAllBusinessProfiles().subscribe({
-          next: (profiles: BusinessProfile[]) => {
-            const adminUserIds = new Set(admins.map(a => a.id));
+          next: (rawProfiles: any[]) => {
+            const profiles: BusinessProfile[] = rawProfiles.map(p => ({
+              id: p.id,
+              ownerId: p.ownerId != null ? String(p.ownerId) : undefined,
+              name: typeof p.name === 'object' ? p.name : { legalName: p.name || '', publicDisplayName: p.name || '' },
+              address: typeof p.address === 'object' ? p.address : { street: p.address || '', city: '', reference: '' },
+              description: p.description || '',
+              phone: p.phone || '',
+              category: p.category || '',
+              isPublished: p.isPublished ?? true,
+              coverImage: p.coverImage || '',
+              services: []
+            }));
+            const adminUserIds = new Set(admins.map(a => String(a.id)));
             const filtered = profiles.filter(p => p.isPublished && (p.ownerId ? adminUserIds.has(p.ownerId) : true));
             this.businesses.set(filtered.length > 0 ? filtered : profiles.filter(p => p.isPublished));
             this.loading.set(false);
@@ -259,8 +274,8 @@ export class ClientViewComponent implements OnInit {
                 const names = (user?.name || 'Cliente').split(' ');
                 this.authApi.createClient({
                   firstName: names[0] || user?.name || 'Cliente',
-                  lastName: names.length > 1 ? names.slice(1).join(' ') : '',
-                  phone: user?.phone || '',
+                  lastName: names.length > 1 ? names.slice(1).join(' ') : 'Sin apellido',
+                  phone: user?.phone || 'N/A',
                   email: user?.email || '',
                   status: 'active',
                   notes: '',
@@ -270,7 +285,9 @@ export class ClientViewComponent implements OnInit {
                   attendedAppointments: 0,
                   history: [historyEntry],
                   businessId: business.id
-                }).subscribe();
+                }).subscribe({
+                  error: (err) => console.error('Error creating client record:', err)
+                });
               }
             }
           });
@@ -291,7 +308,10 @@ export class ClientViewComponent implements OnInit {
 
   getServicesForBusiness(bizId: number | string): any[] {
     return (this.servicesFromServer() || [])
-      .filter(s => (s.status === 'activo' || s.status === 'ACTIVE') && String(s.businessId) === String(bizId));
+      .filter(s => {
+        const status = (s.status || '').toLowerCase();
+        return (status === 'active' || status === 'activo' || status === 'ACTIVE') && String(s.businessId) === String(bizId);
+      });
   }
 
   private loadAllServices(): void {

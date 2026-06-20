@@ -17,16 +17,28 @@ import {
 export class BusinessProfileAssembler {
 
     toEntity(resource: BusinessProfileResource): BusinessProfile {
-        const name = new BusinessName(
-            resource.name?.legalName ?? '',
-            resource.name?.publicDisplayName ?? ''
-        );
+        let name: BusinessName;
+        if (resource.name && typeof resource.name === 'object') {
+            name = new BusinessName(
+                resource.name.legalName ?? '',
+                resource.name.publicDisplayName ?? ''
+            );
+        } else {
+            const nameStr = (resource.name as string) ?? '';
+            name = new BusinessName(nameStr, nameStr);
+        }
 
-        const address = new Address(
-            resource.address?.street ?? '',
-            resource.address?.city ?? '',
-            resource.address?.reference ?? ''
-        );
+        let address: Address;
+        if (resource.address && typeof resource.address === 'object') {
+            address = new Address(
+                resource.address.street ?? '',
+                resource.address.city ?? '',
+                resource.address.reference ?? ''
+            );
+        } else {
+            const addrStr = (resource.address as string) ?? '';
+            address = new Address(addrStr, '', '');
+        }
 
         const services = (resource.services ?? []).map(s => this.toServiceEntity(s));
 

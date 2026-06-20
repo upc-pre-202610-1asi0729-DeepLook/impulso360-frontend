@@ -365,8 +365,9 @@ export class AgendaViewComponent implements OnInit, OnDestroy {
           time: result.time,
           clientName: result.client,
           clientEmail: result.clientEmail ?? '',
+          serviceId: result.serviceId ?? undefined,
           service: result.service,
-          category: 'Veterinaria',
+          category: result.category ?? 'Veterinaria',
           status: result.status,
           note: result.notes,
           businessId: this.authStore.currentUser()?.businessId

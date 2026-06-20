@@ -10,6 +10,7 @@ export class Appointment extends BaseEntity {
   time: string = '';
   clientName: string = '';
   clientEmail: string = '';
+  serviceId?: string;
   service: string = '';
   category: string = '';
   status: AppointmentStatus = 'pending';

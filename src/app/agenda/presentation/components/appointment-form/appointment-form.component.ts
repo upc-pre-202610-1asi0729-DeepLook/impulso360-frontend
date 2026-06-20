@@ -107,9 +107,12 @@ export class AppointmentFormComponent implements OnInit {
       const matchedClient = this.clients.find(c =>
         `${c.firstName} ${c.lastName}` === formValue.client
       );
+      const selectedService = this.services.find(s => s.name === formValue.service);
       this.dialogRef.close({
         ...formValue,
-        clientEmail: matchedClient?.email ?? ''
+        clientEmail: matchedClient?.email ?? '',
+        serviceId: selectedService?.id ?? null,
+        category: selectedService?.category ?? ''
       });
     } else {
       this.appointmentForm.markAllAsTouched();

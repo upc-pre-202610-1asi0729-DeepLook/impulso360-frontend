@@ -16,9 +16,11 @@ export class ClientApiService {
     constructor(private readonly http: HttpClient) {}
 
     getAll(businessId?: number | string): Observable<Client[]> {
+        const clientsUrl = businessId ? `${this.baseUrl}?businessId=${businessId}` : this.baseUrl;
+
         return forkJoin([
-            this.http.get<ClientResource[]>(this.baseUrl).pipe(catchError(() => of([] as ClientResource[]))),
-            this.http.get<any[]>(`${environment.baseUrl}/users`).pipe(catchError(() => of([] as any[])))
+            this.http.get<ClientResource[]>(clientsUrl).pipe(catchError(() => of([] as ClientResource[]))),
+            this.http.get<any[]>(`${environment.baseUrl}/api/v1/users`).pipe(catchError(() => of([] as any[])))
         ]).pipe(
             map(([clientResources, users]) => {
                 const nameByEmail = new Map<string, string>();
@@ -35,7 +37,7 @@ export class ClientApiService {
                         c.lastName = parts.slice(1).join(' ');
                     }
                 }
-                return businessId ? entities.filter(c => String(c.businessId) === String(businessId)) : entities;
+                return entities;
             })
         );
     }
