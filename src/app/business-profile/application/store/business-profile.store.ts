@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, of } from 'rxjs';
-import { tap, map, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject, of, switchMap, tap } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { BusinessProfile } from '../../domain/model/business-profile.entity';
 import { BusinessName } from '../../domain/model/business-name.value-object';
@@ -33,24 +33,24 @@ export class BusinessProfileStore {
         private http: HttpClient
     ) {}
 
-    getCurrentUserId(): string {
-        return this.authStore.currentUser()?.id || '1';
+    getCurrentUserId(): string | null {
+        return this.authStore.currentUser()?.id ?? null;
+    }
+
+    reset(): void {
+        this._profile$.next(null);
+        this._loading$.next(false);
+        this._error$.next(null);
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('business_profile_')) {
+                localStorage.removeItem(key);
+            }
+        }
     }
 
     loadProfile(ownerId: string): void {
-        const savedData = localStorage.getItem(`business_profile_${ownerId}`);
-        if (savedData) {
-            try {
-                const resource = JSON.parse(savedData);
-                const profile = this.assembler.toEntity(resource);
-                this._profile$.next(profile);
-                return;
-            } catch (e) {
-                console.error('Error parsing saved profile', e);
-                localStorage.removeItem(`business_profile_${ownerId}`);
-            }
-        }
-
+        this._profile$.next(null);
         this._loading$.next(true);
         this._error$.next(null);
 
@@ -66,21 +66,57 @@ export class BusinessProfileStore {
                 next: (profile) => {
                     if (profile) {
                         this._profile$.next(profile);
+                        const resource = this.assembler.toResource(profile);
+                        localStorage.setItem(`business_profile_${ownerId}`, JSON.stringify(resource));
+
+                        if (user && profile.id && String(user.businessId) !== String(profile.id)) {
+                            this.http.patch(`${environment.baseUrl}/api/v1/users/${user.id}`, {
+                                businessId: profile.id
+                            }).subscribe({
+                                next: () => {
+                                    this.authStore.setUser({ ...user, businessId: profile.id });
+                                },
+                                error: () => {
+                                    this.authStore.setUser({ ...user, businessId: profile.id });
+                                }
+                            });
+                        }
+                    } else {
+                        const savedData = localStorage.getItem(`business_profile_${ownerId}`);
+                        if (savedData) {
+                            try {
+                                const resource = JSON.parse(savedData);
+                                const savedProfile = this.assembler.toEntity(resource);
+                                this._profile$.next(savedProfile);
+                            } catch (e) {
+                                console.error('Error parsing saved profile', e);
+                                localStorage.removeItem(`business_profile_${ownerId}`);
+                            }
+                        }
                     }
                     this._loading$.next(false);
                 },
                 error: (err) => {
-                    this._error$.next('No se pudo cargar el perfil del negocio');
+                    const savedData = localStorage.getItem(`business_profile_${ownerId}`);
+                    if (savedData) {
+                        try {
+                            const resource = JSON.parse(savedData);
+                            const savedProfile = this.assembler.toEntity(resource);
+                            this._profile$.next(savedProfile);
+                        } catch (e) {
+                            console.error('Error parsing saved profile', e);
+                            localStorage.removeItem(`business_profile_${ownerId}`);
+                        }
+                    }
                     this._loading$.next(false);
-                    console.error(err);
                 }
             })
         ).subscribe();
     }
 
-    /** Reload full profile from json-server, bypassing local caches */
+    /** Reload full profile from server, bypassing local caches */
     refreshFromServer(id: string | number): void {
-        this.http.get<Record<string, unknown>>(`${environment.baseUrl}/business-profiles/${id}`).subscribe({
+        this.http.get<Record<string, unknown>>(`${environment.baseUrl}/api/v1/businesses/${id}`).subscribe({
             next: (resource) => {
                 const profile = this.assembler.toEntity(resource as any);
                 this._profile$.next(profile);
@@ -98,24 +134,73 @@ export class BusinessProfileStore {
         coverImage?: string;
     }): { saved: boolean; sync$: Observable<boolean> } {
         const current = this._profile$.getValue();
+        const currentUser = this.authStore.currentUser();
+
         if (!current) {
-            console.error('updateProfileData: current profile is null');
-            return { saved: false, sync$: of(false) };
+            if (!currentUser) {
+                return { saved: false, sync$: of(false) };
+            }
+
+            const newProfile = new BusinessProfile(
+                '',
+                new BusinessName(data.publicDisplayName, data.publicDisplayName),
+                new Address(data.street, '', ''),
+                data.description,
+                data.phone,
+                data.category,
+                true,
+                [],
+                data.coverImage,
+                currentUser.id
+            );
+
+            const resource = this.assembler.toResource(newProfile);
+            const create$ = this.http.post<any>(`${environment.baseUrl}/api/v1/businesses`, {
+                name: data.publicDisplayName,
+                category: data.category,
+                description: data.description,
+                phone: data.phone,
+                address: data.street,
+                isPublished: true,
+                ownerId: Number(currentUser.id),
+                coverImage: data.coverImage || null
+            }).pipe(
+                switchMap(created => {
+                    const savedResource = { ...resource, id: created.id };
+                    const ownerKey = currentUser.id;
+                    localStorage.setItem(`business_profile_${ownerKey}`, JSON.stringify(savedResource));
+                    const savedProfile = this.assembler.toEntity(savedResource);
+                    this._profile$.next(savedProfile);
+
+                    return this.http.patch(`${environment.baseUrl}/api/v1/users/${currentUser.id}`, {
+                        businessId: created.id
+                    }).pipe(
+                        tap(() => {
+                            const updatedUser = { ...currentUser, businessId: created.id };
+                            this.authStore.setUser(updatedUser);
+                        }),
+                        map(() => true),
+                        catchError(err => {
+                            console.error('Error persisting businessId to user', err);
+                            const updatedUser = { ...currentUser, businessId: created.id };
+                            this.authStore.setUser(updatedUser);
+                            return of(true);
+                        })
+                    );
+                }),
+                catchError(err => {
+                    console.error('Error creating business profile', err);
+                    return of(false);
+                })
+            );
+
+            return { saved: true, sync$: create$ };
         }
 
-        const currentUser = this.authStore.currentUser();
         if (!currentUser || String(current.id) !== String(currentUser.businessId)) {
-            console.error('Cannot save: profile does not belong to the current user', {
-                profileId: current.id,
-                businessId: currentUser?.businessId
-            });
             return { saved: false, sync$: of(false) };
         }
-        if (current.ownerId && current.ownerId !== currentUser.id) {
-            console.error('Cannot save: profile owner does not match current user', {
-                profileOwnerId: current.ownerId,
-                currentUserId: currentUser.id
-            });
+        if (current.ownerId && String(current.ownerId) !== String(currentUser.id)) {
             return { saved: false, sync$: of(false) };
         }
 
@@ -135,15 +220,20 @@ export class BusinessProfileStore {
         );
         this._profile$.next(updated);
 
-        // Save to localStorage keyed by ownerId for consistent lookup
         const resource = this.assembler.toResource(updated);
         const ownerKey = current.ownerId || currentUser.id;
         localStorage.setItem(`business_profile_${ownerKey}`, JSON.stringify(resource));
 
-        // Sync to json-server so client view sees the changes
-        const baseUrl = environment.baseUrl;
-        const url = `${baseUrl}/business-profiles/${updated.id}`;
-        const sync$ = this.http.patch(url, resource).pipe(
+        const url = `${environment.baseUrl}/api/v1/businesses/${updated.id}`;
+        const sync$ = this.http.patch(url, {
+            name: data.publicDisplayName,
+            category: data.category,
+            description: data.description,
+            phone: data.phone,
+            address: data.street,
+            isPublished: current.isPublished,
+            coverImage: data.coverImage !== undefined ? data.coverImage : current.coverImage
+        }).pipe(
             map(() => true),
             catchError(err => {
                 console.error('FAILED to sync profile to server');

@@ -16,6 +16,18 @@ export function authGuard(allowedRoles?: ('cliente' | 'administrador')[]): CanAc
   };
 }
 
+export function profileCompletionGuard(): CanActivateFn {
+  return () => {
+    const authStore = inject(AuthStore);
+    const router = inject(Router);
+    const user = authStore.currentUser();
+    if (user?.role === 'administrador' && !user.businessId) {
+      return router.parseUrl('/admin/perfil-negocio');
+    }
+    return true;
+  };
+}
+
 export function loginGuard(): CanActivateFn {
   return () => {
     const authStore = inject(AuthStore);
