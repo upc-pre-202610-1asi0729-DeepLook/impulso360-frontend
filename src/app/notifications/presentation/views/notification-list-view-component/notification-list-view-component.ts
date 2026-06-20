@@ -7,6 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NotificationStore } from '../../../../shared/application/notification.store';
 import { NotificationService } from '../../../../shared/application/notification.service';
 import { Notification } from '../../../../shared/domain/model/notification.entity';
+import { AgendaApi } from '../../../../agenda/infrastructure/agenda-api';
+import { AuthStore } from '../../../../auth/application/auth-store';
 
 type FilterTab = 'all' | 'unread' | 'alerts';
 
@@ -20,8 +22,15 @@ type FilterTab = 'all' | 'unread' | 'alerts';
 export class NotificationListViewComponent implements OnInit {
   private readonly service = inject(NotificationService);
   protected readonly store = inject(NotificationStore);
+  private readonly agendaApi = inject(AgendaApi);
+  private readonly authStore = inject(AuthStore);
 
   protected readonly activeTab = signal<FilterTab>('all');
+
+  // Resumen del día — counts from actual appointments
+  protected readonly pendingCount   = signal(0);
+  protected readonly confirmedCount = signal(0);
+  protected readonly cancelledCount = signal(0);
 
   // Alertas config (solo UI local, sin backend)
   protected readonly alertConfig = signal({
@@ -39,19 +48,27 @@ export class NotificationListViewComponent implements OnInit {
     return all;
   });
 
-  // Resumen del día
-  protected readonly pendingCount   = computed(() =>
-      this.store.notifications().filter(n => n.type === 'pending' && !n.read).length
-  );
-  protected readonly confirmedCount = computed(() =>
-      this.store.notifications().filter(n => n.type === 'confirmed').length
-  );
-  protected readonly cancelledCount = computed(() =>
-      this.store.notifications().filter(n => n.type === 'cancelled').length
-  );
-
   ngOnInit(): void {
     this.service.loadAll();
+    this.loadTodaySummary();
+  }
+
+  private loadTodaySummary(): void {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    const user = this.authStore.currentUser();
+    const businessId = user?.businessId;
+
+    this.agendaApi.getAllAppointments(businessId).subscribe(appointments => {
+      const todayAppointments = appointments.filter((a: any) => a.date === todayStr);
+      this.pendingCount.set(todayAppointments.filter((a: any) => a.status === 'pending').length);
+      this.confirmedCount.set(todayAppointments.filter((a: any) => a.status === 'confirmed').length);
+      this.cancelledCount.set(todayAppointments.filter((a: any) => a.status === 'cancelled').length);
+    });
   }
 
   protected setTab(tab: FilterTab): void {

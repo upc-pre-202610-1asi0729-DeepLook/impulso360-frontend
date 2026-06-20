@@ -63,7 +63,7 @@ export class AppointmentFormComponent implements OnInit {
     date: [new Date(), Validators.required],
     time: ['09:00', Validators.required],
     duration: ['1 hora', Validators.required],
-    status: ['confirmed', Validators.required],
+    status: ['pending', Validators.required],
     notes: [''],
     sendReminder: [true]
   });
@@ -103,7 +103,17 @@ export class AppointmentFormComponent implements OnInit {
 
   submit() {
     if (this.appointmentForm.valid) {
-      this.dialogRef.close(this.appointmentForm.value);
+      const formValue = this.appointmentForm.value;
+      const matchedClient = this.clients.find(c =>
+        `${c.firstName} ${c.lastName}` === formValue.client
+      );
+      const selectedService = this.services.find(s => s.name === formValue.service);
+      this.dialogRef.close({
+        ...formValue,
+        clientEmail: matchedClient?.email ?? '',
+        serviceId: selectedService?.id ?? null,
+        category: selectedService?.category ?? ''
+      });
     } else {
       this.appointmentForm.markAllAsTouched();
     }

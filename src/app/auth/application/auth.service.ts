@@ -14,12 +14,12 @@ export class AuthService {
 
   login(email: string, password: string): Observable<AuthResponse> {
     return this.authApi.login(email, password).pipe(
-      map(user => {
-        if (user) {
-          this.authStore.setUser(user);
-          return { success: true, user };
+      switchMap(user => {
+        if (!user) {
+          return of({ success: false, message: 'Credenciales inválidas' });
         }
-        return { success: false, message: 'Credenciales inválidas' };
+        this.authStore.setUser(user);
+        return of({ success: true, user });
       }),
       catchError(() => of({ success: false, message: 'Error de conexión' }))
     );
@@ -37,44 +37,6 @@ export class AuthService {
         if (error) return of(error);
         return this.authApi.register(data as Omit<User, 'id'>).pipe(
           switchMap(user => {
-            if (user.role === 'administrador') {
-              return this.authApi.getBusinessProfilesByOwner(user.id!).pipe(
-                switchMap(profiles => {
-                  if (profiles.length > 0) {
-                    const existing = profiles[0];
-                    return this.authApi.updateUser(user.id!, { businessId: existing.id }).pipe(
-                      map(updatedUser => {
-                        const fullUser = { ...updatedUser, businessId: existing.id };
-                        this.authStore.setUser(fullUser);
-                        return { success: true, user: fullUser } as AuthResponse;
-                      })
-                    );
-                  }
-                  const defaultProfile = {
-                    name: { legalName: '', publicDisplayName: user.name },
-                    address: { street: '', city: '', reference: '' },
-                    description: '',
-                    phone: user.phone || '',
-                    category: '',
-                    isPublished: true,
-                    coverImage: '',
-                    ownerId: user.id,
-                    services: []
-                  };
-                  return this.authApi.createBusinessProfile(defaultProfile).pipe(
-                    switchMap(profile =>
-                      this.authApi.updateUser(user.id!, { businessId: profile.id }).pipe(
-                        map(updatedUser => {
-                          const fullUser = { ...updatedUser, businessId: profile.id };
-                          this.authStore.setUser(fullUser);
-                          return { success: true, user: fullUser } as AuthResponse;
-                        })
-                      )
-                    )
-                  );
-                })
-              );
-            }
             this.authStore.setUser(user);
             return of({ success: true, user } as AuthResponse);
           }),

@@ -27,8 +27,8 @@ export interface ServiceResource {
 
 export interface BusinessProfileResource {
     id: number | string;
-    name: BusinessNameResource;
-    address: AddressResource;
+    name: BusinessNameResource | string;
+    address: AddressResource | string;
     description: string;
     phone: string;
     category: string;

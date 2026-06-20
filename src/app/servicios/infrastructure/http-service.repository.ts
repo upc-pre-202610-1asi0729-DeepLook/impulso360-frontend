@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { ServiceRepository } from '@app/servicios/domain/model/service.repository';
 import { Service, ServiceProps } from '@app/servicios/domain/model/service.entity';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpServiceRepository extends ServiceRepository {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3000/services';
+  private readonly baseUrl = `${environment.baseUrl}/api/v1/services`;
 
   override getAll(businessId?: number | string): Observable<Service[]> {
     const params = businessId ? `?businessId=${businessId}` : '';

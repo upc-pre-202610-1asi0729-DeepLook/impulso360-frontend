@@ -68,7 +68,17 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
         this.store.profile$
             .pipe(takeUntil(this.destroy$))
             .subscribe(profile => {
-                if (!profile) return;
+                if (!profile) {
+                    this.form.reset({
+                        publicDisplayName: '',
+                        category: '',
+                        description: '',
+                        phone: '',
+                        street: ''
+                    });
+                    this.selectedCoverImage = null;
+                    return;
+                }
                 this.form.patchValue({
                     publicDisplayName: profile.name.publicDisplayName,
                     category: profile.category,
@@ -79,11 +89,15 @@ export class BusinessProfileComponent implements OnInit, OnDestroy {
                 
                 if (profile.coverImage) {
                     this.selectedCoverImage = profile.coverImage;
+                } else {
+                    this.selectedCoverImage = null;
                 }
             });
 
         const userId = this.store.getCurrentUserId();
-        this.store.loadProfile(userId);
+        if (userId) {
+            this.store.loadProfile(userId);
+        }
     }
 
     onSave(): void {

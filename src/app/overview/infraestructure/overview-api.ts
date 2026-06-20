@@ -19,12 +19,13 @@ export class OverviewApi extends BaseApi {
     override get resourcePath(): string { return '/appointments'; }
 
     getStats(businessId?: number | string): Observable<OverviewStats> {
-        return this.http.get<any[]>(`${this.baseUrl}/appointments`).pipe(
+        const url = businessId
+            ? `${this.baseUrl}/api/v1/appointments?businessId=${businessId}`
+            : `${this.baseUrl}/api/v1/appointments`;
+        return this.http.get<any[]>(url).pipe(
             map(list => {
                 const today = this.formatLocalDate(new Date());
-                const filtered = list.filter(a =>
-                    (!businessId || String(a.businessId) === String(businessId)) && a.date === today
-                );
+                const filtered = list.filter(a => a.date === today);
                 const stats = new OverviewStats();
                 stats.todayAppointments   = filtered.length;
                 stats.todayVsYesterday    = 2;
@@ -40,32 +41,34 @@ export class OverviewApi extends BaseApi {
     }
 
     getTodayAppointments(businessId?: number | string): Observable<AppointmentSummary[]> {
-        return this.http.get<any[]>(`${this.baseUrl}/appointments`).pipe(
+        const url = businessId
+            ? `${this.baseUrl}/api/v1/appointments?businessId=${businessId}`
+            : `${this.baseUrl}/api/v1/appointments`;
+        return this.http.get<any[]>(url).pipe(
             map(list => {
                 const today = this.formatLocalDate(new Date());
-                const filtered = list.filter(a =>
-                    (!businessId || String(a.businessId) === String(businessId)) && a.date === today
-                );
+                const filtered = list.filter(a => a.date === today);
                 return filtered.map(r => this.apptAssembler.toEntity(r));
             })
         );
     }
 
     getRecentClients(businessId?: number | string): Observable<ClientSummary[]> {
+        const clientsUrl = businessId
+            ? `${this.baseUrl}/api/v1/clients?businessId=${businessId}`
+            : `${this.baseUrl}/api/v1/clients`;
+        const appointmentsUrl = businessId
+            ? `${this.baseUrl}/api/v1/appointments?businessId=${businessId}`
+            : `${this.baseUrl}/api/v1/appointments`;
         return forkJoin({
-            clients: this.http.get<any[]>(`${this.baseUrl}/clients`),
-            appointments: this.http.get<any[]>(`${this.baseUrl}/appointments`),
+            clients: this.http.get<any[]>(clientsUrl),
+            appointments: this.http.get<any[]>(appointmentsUrl),
         }).pipe(
             map(({ clients, appointments }) => {
                 const today = this.formatLocalDate(new Date());
-                const businessClients = clients.filter(client =>
-                    !businessId || String(client.businessId) === String(businessId)
-                );
-                const businessAppointments = appointments.filter(appt =>
-                    (!businessId || String(appt.businessId) === String(businessId)) && appt.date < today
-                );
+                const businessAppointments = appointments.filter(appt => appt.date < today);
 
-                return businessClients
+                return clients
                     .map(client => {
                         const clientName = this.getClientFullName(client);
                         const pastAppointments = businessAppointments
@@ -95,15 +98,15 @@ export class OverviewApi extends BaseApi {
     }
 
     confirmAppointment(id: string | number): Observable<any> {
-        return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status: 'confirmed' });
+        return this.http.patch(`${this.baseUrl}/api/v1/appointments/${id}`, { status: 'confirmed' });
     }
 
     cancelAppointment(id: string | number): Observable<any> {
-        return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status: 'cancelled' });
+        return this.http.patch(`${this.baseUrl}/api/v1/appointments/${id}`, { status: 'cancelled' });
     }
 
     updateAppointmentStatus(id: string | number, status: AppointmentStatus): Observable<any> {
-        return this.http.patch(`${this.baseUrl}/appointments/${id}`, { status });
+        return this.http.patch(`${this.baseUrl}/api/v1/appointments/${id}`, { status });
     }
 
     private formatLocalDate(d: Date): string {

@@ -19,19 +19,18 @@ export class BusinessProfileService implements BusinessProfileRepository {
     }
 
     getById(id: string | number): Observable<BusinessProfile | null> {
-        return this.http.get<BusinessProfileResource>(`${this.baseUrl}/business-profiles/${id}`).pipe(
+        return this.http.get<BusinessProfileResource>(`${this.baseUrl}/api/v1/businesses/${id}`).pipe(
             map(resource => this.assembler.toEntity(resource))
         );
     }
 
     getByOwnerId(ownerId: string): Observable<BusinessProfile | null> {
-        return this.http.get<BusinessProfileResource[]>(`${this.baseUrl}/business-profiles`).pipe(
+        return this.http.get<BusinessProfileResource[]>(`${this.baseUrl}/api/v1/businesses`, {
+            params: { ownerId: ownerId }
+        }).pipe(
             map(list => {
-                const filtered = list.filter(p => String(p.ownerId) === String(ownerId));
-                if (filtered.length === 0) return null;
-                const businessId = this.getCurrentUserBusinessId();
-                const match = businessId ? filtered.find(p => String(p.id) === String(businessId)) : null;
-                return this.assembler.toEntity(match ?? filtered[0]);
+                if (list.length === 0) return null;
+                return this.assembler.toEntity(list[0]);
             })
         );
     }
@@ -48,18 +47,18 @@ export class BusinessProfileService implements BusinessProfileRepository {
     }
 
     save(businessProfile: BusinessProfile): Observable<BusinessProfile> {
-        return this.http.post<BusinessProfileResource>(`${this.baseUrl}/business-profiles`, businessProfile).pipe(
+        return this.http.post<BusinessProfileResource>(`${this.baseUrl}/api/v1/businesses`, businessProfile).pipe(
             map(resource => this.assembler.toEntity(resource))
         );
     }
 
     update(businessProfile: BusinessProfile): Observable<BusinessProfile> {
-        return this.http.put<BusinessProfileResource>(`${this.baseUrl}/business-profiles/${businessProfile.id}`, businessProfile).pipe(
+        return this.http.put<BusinessProfileResource>(`${this.baseUrl}/api/v1/businesses/${businessProfile.id}`, businessProfile).pipe(
             map(resource => this.assembler.toEntity(resource))
         );
     }
 
     delete(_id: string | number): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}/business-profiles/${_id}`);
+        return this.http.delete<void>(`${this.baseUrl}/api/v1/businesses/${_id}`);
     }
 }

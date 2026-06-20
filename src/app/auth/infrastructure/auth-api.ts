@@ -10,7 +10,7 @@ export class AuthApi {
   private baseUrl = environment.baseUrl;
 
   login(email: string, password: string): Observable<User | null> {
-    return this.http.get<User[]>(`${this.baseUrl}/users`).pipe(
+    return this.http.get<User[]>(`${this.baseUrl}/api/v1/users`).pipe(
       map(users => {
         const found = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
         return found || null;
@@ -19,66 +19,75 @@ export class AuthApi {
   }
 
   register(user: Omit<User, 'id'>): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/users`, user);
+    return this.http.post<User>(`${this.baseUrl}/api/v1/users`, user);
   }
 
   updateUser(id: string, data: Partial<User>): Observable<User> {
-    return this.http.patch<User>(`${this.baseUrl}/users/${id}`, data);
+    return this.http.patch<User>(`${this.baseUrl}/api/v1/users/${id}`, data);
   }
 
   getAllBusinessProfiles(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/business-profiles`);
+    return this.http.get<any[]>(`${this.baseUrl}/api/v1/businesses`);
   }
 
   getBusinessProfile(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/business-profiles/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/api/v1/businesses/${id}`);
   }
 
   getBusinessProfilesByOwner(ownerId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/business-profiles`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}/api/v1/businesses`).pipe(
       map(list => list.filter(p => String(p.ownerId) === String(ownerId)))
     );
   }
 
   createBusinessProfile(profile: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/business-profiles`, profile);
+    const payload = {
+      name: profile.name?.publicDisplayName || (typeof profile.name === 'string' ? profile.name : ''),
+      category: typeof profile.category === 'string' ? profile.category : '',
+      description: profile.description || '',
+      phone: profile.phone || '',
+      address: profile.address?.street || (typeof profile.address === 'string' ? profile.address : ''),
+      isPublished: profile.isPublished ?? true,
+      ownerId: profile.ownerId ? Number(profile.ownerId) : undefined
+    };
+    return this.http.post<any>(`${this.baseUrl}/api/v1/businesses`, payload);
   }
 
   getAppointmentsByBusiness(businessId: number | string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/appointments?businessId=${businessId}`);
+    return this.http.get<any[]>(`${this.baseUrl}/api/v1/appointments?businessId=${businessId}`);
   }
 
   createAppointment(appointment: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/appointments`, appointment);
+    return this.http.post<any>(`${this.baseUrl}/api/v1/appointments`, appointment);
   }
 
   getUsersByRole(role: string): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/users`).pipe(
+    return this.http.get<User[]>(`${this.baseUrl}/api/v1/users`).pipe(
       map(users => users.filter(u => u.role === role))
     );
   }
 
   getAllServices(businessId?: number | string): Observable<any[]> {
-    const url = businessId ? `${this.baseUrl}/services?businessId=${businessId}` : `${this.baseUrl}/services`;
+    const url = businessId ? `${this.baseUrl}/api/v1/services?businessId=${businessId}` : `${this.baseUrl}/api/v1/services`;
     return this.http.get<any[]>(url);
   }
 
   getClientsByEmail(email: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/clients`).pipe(
+    return this.http.get<any[]>(`${this.baseUrl}/api/v1/clients`).pipe(
       map(list => list.filter(c => c.email === email))
     );
   }
 
   createClient(client: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/clients`, client);
+    return this.http.post<any>(`${this.baseUrl}/api/v1/clients`, client);
   }
 
   updateClient(id: any, client: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/clients/${id}`, client);
+    return this.http.put<any>(`${this.baseUrl}/api/v1/clients/${id}`, client);
   }
 
   checkEmailExists(email: string): Observable<boolean> {
-    return this.http.get<User[]>(`${this.baseUrl}/users?email=${encodeURIComponent(email)}`).pipe(
+    return this.http.get<User[]>(`${this.baseUrl}/api/v1/users?email=${encodeURIComponent(email)}`).pipe(
       map(users => users.length > 0)
     );
   }

@@ -49,12 +49,15 @@ import { TranslateModule } from '@ngx-translate/core';
                 <mat-label>{{ 'SERVICES.FIELDS.NAME' | translate }}</mat-label>
                 <input matInput formControlName="name" placeholder="Ej. Corte de pelo premium">
                 <mat-icon matSuffix>label</mat-icon>
+                <mat-error *ngIf="form.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+                <mat-error *ngIf="form.get('name')?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>{{ 'SERVICES.FIELDS.CATEGORY' | translate }}</mat-label>
                 <input matInput formControlName="category" placeholder="Ej. Estética, Salud, etc.">
                 <mat-icon matSuffix>category</mat-icon>
+                <mat-error *ngIf="form.get('category')?.hasError('required')">La categoría es obligatoria</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -65,6 +68,7 @@ import { TranslateModule } from '@ngx-translate/core';
               <mat-label>{{ 'SERVICES.FIELDS.DESCRIPTION' | translate }}</mat-label>
               <textarea matInput formControlName="description" rows="3" placeholder="Describe brevemente de qué trata el servicio..."></textarea>
               <mat-icon matSuffix>description</mat-icon>
+              <mat-error *ngIf="form.get('description')?.hasError('required')">La descripción es obligatoria</mat-error>
             </mat-form-field>
 
             <div class="form-row">
@@ -73,6 +77,8 @@ import { TranslateModule } from '@ngx-translate/core';
                 <input matInput type="number" formControlName="price">
                 <span matPrefix>S/&nbsp;</span>
                 <mat-icon matSuffix>payments</mat-icon>
+                <mat-error *ngIf="form.get('price')?.hasError('required')">El precio es obligatorio</mat-error>
+                <mat-error *ngIf="form.get('price')?.hasError('min')">El precio debe ser mayor a 0</mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="flex-1">
@@ -250,7 +256,7 @@ export class ServiceFormComponent implements OnInit {
     name: ['', [Validators.required, Validators.minLength(3)]],
     category: ['', Validators.required],
     description: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]],
+    price: [null, [Validators.required, Validators.min(0.01)]],
     status: ['activo'],
     isFeatured: [false]
   });
