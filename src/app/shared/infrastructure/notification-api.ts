@@ -13,7 +13,7 @@ import { NotificationAssembler } from "./notification.assembler";
 export class NotificationApi {
     private readonly http       = inject(HttpClient);
     private readonly assembler  = inject(NotificationAssembler);
-    private readonly baseUrl    = `${environment.baseUrl}/notifications`;
+    private readonly baseUrl    = `${environment.baseUrl}/api/v1/notifications`;
 
     getAll(): Observable<Notification[]> {
         return this.http

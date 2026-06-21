@@ -3,6 +3,6 @@
  */
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:3000'
+  baseUrl: 'http://34.176.216.15:3000'
 };
 
