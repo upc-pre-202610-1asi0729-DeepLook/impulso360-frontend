@@ -1,31 +1,29 @@
-import http from 'http';
+const BACKEND = 'http://34.176.216.15:3000';
 
-const BACKEND = '34.176.216.15';
-const PORT = 3000;
+export default async function handler(request) {
+  const url = new URL(request.url);
+  const target = `${BACKEND}/api${url.pathname}${url.search}`;
 
-export default function handler(req, res) {
-  const targetPath = '/api' + req.url;
+  try {
+    const response = await fetch(target, {
+      method: request.method,
+      headers: request.headers,
+      body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
+      redirect: 'follow',
+    });
 
-  const options = {
-    hostname: BACKEND,
-    port: PORT,
-    path: targetPath,
-    method: req.method,
-    headers: { ...req.headers, host: `${BACKEND}:${PORT}` },
-  };
-
-  const proxy = http.request(options, (proxyRes) => {
-    res.writeHead(proxyRes.statusCode, proxyRes.headers);
-    proxyRes.pipe(res, { end: true });
-  });
-
-  proxy.on('error', () => {
-    res.status(502).json({ error: 'Backend unreachable' });
-  });
-
-  req.pipe(proxy, { end: true });
+    return new Response(response.body, {
+      status: response.status,
+      headers: response.headers,
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: 'Backend unreachable', detail: err.message }), {
+      status: 502,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }
 
 export const config = {
-  api: { bodyParser: false },
+  runtime: 'edge',
 };
