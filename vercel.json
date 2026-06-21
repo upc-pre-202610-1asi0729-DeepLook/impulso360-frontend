@@ -1,5 +1,5 @@
 {
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "http://34.176.216.15:3000/api/:path*" }
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/proxy.js" }
   ]
 }
