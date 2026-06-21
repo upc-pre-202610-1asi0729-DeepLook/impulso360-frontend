@@ -3,7 +3,7 @@
  */
 export const environment = {
   production: true,
-  baseUrl: '',
+  baseUrl: 'https://34.176.216.15',
   mock: false
 };
 
