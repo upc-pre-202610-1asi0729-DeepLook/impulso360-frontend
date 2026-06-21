@@ -1,31 +1,29 @@
-const BACKEND = 'http://34.176.216.15:3000';
+import http from 'http';
 
-export default async function handler(req, res) {
-  const target = `${BACKEND}/api${req.url}`;
-  const { method, headers } = req;
+const BACKEND = '34.176.216.15';
+const PORT = 3000;
 
-  const fetchHeaders = { ...headers };
-  delete fetchHeaders['host'];
-  delete fetchHeaders['connection'];
+export default function handler(req, res) {
+  const targetPath = '/api' + req.url;
 
-  try {
-    const chunks = [];
-    for await (const chunk of req) chunks.push(chunk);
-    const body = Buffer.concat(chunks);
+  const options = {
+    hostname: BACKEND,
+    port: PORT,
+    path: targetPath,
+    method: req.method,
+    headers: { ...req.headers, host: `${BACKEND}:${PORT}` },
+  };
 
-    const init = { method, headers: fetchHeaders };
-    if (method !== 'GET' && method !== 'HEAD' && body.length > 0) {
-      init.body = body;
-    }
+  const proxy = http.request(options, (proxyRes) => {
+    res.writeHead(proxyRes.statusCode, proxyRes.headers);
+    proxyRes.pipe(res, { end: true });
+  });
 
-    const response = await fetch(target, init);
-    const data = await response.text();
+  proxy.on('error', () => {
+    res.status(502).json({ error: 'Backend unreachable' });
+  });
 
-    res.setHeader('Content-Type', response.headers.get('content-type') || 'application/json');
-    res.status(response.status).send(data);
-  } catch (err) {
-    res.status(502).json({ error: 'Backend unreachable', detail: err.message });
-  }
+  req.pipe(proxy, { end: true });
 }
 
 export const config = {
