@@ -90,7 +90,8 @@
     "TODAY": "Hoy",
     "SIDEBAR_TITLE": "Detalles del día",
     "SIDEBAR_SUBTITLE": "{{ count }} citas programadas",
-    "UPCOMING_TITLE": "PRÓXIMAS CITAS"
+    "UPCOMING_TITLE": "PRÓXIMAS CITAS",
+    "NO_UPCOMING": "No hay citas próximas"
   },
   "APPOINTMENT": {
     "FORM": {

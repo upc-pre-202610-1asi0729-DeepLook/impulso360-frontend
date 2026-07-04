@@ -90,7 +90,8 @@
     "TODAY": "Today",
     "SIDEBAR_TITLE": "Day details",
     "SIDEBAR_SUBTITLE": "{{ count }} scheduled appointments",
-    "UPCOMING_TITLE": "UPCOMING APPOINTMENTS"
+    "UPCOMING_TITLE": "UPCOMING APPOINTMENTS",
+    "NO_UPCOMING": "No upcoming appointments"
   },
   "APPOINTMENT": {
     "FORM": {
