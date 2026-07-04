@@ -69,8 +69,13 @@ export class ClientStore {
     ) {}
 
     loadClients(): void {
-        this.loadingSignal.set(true);
         const businessId = this.authStore.currentUser()?.businessId;
+        if (!businessId) {
+            this.clientsSignal.set([]);
+            this.selectedClientSignal.set(null);
+            return;
+        }
+        this.loadingSignal.set(true);
 
         forkJoin([
             this.clientApiService.getAll(businessId),

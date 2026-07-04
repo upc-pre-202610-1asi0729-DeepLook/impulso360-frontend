@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './shared/presentation/components/layout/layout';
 import { ClientLayoutComponent } from './client-dashboard/presentation/layout/client-layout';
-import { authGuard, loginGuard } from './auth/presentation/guards/auth.guard';
+import { authGuard, loginGuard, profileCompletionGuard } from './auth/presentation/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -22,14 +22,17 @@ export const routes: Routes = [
       },
       {
         path: 'agenda',
+        canActivate: [profileCompletionGuard()],
         loadChildren: () => import('./agenda/presentation/agenda.routes').then(m => m.AGENDA_ROUTES)
       },
       {
         path: 'clientes',
+        canActivate: [profileCompletionGuard()],
         loadChildren: () => import('./clients/presentation/clients.routes').then(m => m.CLIENTS_ROUTES)
       },
       {
         path: 'servicios',
+        canActivate: [profileCompletionGuard()],
         loadChildren: () => import('./servicios/presentation/servicios.routes').then(m => m.SERVICIOS_ROUTES)
       },
       {
