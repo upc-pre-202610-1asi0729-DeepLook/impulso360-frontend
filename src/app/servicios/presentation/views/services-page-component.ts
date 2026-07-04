@@ -70,32 +70,46 @@ export class ServicesPageComponent implements OnInit {
     }
 
     onEdit(serviceId: string): void {
-        this.serviceRepository.getById(serviceId).subscribe(service => {
-            if (!service) return;
+        this.serviceRepository.getById(serviceId).subscribe({
+            next: (service) => {
+                if (!service) return;
 
-            const dialogRef = this.dialog.open(ServiceFormComponent, {
-                width: '500px',
-                data: service.toPlainObject()
-            });
+                const dialogRef = this.dialog.open(ServiceFormComponent, {
+                    width: '500px',
+                    data: service.toPlainObject()
+                });
 
-            dialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    const updatedService = Service.create({
-                        ...service.toPlainObject(),
-                        ...result
-                    });
-                    this.serviceRepository.update(updatedService).subscribe(() => {
-                        this.refresh$.next();
-                    });
-                }
-            });
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result) {
+                        const updatedService = Service.create({
+                            ...service.toPlainObject(),
+                            ...result
+                        });
+                        this.serviceRepository.update(updatedService).subscribe({
+                            next: () => this.refresh$.next(),
+                            error: (err) => {
+                                this.errorMessage = err.error?.message || 'Error al actualizar el servicio';
+                                setTimeout(() => this.errorMessage = null, 4000);
+                            }
+                        });
+                    }
+                });
+            },
+            error: (err) => {
+                this.errorMessage = err.error?.message || 'Error al cargar el servicio';
+                setTimeout(() => this.errorMessage = null, 4000);
+            }
         });
     }
 
     onDelete(serviceId: string): void {
         if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
-            this.serviceRepository.delete(serviceId).subscribe(() => {
-                this.refresh$.next();
+            this.serviceRepository.delete(serviceId).subscribe({
+                next: () => this.refresh$.next(),
+                error: (err) => {
+                    this.errorMessage = err.error?.message || 'Error al eliminar el servicio';
+                    setTimeout(() => this.errorMessage = null, 4000);
+                }
             });
         }
     }
@@ -107,13 +121,23 @@ export class ServicesPageComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                const businessId = this.authStore.currentUser()?.businessId;
+                if (!businessId) {
+                    this.errorMessage = 'No se encontró el ID del negocio. Inicie sesión nuevamente.';
+                    setTimeout(() => this.errorMessage = null, 4000);
+                    return;
+                }
                 const newService = Service.create({
                     id: Math.random().toString(36).substr(2, 9),
                     ...result,
-                    businessId: this.authStore.currentUser()?.businessId
+                    businessId: Number(businessId)
                 });
-                this.serviceRepository.save(newService).subscribe(() => {
-                    this.refresh$.next();
+                this.serviceRepository.save(newService).subscribe({
+                    next: () => this.refresh$.next(),
+                    error: (err) => {
+                        this.errorMessage = err.error?.message || 'Error al guardar el servicio';
+                        setTimeout(() => this.errorMessage = null, 4000);
+                    }
                 });
             }
         });

@@ -235,11 +235,10 @@ export class ClientViewComponent implements OnInit {
       time,
       clientName: user?.name || 'Cliente',
       clientEmail: user?.email || '',
-      clientId: user?.id || '',
+      serviceId: service.id ?? null,
       service: service.name,
       category: business.category,
       businessId: business.id,
-      businessName: business.name.publicDisplayName,
       status: 'pending',
       note: ''
     };

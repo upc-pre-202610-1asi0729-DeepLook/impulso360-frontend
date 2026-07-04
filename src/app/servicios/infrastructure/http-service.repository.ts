@@ -27,7 +27,11 @@ export class HttpServiceRepository extends ServiceRepository {
 
   override save(service: Service): Observable<Service> {
     const body = service.toPlainObject();
-    return this.http.post<ServiceProps>(this.baseUrl, body).pipe(
+    const payload = {
+      ...body,
+      businessId: body.businessId != null ? Number(body.businessId) : null
+    };
+    return this.http.post<ServiceProps>(this.baseUrl, payload).pipe(
       map(p => Service.create(p))
     );
   }
@@ -38,7 +42,11 @@ export class HttpServiceRepository extends ServiceRepository {
 
   override update(service: Service): Observable<Service> {
     const body = service.toPlainObject();
-    return this.http.put<ServiceProps>(`${this.baseUrl}/${service.id}`, body).pipe(
+    const payload = {
+      ...body,
+      businessId: body.businessId != null ? Number(body.businessId) : null
+    };
+    return this.http.put<ServiceProps>(`${this.baseUrl}/${service.id}`, payload).pipe(
       map(p => Service.create(p))
     );
   }
