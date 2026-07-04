@@ -199,6 +199,14 @@ export class AgendaViewComponent implements OnInit, OnDestroy {
     });
   });
 
+  upcomingAppointments = computed(() => {
+    const today = this.formatLocalDate(new Date());
+    return this.appointments()
+      .filter(app => app.date >= today && app.status !== 'cancelled')
+      .sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time))
+      .slice(0, 5);
+  });
+
   ngOnInit() {
     this.loadAppointments();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
@@ -397,5 +405,11 @@ export class AgendaViewComponent implements OnInit, OnDestroy {
   getStatusClass(status: string) {
 
     return `status-${status}`;
+  }
+
+  getMonthShort(dateStr: string): string {
+    const months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+    const month = parseInt(dateStr.split('-')[1], 10);
+    return months[month - 1] || '';
   }
 }

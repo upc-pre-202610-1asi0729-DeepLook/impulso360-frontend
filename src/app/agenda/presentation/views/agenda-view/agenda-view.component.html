@@ -206,17 +206,23 @@
       <!-- Upcoming Appointments -->
       <section class="upcoming-appointments card">
         <h4>{{ 'AGENDA.UPCOMING_TITLE' | translate }}</h4>
-        <div class="upcoming-item">
-          <div class="date-box">
-            <span class="day">15</span>
-            <span class="month">MAY</span>
-          </div>
-          <div class="info">
-            <span class="name">Ana Flores</span>
-            <span class="svc">Desparasitación</span>
-          </div>
-          <span class="time">11:00</span>
-        </div>
+        @if (upcomingAppointments().length === 0) {
+          <p class="empty-state">{{ 'AGENDA.NO_UPCOMING' | translate }}</p>
+        } @else {
+          @for (app of upcomingAppointments(); track app.id) {
+            <div class="upcoming-item">
+              <div class="date-box">
+                <span class="day">{{ app.date.split('-')[2] | number:'1.0-0' }}</span>
+                <span class="month">{{ getMonthShort(app.date) }}</span>
+              </div>
+              <div class="info">
+                <span class="name">{{ app.clientName }}</span>
+                <span class="svc">{{ app.service }}</span>
+              </div>
+              <span class="time">{{ app.time }}</span>
+            </div>
+          }
+        }
       </section>
     </aside>
   </div>
