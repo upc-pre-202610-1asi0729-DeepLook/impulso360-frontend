@@ -46,7 +46,7 @@ export class HttpServiceRepository extends ServiceRepository {
       ...body,
       businessId: body.businessId != null ? Number(body.businessId) : null
     };
-    return this.http.put<ServiceProps>(`${this.baseUrl}/${service.id}`, payload).pipe(
+    return this.http.patch<ServiceProps>(`${this.baseUrl}/${service.id}`, payload).pipe(
       map(p => Service.create(p))
     );
   }

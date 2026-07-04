@@ -72,8 +72,9 @@ export class AuthApi {
     return this.http.get<any[]>(url);
   }
 
-  getClientsByEmail(email: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/api/v1/clients`).pipe(
+  getClientsByEmail(email: string, businessId?: number | string): Observable<any[]> {
+    if (!businessId) return of([]);
+    return this.http.get<any[]>(`${this.baseUrl}/api/v1/clients?businessId=${businessId}`).pipe(
       map(list => list.filter(c => c.email === email))
     );
   }

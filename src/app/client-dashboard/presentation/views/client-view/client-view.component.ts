@@ -103,8 +103,6 @@ export class ClientViewComponent implements OnInit {
   ngOnInit(): void {
     this.showMyAppointments.set(this.router.url.includes('mis-citas'));
     this.loadBusinesses();
-    this.loadAllServices();
-    this.loadMyAppointments();
   }
 
   private loadBusinesses(): void {
@@ -129,6 +127,8 @@ export class ClientViewComponent implements OnInit {
             const filtered = profiles.filter(p => p.isPublished && (p.ownerId ? adminUserIds.has(p.ownerId) : true));
             this.businesses.set(filtered.length > 0 ? filtered : profiles.filter(p => p.isPublished));
             this.loading.set(false);
+            this.loadServicesForAllBusinesses();
+            this.loadMyAppointments();
           },
           error: () => this.loading.set(false)
         });
@@ -243,7 +243,7 @@ export class ClientViewComponent implements OnInit {
       note: ''
     };
 
-    this.agendaApi.getAllAppointments().subscribe(allApps => {
+    this.agendaApi.getAllAppointments(business.id).subscribe(allApps => {
       const conflict = allApps.some((a: any) =>
         a.clientId === user?.id &&
         a.date === date &&
@@ -258,7 +258,7 @@ export class ClientViewComponent implements OnInit {
 
       this.agendaApi.createAppointment(newAppointment).subscribe({
         next: () => {
-          this.authApi.getClientsByEmail(user?.email || '').subscribe({
+          this.authApi.getClientsByEmail(user?.email || '', business.id).subscribe({
             next: (existing) => {
               const historyEntry = { service: service.name, date, time, status: 'pending' };
               const clientForThisBusiness = existing?.find((c: any) => String(c.businessId) === String(business.id));
@@ -313,19 +313,50 @@ export class ClientViewComponent implements OnInit {
       });
   }
 
-  private loadAllServices(): void {
-    this.authApi.getAllServices().subscribe({
-      next: (services) => this.servicesFromServer.set(services || []),
-      error: () => {}
+  private loadServicesForAllBusinesses(): void {
+    const allServices: any[] = [];
+    const businesses = this.businesses();
+    let completed = 0;
+    if (businesses.length === 0) return;
+    businesses.forEach(biz => {
+      this.authApi.getAllServices(biz.id).subscribe({
+        next: (services) => {
+          allServices.push(...(services || []));
+          completed++;
+          if (completed === businesses.length) {
+            this.servicesFromServer.set(allServices);
+          }
+        },
+        error: () => {
+          completed++;
+          if (completed === businesses.length) {
+            this.servicesFromServer.set(allServices);
+          }
+        }
+      });
     });
   }
 
   private loadMyAppointments(): void {
     this.myAppointmentsLoading.set(true);
     const user = this.authStore.currentUser();
-    this.agendaApi.getAllAppointments().subscribe((allApps: any[]) => {
-      this.myAppointments.set(allApps.filter(a => a.clientId === user?.id || a.clientEmail === user?.email));
+    const businesses = this.businesses();
+    if (businesses.length === 0) {
+      this.myAppointments.set([]);
       this.myAppointmentsLoading.set(false);
+      return;
+    }
+    const allAppts: any[] = [];
+    let completed = 0;
+    businesses.forEach(biz => {
+      this.agendaApi.getAllAppointments(biz.id).subscribe((apps: any[]) => {
+        allAppts.push(...apps.filter(a => a.clientId === user?.id || a.clientEmail === user?.email));
+        completed++;
+        if (completed === businesses.length) {
+          this.myAppointments.set(allAppts);
+          this.myAppointmentsLoading.set(false);
+        }
+      });
     });
   }
 
