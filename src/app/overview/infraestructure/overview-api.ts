@@ -19,22 +19,50 @@ export class OverviewApi extends BaseApi {
     override get resourcePath(): string { return '/appointments'; }
 
     getStats(businessId?: number | string): Observable<OverviewStats> {
-        const url = businessId
+        const apptUrl = businessId
             ? `${this.baseUrl}/api/v1/appointments?businessId=${businessId}`
             : `${this.baseUrl}/api/v1/appointments`;
-        return this.http.get<any[]>(url).pipe(
-            map(list => {
+        const clientsUrl = businessId
+            ? `${this.baseUrl}/api/v1/clients?businessId=${businessId}`
+            : `${this.baseUrl}/api/v1/clients`;
+        return forkJoin({
+            appointments: this.http.get<any[]>(apptUrl),
+            clients: this.http.get<any[]>(clientsUrl),
+        }).pipe(
+            map(({ appointments, clients }) => {
                 const today = this.formatLocalDate(new Date());
-                const filtered = list.filter(a => a.date === today);
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+
+                const todayAppts = appointments.filter(a => a.date === today);
+                const yesterday = new Date(now);
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = this.formatLocalDate(yesterday);
+                const yesterdayAppts = appointments.filter(a => a.date === yesterdayStr);
+
                 const stats = new OverviewStats();
-                stats.todayAppointments   = filtered.length;
-                stats.todayVsYesterday    = 2;
-                stats.confirmed           = filtered.filter(a => a.status === 'confirmed').length;
-                stats.confirmedPercent    = filtered.length
-                    ? Math.round((stats.confirmed / filtered.length) * 100) : 0;
-                stats.pending             = filtered.filter(a => a.status === 'pending').length;
-                stats.activeClients       = 42;
-                stats.newClientsThisMonth = 5;
+                stats.todayAppointments = todayAppts.length;
+                stats.todayVsYesterday = todayAppts.length - yesterdayAppts.length;
+                stats.confirmed = todayAppts.filter(a => a.status === 'confirmed').length;
+                stats.confirmedPercent = todayAppts.length
+                    ? Math.round((stats.confirmed / todayAppts.length) * 100) : 0;
+                stats.pending = todayAppts.filter(a => a.status === 'pending').length;
+
+                const clientIdsWithAppts = new Set(
+                    appointments
+                        .filter(a => a.clientId)
+                        .map(a => String(a.clientId))
+                );
+                stats.activeClients = clientIdsWithAppts.size || clients.length;
+
+                stats.newClientsThisMonth = clients.filter((c: any) => {
+                    const created = c.createdAt || c.created_at;
+                    if (!created) return false;
+                    const d = new Date(created);
+                    return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+                }).length;
+
                 return stats;
             })
         );
