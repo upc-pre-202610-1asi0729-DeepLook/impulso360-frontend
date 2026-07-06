@@ -2,10 +2,11 @@
  * @summary Overview views — panel general, presentation layer.
  * Fiel al mockup: KPIs, citas del día, mini-calendario, alerta, clientes recientes.
  */
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { OverviewService } from '../../../application/overview.service';
 import { OverviewStore, AppointmentFilter } from '../../../application/overview.store';
@@ -22,15 +23,29 @@ import { AuthStore } from '../../../../auth/application/auth-store';
     templateUrl: './overview-view.component.html',
     styleUrl: './overview-view.component.scss',
 })
-export class OverviewViewComponent implements OnInit {
+export class OverviewViewComponent implements OnInit, OnDestroy {
     private readonly service = inject(OverviewService);
     protected readonly store = inject(OverviewStore);
     private readonly translate = inject(TranslateService);
     private readonly dialog = inject(MatDialog);
     private readonly agendaApi = inject(AgendaApi);
     private readonly authStore = inject(AuthStore);
+    private readonly router = inject(Router);
     protected readonly currentLang = signal(this.translate.currentLang || 'es');
     protected readonly editingAppointmentId = signal<string | number | null>(null);
+
+    private timerInterval: ReturnType<typeof setInterval> | null = null;
+    protected readonly now = signal(new Date());
+
+    protected readonly minutesUntilAlert = computed(() => {
+        const alert = this.store.nextAlert();
+        if (!alert?.time) return null;
+        const [hours, minutes] = alert.time.split(':').map(Number);
+        const target = new Date();
+        target.setHours(hours, minutes, 0, 0);
+        const diffMs = target.getTime() - this.now().getTime();
+        return Math.max(0, Math.round(diffMs / 60000));
+    });
 
     // ── Mini-calendario ───────────────────────────────────
     protected readonly calendarDays = computed(() => this.buildCalendar(this.store.selectedDate()));
@@ -50,6 +65,17 @@ export class OverviewViewComponent implements OnInit {
         this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
             this.currentLang.set(event.lang);
         });
+        this.timerInterval = setInterval(() => this.now.set(new Date()), 60000);
+    }
+
+    ngOnDestroy(): void {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+    }
+
+    protected navigateToAgenda(): void {
+        this.router.navigate(['/agenda']);
     }
 
     // ── Filtro de citas ───────────────────────────────────

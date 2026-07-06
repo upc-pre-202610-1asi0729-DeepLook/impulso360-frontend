@@ -190,9 +190,9 @@
                     <p class="alert-card__detail">{{ alert.clientName }}</p>
                     <div class="alert-card__footer">
                         <span class="alert-card__time">{{ alert.time }}</span>
-                        <span class="alert-card__eta">{{ 'OVERVIEW.ALERT.ETA' | translate:{ mins: 12 } }}</span>
+                        <span class="alert-card__eta">{{ 'OVERVIEW.ALERT.ETA' | translate:{ mins: minutesUntilAlert() ?? 0 } }}</span>
                     </div>
-                    <button class="alert-card__btn" type="button">{{ 'OVERVIEW.ALERT.REVIEW' | translate }}</button>
+                    <button class="alert-card__btn" type="button" (click)="navigateToAgenda()">{{ 'OVERVIEW.ALERT.REVIEW' | translate }}</button>
                 </div>
             }
 
