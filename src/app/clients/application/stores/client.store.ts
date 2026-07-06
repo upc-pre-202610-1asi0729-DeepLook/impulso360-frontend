@@ -209,7 +209,8 @@ export class ClientStore {
             return;
         }
 
-        this.agendaApi.getAppointmentsByClientName(client.fullName).pipe(
+        const businessId = this.authStore.currentUser()?.businessId;
+        this.agendaApi.getAppointmentsByClientName(client.fullName, businessId).pipe(
             switchMap(appointments => {
                 if (appointments && appointments.length > 0) {
                     const deleteRequests = appointments

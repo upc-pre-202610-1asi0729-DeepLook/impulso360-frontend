@@ -32,8 +32,12 @@ export class AgendaApi extends BaseApi {
     );
   }
 
-  getAppointmentsByClientName(clientName: string): Observable<Appointment[]> {
-    return this.http.get<any[]>(`${this.resourceUrl}?clientName=${clientName}`).pipe(
+  getAppointmentsByClientName(clientName: string, businessId?: number | string): Observable<Appointment[]> {
+    let url = `${this.resourceUrl}?clientName=${encodeURIComponent(clientName)}`;
+    if (businessId) {
+      url += `&businessId=${businessId}`;
+    }
+    return this.http.get<any[]>(url).pipe(
       map(list => list.map(a => this.normalizeAppointment(a)))
     );
   }
