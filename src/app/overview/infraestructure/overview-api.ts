@@ -44,10 +44,10 @@ export class OverviewApi extends BaseApi {
                 const stats = new OverviewStats();
                 stats.todayAppointments = todayAppts.length;
                 stats.todayVsYesterday = todayAppts.length - yesterdayAppts.length;
-                stats.confirmed = todayAppts.filter(a => a.status === 'confirmed').length;
+                stats.confirmed = todayAppts.filter(a => a.status?.toLowerCase() === 'confirmed').length;
                 stats.confirmedPercent = todayAppts.length
                     ? Math.round((stats.confirmed / todayAppts.length) * 100) : 0;
-                stats.pending = todayAppts.filter(a => a.status === 'pending').length;
+                stats.pending = todayAppts.filter(a => a.status?.toLowerCase() === 'pending').length;
 
                 const clientIdsWithAppts = new Set(
                     appointments

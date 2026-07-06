@@ -24,7 +24,7 @@ export class AppointmentSummaryAssembler extends BaseAssembler<AppointmentSummar
         e.clientName = r.clientName;
         e.service    = r.service;
         e.category   = r.category;
-        e.status     = (r.status as AppointmentStatus) ?? 'pending';
+        e.status     = (r.status?.toLowerCase() as AppointmentStatus) ?? 'pending';
         e.note       = r.note;
         return e;
     }
