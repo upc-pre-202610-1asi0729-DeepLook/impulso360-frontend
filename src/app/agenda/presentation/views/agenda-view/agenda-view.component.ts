@@ -56,6 +56,13 @@ export class AgendaViewComponent implements OnInit, OnDestroy {
   isCameraActive = signal<boolean>(false);
   isRecognizing = signal<boolean>(false);
   private cameraStream?: MediaStream;
+
+  private readonly refreshEffect = effect(() => {
+    if (this.agendaStore.refreshNeeded()) {
+      this.agendaStore.clearRefresh();
+      this.loadAppointments();
+    }
+  });
   
   // Date helpers
   weekDays = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM'];
@@ -214,16 +221,10 @@ export class AgendaViewComponent implements OnInit, OnDestroy {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.currentLang.set(event.lang);
     });
-
-    effect(() => {
-      if (this.agendaStore.refreshNeeded()) {
-        this.agendaStore.clearRefresh();
-        this.loadAppointments();
-      }
-    });
   }
 
   ngOnDestroy() {
+    this.refreshEffect.destroy();
     this.stopCamera();
   }
 
