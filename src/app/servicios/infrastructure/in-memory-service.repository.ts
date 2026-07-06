@@ -4,11 +4,11 @@ import { ServiceRepository } from '@app/servicios/domain/model/service.repositor
 import { Service } from '@app/servicios/domain/model/service.entity';
 
 const MOCK_SERVICES = [
-    { id: '1', name: 'Consulta general', category: 'Veterinaria', description: 'Evaluación general del estado de salud de la mascota.', price: 50, status: 'activo' as const, isFeatured: true },
-    { id: '2', name: 'Vacunación', category: 'Prevención', description: 'Aplicación de vacunas según el calendario del animal.', price: 35, status: 'activo' as const, isFeatured: true },
-    { id: '3', name: 'Baño y corte', category: 'Estética', description: 'Baño completo y corte de pelo a medida.', price: 45, status: 'activo' as const, isFeatured: true },
-    { id: '4', name: 'Desparasitación', category: 'Prevención', description: 'Tratamiento contra parásitos internos y externos.', price: 30, status: 'activo' as const, isFeatured: false },
-    { id: '5', name: 'Cirugía menor', category: 'Cirugía', description: 'Procedimientos quirúrgicos de baja complejidad.', price: 200, status: 'inactivo' as const, isFeatured: false },
+    { id: '1', name: 'Consulta general', category: 'Veterinaria', description: 'Evaluación general del estado de salud de la mascota.', price: 50, status: 'active' as const, isFeatured: true },
+    { id: '2', name: 'Vacunación', category: 'Prevención', description: 'Aplicación de vacunas según el calendario del animal.', price: 35, status: 'active' as const, isFeatured: true },
+    { id: '3', name: 'Baño y corte', category: 'Estética', description: 'Baño completo y corte de pelo a medida.', price: 45, status: 'active' as const, isFeatured: true },
+    { id: '4', name: 'Desparasitación', category: 'Prevención', description: 'Tratamiento contra parásitos internos y externos.', price: 30, status: 'active' as const, isFeatured: false },
+    { id: '5', name: 'Cirugía menor', category: 'Cirugía', description: 'Procedimientos quirúrgicos de baja complejidad.', price: 200, status: 'inactive' as const, isFeatured: false },
 ];
 
 @Injectable()

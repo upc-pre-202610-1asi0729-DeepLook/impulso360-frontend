@@ -53,7 +53,7 @@ export class BusinessProfileService implements BusinessProfileRepository {
     }
 
     update(businessProfile: BusinessProfile): Observable<BusinessProfile> {
-        return this.http.put<BusinessProfileResource>(`${this.baseUrl}/api/v1/businesses/${businessProfile.id}`, businessProfile).pipe(
+        return this.http.patch<BusinessProfileResource>(`${this.baseUrl}/api/v1/businesses/${businessProfile.id}`, businessProfile).pipe(
             map(resource => this.assembler.toEntity(resource))
         );
     }

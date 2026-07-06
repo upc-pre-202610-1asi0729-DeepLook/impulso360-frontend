@@ -41,13 +41,16 @@ export class AuthApi {
   }
 
   createBusinessProfile(profile: any): Observable<any> {
+    const name = profile.name?.publicDisplayName || (typeof profile.name === 'string' ? profile.name : '');
+    if (!name || !name.trim()) {
+      throw new Error('El nombre del negocio es obligatorio');
+    }
     const payload = {
-      name: profile.name?.publicDisplayName || (typeof profile.name === 'string' ? profile.name : ''),
+      name: name.trim(),
       category: typeof profile.category === 'string' ? profile.category : '',
       description: profile.description || '',
       phone: profile.phone || '',
       address: profile.address?.street || (typeof profile.address === 'string' ? profile.address : ''),
-      isPublished: profile.isPublished ?? true,
       ownerId: profile.ownerId ? Number(profile.ownerId) : undefined
     };
     return this.http.post<any>(`${this.baseUrl}/api/v1/businesses`, payload);

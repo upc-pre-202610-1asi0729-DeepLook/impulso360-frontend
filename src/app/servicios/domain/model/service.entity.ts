@@ -1,4 +1,4 @@
-﻿export type ServiceStatus = 'activo' | 'inactivo';
+﻿export type ServiceStatus = 'active' | 'inactive';
 export type ServiceCategory =
     | 'Veterinaria'
     | 'Prevención'
@@ -31,7 +31,7 @@ export class Service {
     get price(): number { return this.props.price; }
     get status(): ServiceStatus { return this.props.status; }
     get isFeatured(): boolean { return this.props.isFeatured; }
-    get isActive(): boolean { return this.props.status === 'activo'; }
+    get isActive(): boolean { return this.props.status === 'active'; }
     get businessId(): number | string | undefined { return this.props.businessId; }
 
     feature(): Service {

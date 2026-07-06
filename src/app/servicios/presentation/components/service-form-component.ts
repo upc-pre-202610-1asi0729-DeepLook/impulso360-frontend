@@ -84,8 +84,8 @@ import { TranslateModule } from '@ngx-translate/core';
               <mat-form-field appearance="outline" class="flex-1">
                 <mat-label>Estado de Visibilidad</mat-label>
                 <mat-select formControlName="status">
-                  <mat-option value="activo">Activo</mat-option>
-                  <mat-option value="inactivo">Inactivo</mat-option>
+                  <mat-option value="active">Activo</mat-option>
+                  <mat-option value="inactive">Inactivo</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -254,10 +254,10 @@ export class ServiceFormComponent implements OnInit {
 
   form = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
-    category: ['', Validators.required],
+    category: ['', [Validators.required, Validators.minLength(3)]],
     description: ['', Validators.required],
     price: [null, [Validators.required, Validators.min(0.01)]],
-    status: ['activo'],
+    status: ['active'],
     isFeatured: [false]
   });
 
@@ -273,7 +273,10 @@ export class ServiceFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
+      const value = { ...this.form.value };
+      if (value.category) value.category = value.category.trim();
+      if (value.name) value.name = value.name.trim();
+      this.dialogRef.close(value);
     }
   }
 }

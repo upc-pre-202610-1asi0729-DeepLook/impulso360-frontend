@@ -86,7 +86,7 @@ export class ClientViewComponent implements OnInit {
     return serverServices
       .filter(s => {
         const status = (s.status || '').toLowerCase();
-        return (status === 'active' || status === 'activo' || status === 'ACTIVE') && String(s.businessId) === String(bizId);
+        return (status === 'active' || status === 'ACTIVE') && String(s.businessId) === String(bizId);
       })
       .map(s => ({
         id: s.id,
@@ -266,7 +266,7 @@ export class ClientViewComponent implements OnInit {
                 this.authApi.updateClient(clientForThisBusiness.id, {
                   firstName: clientForThisBusiness.firstName,
                   lastName: clientForThisBusiness.lastName,
-                  phone: clientForThisBusiness.phone || undefined,
+                  phone: clientForThisBusiness.phone || '',
                   email: clientForThisBusiness.email,
                   status: clientForThisBusiness.status || 'active',
                   notes: clientForThisBusiness.notes || ''
@@ -299,7 +299,7 @@ export class ClientViewComponent implements OnInit {
     return (this.servicesFromServer() || [])
       .filter(s => {
         const status = (s.status || '').toLowerCase();
-        return (status === 'active' || status === 'activo' || status === 'ACTIVE') && String(s.businessId) === String(bizId);
+        return (status === 'active' || status === 'ACTIVE') && String(s.businessId) === String(bizId);
       });
   }
 
@@ -373,7 +373,7 @@ export class ClientViewComponent implements OnInit {
     this.authApi.createClient({
       firstName: names[0] || user?.name || 'Cliente',
       lastName: names.length > 1 ? names.slice(1).join(' ') : 'Sin apellido',
-      phone: user?.phone || undefined,
+      phone: user?.phone || '',
       email: user?.email || '',
       notes: '',
       businessId: businessId
