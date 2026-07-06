@@ -2,6 +2,7 @@ import { computed, Injectable, signal, inject } from '@angular/core';
 import { Client } from '../../domain/model/client.entity';
 import { ClientApiService } from '../../infrastructure/client-api.service';
 import { AgendaApi } from '../../../agenda/infrastructure/agenda-api';
+import { AgendaStore } from '../../../agenda/application/agenda.store';
 import { forkJoin, of, switchMap } from 'rxjs';
 import { AuthStore } from '../../../auth/application/auth-store';
 import { Appointment } from '../../../agenda/domain/model/appointment.entity';
@@ -62,6 +63,7 @@ export class ClientStore {
     });
 
     private authStore = inject(AuthStore);
+    private agendaStore = inject(AgendaStore);
 
     constructor(
         private readonly clientApiService: ClientApiService,
@@ -169,6 +171,7 @@ export class ClientStore {
                 );
 
                 this.selectedClientSignal.set(updatedClient);
+                this.agendaStore.requestRefresh();
                 this.closeModal();
             },
             error: (error) => {

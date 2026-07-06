@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject, signal, computed } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { AgendaApi } from '../../../infrastructure/agenda-api';
+import { AgendaStore } from '../../../application/agenda.store';
 import { Appointment, AppointmentStatus } from '../../../domain/model/appointment.entity';
 import { AppointmentFormComponent } from '../../components/appointment-form/appointment-form.component';
 import { AuthStore } from '../../../../auth/application/auth-store';
@@ -34,6 +35,7 @@ export type CalendarViewMode = 'daily' | 'weekly' | 'monthly';
 })
 export class AgendaViewComponent implements OnInit, OnDestroy {
   private agendaApi = inject(AgendaApi);
+  private agendaStore = inject(AgendaStore);
   private dialog = inject(MatDialog);
   private translate = inject(TranslateService);
   private authStore = inject(AuthStore);
@@ -211,6 +213,13 @@ export class AgendaViewComponent implements OnInit, OnDestroy {
     this.loadAppointments();
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.currentLang.set(event.lang);
+    });
+
+    effect(() => {
+      if (this.agendaStore.refreshNeeded()) {
+        this.agendaStore.clearRefresh();
+        this.loadAppointments();
+      }
     });
   }
 
