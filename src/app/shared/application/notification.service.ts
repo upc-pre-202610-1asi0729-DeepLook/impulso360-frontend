@@ -23,10 +23,10 @@ export class NotificationService {
     }
 
     markAsRead(id: number): void {
-        this.api.markAsRead(id).subscribe(() => this.store.markAsRead(id));
+        this.store.markAsRead(id);
     }
 
     markAllAsRead(): void {
-        this.api.markAllAsRead().subscribe(() => this.store.markAllAsRead());
+        this.store.markAllAsRead();
     }
 }
