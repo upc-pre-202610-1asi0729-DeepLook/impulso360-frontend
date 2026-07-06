@@ -72,12 +72,7 @@ export class ClientFormModalComponent implements OnChanges {
       phone: this.phone.trim(),
       email: this.email.trim(),
       status: this.status,
-      notes: this.notes.trim(),
-      createdAt: this.client?.createdAt ?? new Date().toISOString().slice(0, 10),
-      lastAppointment: this.client?.lastAppointment ?? '',
-      totalAppointments: this.client?.totalAppointments ?? 0,
-      attendedAppointments: this.client?.attendedAppointments ?? 0,
-      history: this.client?.history ?? []
+      notes: this.notes.trim()
     });
   }
 

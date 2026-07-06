@@ -264,10 +264,12 @@ export class ClientViewComponent implements OnInit {
               const clientForThisBusiness = existing?.find((c: any) => String(c.businessId) === String(business.id));
               if (clientForThisBusiness) {
                 this.authApi.updateClient(clientForThisBusiness.id, {
-                  ...clientForThisBusiness,
-                  lastAppointment: date,
-                  totalAppointments: (clientForThisBusiness.totalAppointments || 0) + 1,
-                  history: [...(clientForThisBusiness.history || []), historyEntry]
+                  firstName: clientForThisBusiness.firstName,
+                  lastName: clientForThisBusiness.lastName,
+                  phone: clientForThisBusiness.phone || undefined,
+                  email: clientForThisBusiness.email,
+                  status: clientForThisBusiness.status || 'active',
+                  notes: clientForThisBusiness.notes || ''
                 }).subscribe();
               } else {
                 this.createClientRecord(user, business.id, service, date, time);
@@ -367,20 +369,13 @@ export class ClientViewComponent implements OnInit {
   }
 
   private createClientRecord(user: any, businessId: number | string, service: any, date: string, time: string): void {
-    const historyEntry = { service: service.name, date, time, status: 'pending' };
     const names = (user?.name || 'Cliente').split(' ');
     this.authApi.createClient({
       firstName: names[0] || user?.name || 'Cliente',
       lastName: names.length > 1 ? names.slice(1).join(' ') : 'Sin apellido',
-      phone: user?.phone || '',
+      phone: user?.phone || undefined,
       email: user?.email || '',
-      status: 'active',
       notes: '',
-      createdAt: new Date().toISOString().slice(0, 10),
-      lastAppointment: date,
-      totalAppointments: 1,
-      attendedAppointments: 0,
-      history: [historyEntry],
       businessId: businessId
     }).subscribe({
       error: (err) => console.error('Error creating client record:', err)
