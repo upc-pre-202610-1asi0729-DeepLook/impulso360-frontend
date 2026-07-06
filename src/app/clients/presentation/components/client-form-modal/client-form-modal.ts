@@ -82,12 +82,12 @@ export class ClientFormModalComponent implements OnChanges {
       return;
     }
 
-    this.firstName = this.client.firstName;
-    this.lastName = this.client.lastName;
-    this.phone = this.client.phone;
-    this.email = this.client.email;
-    this.status = this.client.status;
-    this.notes = this.client.notes;
+    this.firstName = this.client.firstName ?? '';
+    this.lastName = this.client.lastName ?? '';
+    this.phone = this.client.phone ?? '';
+    this.email = this.client.email ?? '';
+    this.status = this.client.status ?? 'active';
+    this.notes = this.client.notes ?? '';
   }
 
   private resetForm(): void {
