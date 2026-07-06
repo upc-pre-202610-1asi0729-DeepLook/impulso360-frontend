@@ -63,6 +63,7 @@
       "TITLE": "ALERTA",
       "SUBTITLE": "Próxima cita inicia pronto",
       "ETA": "En {{ mins }} min",
+      "ETA_HOURS": "En {{ hours }} h {{ mins }} min",
       "REVIEW": "Revisar"
     },
     "RECENT_CLIENTS": "Clientes recientes",

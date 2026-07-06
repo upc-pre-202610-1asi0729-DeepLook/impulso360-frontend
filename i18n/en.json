@@ -63,6 +63,7 @@
       "TITLE": "ALERT",
       "SUBTITLE": "Next appointment starts soon",
       "ETA": "In {{ mins }} mins",
+      "ETA_HOURS": "In {{ hours }}h {{ mins }}m",
       "REVIEW": "Review"
     },
     "RECENT_CLIENTS": "Recent Clients",
