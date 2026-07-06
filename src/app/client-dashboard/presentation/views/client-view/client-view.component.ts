@@ -270,24 +270,12 @@ export class ClientViewComponent implements OnInit {
                   history: [...(clientForThisBusiness.history || []), historyEntry]
                 }).subscribe();
               } else {
-                const names = (user?.name || 'Cliente').split(' ');
-                this.authApi.createClient({
-                  firstName: names[0] || user?.name || 'Cliente',
-                  lastName: names.length > 1 ? names.slice(1).join(' ') : 'Sin apellido',
-                  phone: user?.phone || 'N/A',
-                  email: user?.email || '',
-                  status: 'active',
-                  notes: '',
-                  createdAt: new Date().toISOString().slice(0, 10),
-                  lastAppointment: date,
-                  totalAppointments: 1,
-                  attendedAppointments: 0,
-                  history: [historyEntry],
-                  businessId: business.id
-                }).subscribe({
-                  error: (err) => console.error('Error creating client record:', err)
-                });
+                this.createClientRecord(user, business.id, service, date, time);
               }
+            },
+            error: () => {
+              const historyEntry = { service: service.name, date, time, status: 'pending' };
+              this.createClientRecord(user, business.id, service, date, time);
             }
           });
 
@@ -376,6 +364,27 @@ export class ClientViewComponent implements OnInit {
     } else {
       this.router.navigate(['/cliente', 'mis-citas']);
     }
+  }
+
+  private createClientRecord(user: any, businessId: number | string, service: any, date: string, time: string): void {
+    const historyEntry = { service: service.name, date, time, status: 'pending' };
+    const names = (user?.name || 'Cliente').split(' ');
+    this.authApi.createClient({
+      firstName: names[0] || user?.name || 'Cliente',
+      lastName: names.length > 1 ? names.slice(1).join(' ') : 'Sin apellido',
+      phone: user?.phone || '',
+      email: user?.email || '',
+      status: 'active',
+      notes: '',
+      createdAt: new Date().toISOString().slice(0, 10),
+      lastAppointment: date,
+      totalAppointments: 1,
+      attendedAppointments: 0,
+      history: [historyEntry],
+      businessId: businessId
+    }).subscribe({
+      error: (err) => console.error('Error creating client record:', err)
+    });
   }
 
   get currentUserName(): string {
