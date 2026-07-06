@@ -47,6 +47,17 @@ export class OverviewViewComponent implements OnInit, OnDestroy {
         return Math.max(0, Math.round(diffMs / 60000));
     });
 
+    protected readonly alertEtaLabel = computed(() => {
+        const totalMins = this.minutesUntilAlert();
+        if (totalMins == null) return '';
+        if (totalMins >= 60) {
+            const h = Math.floor(totalMins / 60);
+            const m = totalMins % 60;
+            return this.translate.instant('OVERVIEW.ALERT.ETA_HOURS', { hours: h, mins: m });
+        }
+        return this.translate.instant('OVERVIEW.ALERT.ETA', { mins: totalMins });
+    });
+
     // ── Mini-calendario ───────────────────────────────────
     protected readonly calendarDays = computed(() => this.buildCalendar(this.store.selectedDate()));
     protected readonly calMonthLabel = computed(() => {
